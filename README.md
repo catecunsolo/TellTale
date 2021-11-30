@@ -25,3 +25,7 @@ The following guides illustrate how to use some features concretely:
  * Juanfe Romero
  * Marcos G. Frites
  * Juanfe Otra vez
+ * Mirna Pamela Diaz
+ * Seba Gimenez
+ * Bianca Dente
+ * Juanfe Otra vez
