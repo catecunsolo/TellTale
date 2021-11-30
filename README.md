@@ -27,3 +27,4 @@ The following guides illustrate how to use some features concretely:
  * Seba Gimenez
  * Bianca Dente
  * Juanfe Otra vez
+ * Caterina Cunsolo
