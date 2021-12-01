@@ -20,7 +20,7 @@ public class Rol implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_rol;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(20)")
+    @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(20)")
     private String nombre;
 
 }
