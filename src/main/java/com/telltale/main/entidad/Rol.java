@@ -1,5 +1,6 @@
 package com.telltale.main.entidad;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "rol", schema = "telltale")
 public class Rol implements Serializable {
 
