@@ -53,27 +53,12 @@ public class Historia {
     private LocalDate fechaCreacion;
     @LastModifiedDate
     private LocalDate fechaUltModificacion;
+    private Boolean alta;
 
-    public Historia(Integer id_historia, String titulo, String historia, Integer meGusta, Integer noMeGusta, Categoria categoria, Perfil perfil, LocalDate fechaCreacion, LocalDate fechaUltModificacion, Boolean alta, List<HistoriaFavorita> historiasFav, List<Comentario> comentarios) {
-        this.id_historia = id_historia;
-        this.titulo = titulo;
-        this.historia = historia;
-        this.meGusta = meGusta;
-        this.noMeGusta = noMeGusta;
-        this.categoria = categoria;
-        this.perfil = perfil;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaUltModificacion = fechaUltModificacion;
-        this.alta = alta;
-        this.historiasFav = historiasFav;
-        this.comentarios = comentarios;
-    }
-
+   
+    
     public Historia() {
     }
-    @Column(nullable = false)
-    private Boolean alta;
-    private List<HistoriaFavorita> historiasFav;
-    private List<Comentario> comentarios;
-
+  
+ 
 }
