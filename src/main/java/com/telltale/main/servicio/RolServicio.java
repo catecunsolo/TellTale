@@ -25,7 +25,7 @@ public class RolServicio {
         }
     }
 
-    private boolean existeRol(String nombre) throws Exception {
+    public boolean existeRol(String nombre) throws Exception {
         try {
             return (rolRepositorio.findByNombreIgnoreCase(nombre) != null) ? true : false;
         } catch (Exception excepcion) {
@@ -34,7 +34,7 @@ public class RolServicio {
         }
     }
 
-    private Rol validarFormularioYCrear(String nombre) throws Exception {
+    public Rol validarFormularioYCrear(String nombre) throws Exception {
         if (this.existeRol(nombre)) {
             throw new Exception("Ya se ha registrado un Rol con el mismo nombre.");
         }
