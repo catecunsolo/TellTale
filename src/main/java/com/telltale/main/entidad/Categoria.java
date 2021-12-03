@@ -22,7 +22,7 @@ private String nombre;
    
 private Integer voto;
 
-@OneToMany
+@OneToMany(mappedBy = "categoria" )
 private List <Historia> historias;
 
     public Categoria() {
