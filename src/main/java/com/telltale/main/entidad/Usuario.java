@@ -1,6 +1,7 @@
 package com.telltale.main.entidad;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class Usuario {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDate fechaCreacion;
-    @CreatedDate
+    @LastModifiedDate
     @Column(nullable = false, updatable = false)
     private LocalDate fechaUltModificacion;
     @Column(columnDefinition = "TINYINT(1)")
