@@ -25,6 +25,35 @@ public class RolServicio {
         }
     }
 
+    @Transactional
+    public Rol modificarRol(Integer id_rol, String nombre) throws Exception {
+        try {
+            Rol rol = new Rol();
+            rol.setId_rol(id_rol);
+            rol.setNombre(nombre.toUpperCase());
+            return rolRepositorio.save(rol);
+        } catch (Exception excepcion) {
+            throw new Exception("Algo ha sucedido y no se ha podido procesar la modificación de Rol en la base de datos." +
+                    "\n - Descripción del error: " + excepcion.getMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Rol buscarRolPorId(Integer id_rol) throws Exception {
+        try {
+            Rol rol = rolRepositorio.findById(id_rol).get();
+            if (rol == null) {
+                throw new Exception("No se ha encontrado un Rol con el número de ID indicado");
+            } else {
+                return rol;
+            }
+        } catch (Exception excepcion) {
+            throw new Exception("Algo ha sucedido y no se ha podido procesar la búsqueda de Rol, por ID, en la base de datos." +
+                    "\n - Descripción del error: " + excepcion.getMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
     public boolean existeRol(String nombre) throws Exception {
         try {
             return (rolRepositorio.findByNombreIgnoreCase(nombre) != null) ? true : false;
@@ -41,4 +70,10 @@ public class RolServicio {
         return this.crearRol(nombre);
     }
 
+    public Rol validarFormularioYModificar(Integer id_rol, String nombre) throws Exception {
+        if (this.existeRol(nombre)) {
+            throw new Exception("Ya se ha registrado un Rol con el mismo nombre.");
+        }
+        return this.modificarRol(id_rol, nombre);
+    }
 }

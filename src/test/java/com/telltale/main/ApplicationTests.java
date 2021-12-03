@@ -24,10 +24,10 @@ class ApplicationTests {
 
 	@Test
 	public void testRolRepositorio_save() { //método para cargar datos, desde RolRepositorio, a la tabla ROL de la DB
-		rolRepositorio.save(new Rol(1, "SUPER"));
-		rolRepositorio.save(new Rol(2, "ADMIN"));
-		rolRepositorio.save(new Rol(3, "MODER"));
-		rolRepositorio.save(new Rol(4, "USER"));
+		rolRepositorio.save(new Rol(null, "SUPER"));
+		rolRepositorio.save(new Rol(null, "ADMIN"));
+		rolRepositorio.save(new Rol(null, "MODER"));
+		rolRepositorio.save(new Rol(null, "USER"));
 	}
 
 }

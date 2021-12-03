@@ -30,6 +30,8 @@ public class RolControlador {
         } else {
             modelAndView.addObject("rol", new Rol());
         }
+        modelAndView.addObject("title", "Creación de Rol");
+        modelAndView.addObject("action", "guardar");
         return modelAndView;
     }
 
@@ -47,5 +49,34 @@ public class RolControlador {
         return redirectView;
     }
 
+    @GetMapping("/editar/{id_rol}")
+    public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws Exception {
+        ModelAndView modelAndView = new ModelAndView("rolformulario");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("rol", flashMap.get("rol"));
+        } else {
+            modelAndView.addObject("rol", rolServicio.buscarRolPorId(id_rol));
+        }
+        modelAndView.addObject("title", "Modificación de Rol");
+        modelAndView.addObject("action", "modificar");
+        return modelAndView;
+    }
+
+    @PostMapping("/modificar")
+    public RedirectView modificarRol(@ModelAttribute Rol rol, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/rol");
+        try {
+            rolServicio.validarFormularioYModificar(rol.getId_rol(), rol.getNombre());
+            redirectAttributes.addFlashAttribute("success", "El Rol se ha modificado exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+            redirectAttributes.addFlashAttribute("rol", rol);
+            redirectView.setUrl("/rol/editar/" + rol.getId_rol());
+        }
+        return redirectView;
+    }
 
 }
