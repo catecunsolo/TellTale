@@ -16,9 +16,9 @@ public interface CategoriaRepositorio  extends JpaRepository<Categoria, Integer>
      void modificarCategoria(@Param("id_categoria") Integer id_categoria ,
              @Param("nombre") String nombre);
     
-      @Query("SELECT c FROM Categoria WHERE c.nombre = :nombre")
+      @Query("SELECT c FROM Categoria c WHERE c.nombre = :nombre")
       Categoria buscarCategoriaPorNombre(@Param ("nombre") String nombre);
       
-      @Query("SELECT c FROM Categoria WHERE c.id_categoria = :id_categoria")
+      @Query("SELECT c FROM Categoria c WHERE c.id_categoria = :id_categoria")
       Categoria buscarCategoriaPorId(@Param ("id_categoria") Integer id_categoria);
 }
