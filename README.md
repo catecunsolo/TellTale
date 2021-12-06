@@ -23,9 +23,9 @@ The following guides illustrate how to use some features concretely:
 
 ## Participantes
  * Juanfe Romero
- * Vilma Garcia
  * Marcos G. Frites
+ * Juanfe Otra vez
  * Mirna Pamela Diaz
  * Seba Gimenez
  * Bianca Dente
- * Caterina Cunsolo
+ * Juanfe Otra vez
