@@ -4518,7 +4518,17 @@ textarea.form-control-lg {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+  transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
 }
+
+      .card:hover{
+        transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+      }
+
+
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -11288,11 +11298,13 @@ textarea.form-control-lg {
   }
 }
 body {
-  background-image: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url("../assets/img/bg.jpg");
+  background-image: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url(../img/fondo2.jpg);
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+
 }
+
 
 p {
   line-height: 1.75;
@@ -11416,6 +11428,16 @@ p {
   z-index: -1;
 }
 
+.cta2 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.cta2 .cta-inner {
+  position: relative;
+  padding: 3rem;
+  margin: 0.5rem;
+}
+
 .footer {
   background-color: rgba(47, 23, 15, 0.9);
 }
@@ -11425,8 +11447,8 @@ p {
 }
 @media (min-width: 992px) {
   .intro .intro-img {
-    width: 75%;
-    float: right;
+    width: 50%;
+    float: center;
   }
   .intro .intro-text {
     left: 0;
