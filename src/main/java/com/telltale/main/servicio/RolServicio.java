@@ -64,6 +64,15 @@ public class RolServicio {
     }
 
     public Rol validarFormularioYCrear(String nombre) throws Exception {
+        if (nombre.isEmpty() || nombre == null) {
+            throw new Exception("El nombre no puede estar vacío.");
+        }
+        if (nombre.length() <= 3) {
+            throw new Exception("El nombre debe contener como mínimo 3 caracteres.");
+        }
+        if (nombre.length() > 20) {
+            throw new Exception("El nombre puede contener como máximo 20 caracteres.");
+        }
         if (this.existeRol(nombre)) {
             throw new Exception("Ya se ha registrado un Rol con el mismo nombre.");
         }
@@ -71,9 +80,25 @@ public class RolServicio {
     }
 
     public Rol validarFormularioYModificar(Integer id_rol, String nombre) throws Exception {
+        if (id_rol.toString().isEmpty() || id_rol.toString().trim() == null) {
+            throw new Exception("El ID no puede estar vacío.");
+        }
+        if (id_rol <= 0) {
+            throw new Exception("El ID no es válido. No puede ser menor o igual que 0.");
+        }
+        if (nombre.isEmpty() || nombre == null) {
+            throw new Exception("El nombre no puede estar vacío.");
+        }
+        if (nombre.length() <= 3) {
+            throw new Exception("El nombre debe contener como mínimo 3 caracteres.");
+        }
+        if (nombre.length() > 20) {
+            throw new Exception("El nombre puede contener como máximo 20 caracteres.");
+        }
         if (this.existeRol(nombre)) {
             throw new Exception("Ya se ha registrado un Rol con el mismo nombre.");
         }
         return this.modificarRol(id_rol, nombre);
     }
+
 }
