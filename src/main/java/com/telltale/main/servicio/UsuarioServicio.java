@@ -5,6 +5,9 @@ import com.telltale.main.entidad.Usuario;
 import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService{
 
     private Usuario usuario;
 
@@ -105,5 +108,10 @@ usuarioRepositorio.save(usuario);
         if (password.length() <7) {
             throw new MiExcepcion("Error--> La contraseña no puede contener menos de 8 carácteres.");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
