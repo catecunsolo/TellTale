@@ -6438,7 +6438,7 @@ textarea.form-control-lg {
   }
 }
 .clearfix::after {
-  display: absolute;
+  display: block;
   clear: both;
   content: "";
 }
