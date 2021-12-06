@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class Perfil {
@@ -27,14 +28,15 @@ public class Perfil {
     @Column(nullable = false)
     private String descripcion;
     
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean alta;
     @OneToOne
     private Usuario usuario;
     
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @LastModifiedDate
     private LocalDate fechaModificacion;
     
-    @OneToMany
+    @OneToMany(mappedBy = "perfil")
     private List<Historia> historias;
 
     public Integer getId_perfil() {
@@ -69,6 +71,14 @@ public class Perfil {
         this.descripcion = descripcion;
     }
 
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -96,14 +106,15 @@ public class Perfil {
     public Perfil() {
     }
 
-    public Perfil(Integer id_perfil, String nombre, String apellido, String descripcion, Usuario usuario, LocalDate fechaModificacion, List<Historia> historias) {
-        this.id_perfil = id_perfil;
+    public Perfil(String nombre, String apellido, String descripcion, Boolean alta, Usuario usuario, LocalDate fechaModificacion, List<Historia> historias) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.descripcion = descripcion;
+        this.alta = alta;
         this.usuario = usuario;
         this.fechaModificacion = fechaModificacion;
         this.historias = historias;
     }
 
+   
 }
