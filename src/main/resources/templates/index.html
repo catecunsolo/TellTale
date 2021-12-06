@@ -1,149 +1,72 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Business Casual - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        
-        <link th:href="@{../css/styles.css}" rel="stylesheet" />
+    <head th:replace="fragments :: head">
     </head>
     <body>
-       
-        <!-- Navigation-->
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" th:href="@{/}">(Inicio)</a>
-            <button
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              class="navbar-toggler"
-              data-bs-target="#navbarSupportedContent"
-              data-bs-toggle="collapse"
-              type="button"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <header th:replace="fragments :: header">
+        </header>
 
-            </div>
-        </div>
-      </nav>
-
-      <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
-            <span class="site-heading-lower text-primary mb-3">TellTale</span>
-            <span class="site-heading-upper">HISTORIA X HISTORIA</span>
-        </h1>
-    </header>
-
-        <section class="page-section clearfix">
-            <div class="container">
-                <div class="intro">
-                   <img class="intro-img img-fluid mb-2 mb-lg-0 rounded" th:src="@{../img/monkey-pissed.gif}" />
-                   <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-                    <h2 class="section-heading mb-4">
-                            <span class="section-heading-upper">¿Y esto...</span>
-                            <span class="section-heading-lower">cómo funciona?</span>
-                        </h2>
-                        <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, itaque? Nisi ab nihil rem iste blanditiis odit veniam numquam. Quo id architecto inventore, autem deleniti deserunt dolorem! Hic, quam atque.</p>
-                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">¡Mirá el tutorial!</a></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="page-section cta">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-9 mx-auto">
-                        <div class="cta-inner bg-faded text-center rounded">
-                            <h2 class="section-heading mb-4">
-                                <span class="section-heading-upper">FÁCIL Y GRATUITO</span>
-                                <span class="section-heading-lower">¡REGISTRATE!</span>
-                            </h2>
- 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
         <section class="page-section cta2">
             <div class="container">
-           
-                    <div class="col-xl-9 mx-auto">
-                        <div class="cta-inner bg-faded text-center rounded">
-                            <h2 class="section-heading mb-4">
-                                <span class="section-heading-upper">¿Sobre qué vas a escribir hoy?</span>
-                                <span class="section-heading-lower">Elegí un disparador</span>
-                            </h2>
-                            
-                            <div class="row row-cols-1 row-cols-md-3 g-4">
-                                <div clas="col">
+
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner bg-faded text-center rounded">
+                        <h2 class="section-heading mb-4">
+                            <span class="section-heading-upper">¿Sobre qué vas a escribir hoy?</span>
+                            <span class="section-heading-lower">Elegí un disparador</span>
+                        </h2>
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div clas="col">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                      <h5 class="card-title">SAUCE</h5>
+                                        <h5 class="card-title">SAUCE</h5>
                                     </div>
                                     <div class="card-footer">
-                                      <a href="#" class="btn btn-primary">Escribir</a>
+                                        <a href="#" class="btn btn-primary">Escribir</a>
                                     </div>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                <div class="card text-center">
-                                    <div class="card-body">
-                                      <h5 class="card-title">JABÓN</h5>
-                                    </div>
-                                    <div class="card-footer">
-                                      <a href="#" class="btn btn-primary">Escribir</a>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                <div class="card text-center">
-                                  <div class="card-body">
-                                    <h5 class="card-title">PANQUEQUE</h5>
-                                  </div>
-                                  <div class="card-footer">
-                                    <a href="#" class="btn btn-primary">Escribir</a>
-                                  </div>
                                 </div>
                             </div>
-                              </div>
-                                <!--<div class="card col-lg-5 p-0 clickable-card">
-                                    <a class="text-decoration-none" th:href="@{/}">
-                                        <div class="row g-0">
-                                            <div class="col-md-4 index-autor"></div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">PANQUEQUE</h5>
-                                                    <p class="card-text">Escribir</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                    
-                                </div>-->
+                            <div class="col">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">JABÓN</h5>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="btn btn-primary">Escribir</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">PANQUEQUE</h5>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="btn btn-primary">Escribir</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <!--<div class="card col-lg-5 p-0 clickable-card">
+                            <a class="text-decoration-none" th:href="@{/}">
+                                <div class="row g-0">
+                                    <div class="col-md-4 index-autor"></div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">PANQUEQUE</h5>
+                                            <p class="card-text">Escribir</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>-->
                     </div>
-               
+                </div>
+
             </div>
         </section>
-        <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2021</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../js/scripts.js"></script>
+        <footer th:replace="fragments :: footer"></footer>
     </body>
 </html>
