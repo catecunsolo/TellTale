@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 /* //DESCOMENTAR >> cuando UsuarioServicio implemente UserDetailsService
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(usuarioServicio).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsServic
+        e(usuarioServicio).passwordEncoder(passwordEncoder);
     }
 */
 
