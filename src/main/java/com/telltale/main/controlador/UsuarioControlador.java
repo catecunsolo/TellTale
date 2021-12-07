@@ -20,7 +20,7 @@ public class UsuarioControlador {
     private RolServicio rolServicio;
 
 @GetMapping("/crear")
-    public ModelAndView crearUsuario(){
+    public ModelAndView crearUsuario() throws Exception {
     ModelAndView modelAndView = new ModelAndView("usuario-formulario");
     modelAndView.addObject("usuario", new Usuario());
     modelAndView.addObject("title", "Crear Cliente");
@@ -61,7 +61,7 @@ return new RedirectView("/usuario");
 }
 
 @GetMapping("/modificar/{id_usuario}")
-public ModelAndView modificarUsuario(@PathVariable Integer id_usuario){
+public ModelAndView modificarUsuario(@PathVariable Integer id_usuario) throws Exception {
     ModelAndView modelAndView = new ModelAndView("usuario-formulario");
     modelAndView.addObject("usuario",usuarioServicio.verTodosUsuario());
     modelAndView.addObject("title","Modificar Usuario.");
