@@ -1,6 +1,7 @@
 package com.telltale.main.controlador;
 
 import com.telltale.main.entidad.Rol;
+import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.servicio.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -76,7 +77,7 @@ public class RolControlador {
     }
 
     @GetMapping("/editar/{id_rol}")
-    public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws Exception {
+    public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws MiExcepcion {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
