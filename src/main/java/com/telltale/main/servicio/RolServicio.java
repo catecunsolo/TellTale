@@ -7,11 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class RolServicio {
 
     @Autowired
     private RolRepositorio rolRepositorio;
+
+    @Transactional(readOnly = true)
+    public List<Rol> verTodosRol() throws Exception {
+        try {
+            List<Rol> roles = rolRepositorio.findByOrderByNombreAsc();
+            return roles;
+        } catch (Exception excepcion) {
+            throw new Exception("Algo ha sucedido y no se ha podido procesar la obtención del listado de Roles, ordenados alfabéticamente, de la base de datos." +
+                    "\n - Descripción del error: " + excepcion.getMessage());
+        }
+    }
 
     @Transactional
     public Rol crearRol(String nombre) throws Exception {
@@ -34,6 +47,17 @@ public class RolServicio {
             return rolRepositorio.save(rol);
         } catch (Exception excepcion) {
             throw new Exception("Algo ha sucedido y no se ha podido procesar la modificación de Rol en la base de datos." +
+                    "\n - Descripción del error: " + excepcion.getMessage());
+        }
+    }
+
+    @Transactional
+    public void eliminarRol(Integer id_rol) throws Exception {
+        try {
+            Rol rol =rolRepositorio.findById(id_rol).get();
+            rolRepositorio.delete(rol);
+        } catch (Exception excepcion) {
+            throw new Exception("Algo ha sucedido y no se ha podido procesar la eliminación de Rol en la base de datos." +
                     "\n - Descripción del error: " + excepcion.getMessage());
         }
     }
