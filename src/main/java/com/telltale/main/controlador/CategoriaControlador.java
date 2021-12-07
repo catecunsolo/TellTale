@@ -1,7 +1,10 @@
 package com.telltale.main.controlador;
 
 import com.telltale.main.entidad.Categoria;
+import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.servicio.CategoriaServicio;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -20,15 +25,29 @@ public class CategoriaControlador {
     CategoriaServicio categoriaServicio;
 
     @GetMapping
-    public ModelAndView verTodosCategoria() {
+    public ModelAndView verTodosCategoria(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("categorias");
+        Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
+        if(map!=null){
+            mav.addObject("error", map.get("exito-name"));
+            
+        }
         mav.addObject("categorias", categoriaServicio.verTodosCategoria());
         return mav;
     }
-
+/***
+ * redireccionar en un get
+ * mav.setViewName("redirect:/usuario");
+ */
     @GetMapping("/crear")
-    public ModelAndView crearCategoria() {
+    public ModelAndView crearCategoria(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("categoria-formulario");
+        Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
+        if(map!=null){
+            mav.addObject("error", map.get("error-name"));
+          
+        }
+        
         mav.addObject("categoria", new Categoria());
         mav.addObject("tittle", "Crear Categoria");
         mav.addObject("action", "guardar");
@@ -45,9 +64,17 @@ public class CategoriaControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String nombre) {
-        categoriaServicio.crearCategoria(nombre);
-        return new RedirectView("/categorias");
+    public RedirectView guardar(@RequestParam String nombre, RedirectAttributes ra){
+        RedirectView rv = new RedirectView("/categorias");
+        try{
+            categoriaServicio.crearCategoria(nombre);
+             ra.addFlashAttribute("exito-name","Se ha creado la categoria con exito");
+        }catch( MiExcepcion me){
+            ra.addFlashAttribute("error-name", me.getMessage());
+            rv.setUrl("/categorias/crear");
+        }
+        
+        return rv;
     }
 
     @PostMapping("/modificar")
