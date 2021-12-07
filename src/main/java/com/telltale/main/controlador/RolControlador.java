@@ -3,6 +3,8 @@ package com.telltale.main.controlador;
 import com.telltale.main.entidad.Rol;
 import com.telltale.main.servicio.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,10 +16,34 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rol")
+@PreAuthorize("hasRole('SUPER')")
 public class RolControlador {
 
     @Autowired
     private RolServicio rolServicio;
+
+    @GetMapping
+    public ModelAndView verTodosRol(HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("roles");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("roles", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("roles", null);
+        } else {
+            try {
+                modelAndView.addObject("roles", rolServicio.verTodosRol());
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/roles");
+            }
+        }
+        return modelAndView;
+    }
 
     @GetMapping("/crear")
     public ModelAndView crearRol(HttpServletRequest request) {
@@ -75,6 +101,18 @@ public class RolControlador {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             redirectAttributes.addFlashAttribute("rol", rol);
             redirectView.setUrl("/rol/editar/" + rol.getId_rol());
+        }
+        return redirectView;
+    }
+
+    @PostMapping("/delete/{id_roles}")
+    public RedirectView eliminarRol(@PathVariable Integer id_rol, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/roles");
+        try {
+            rolServicio.eliminarRol(id_rol);
+            redirectAttributes.addFlashAttribute("success", "El Rol ha sido eliminado exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
         }
         return redirectView;
     }
