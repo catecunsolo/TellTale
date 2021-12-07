@@ -5,6 +5,9 @@ import com.telltale.main.entidad.Usuario;
 import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +31,8 @@ public class UsuarioServicio implements UserDetailsService{
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    private final String MENSAJE="Este usuario no existe. %s";
 
     @Transactional
     public Usuario crearUsuario(String username, String email, String password, Rol rol) throws MiExcepcion {
@@ -47,14 +53,14 @@ public class UsuarioServicio implements UserDetailsService{
         validarEmail(email);
         validarPassword(password);
         try {
-        usuario = buscarUsuarioPorId(id_usuario);
+            usuario = buscarUsuarioPorId(id_usuario);
         }catch(Exception exception){
             exception.printStackTrace();
             throw new MiExcepcion("Error--> Ocurrió un error al buscar usuario por id.");
-    }
-usuario.setEmail(email);
-usuario.setPassword(password);
-usuarioRepositorio.save(usuario);
+        }
+        usuario.setEmail(email);
+        usuario.setPassword(password);
+        usuarioRepositorio.save(usuario);
     }
 
     @Transactional
@@ -66,7 +72,7 @@ usuarioRepositorio.save(usuario);
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> buscarUsuarioTodos(){return usuarioRepositorio.findAll();
+    public List<Usuario> verTodosUsuario(){return usuarioRepositorio.findAll();
     }
 
     @Transactional(readOnly = true)
@@ -93,6 +99,9 @@ usuarioRepositorio.save(usuario);
                 throw new MiExcepcion("Error--> El nombre de usuario debe contener al menos 8 caracteres.");
             }
         }
+        if(usuarioRepositorio.existsUsuarioByUsername(username)){
+            throw new MiExcepcion("Error --> Este nombre de usuario ya existe.");
+        }
     }
 
     public void validarEmail(String email) throws MiExcepcion {
@@ -111,7 +120,10 @@ usuarioRepositorio.save(usuario);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Usuario usuario = usuarioRepositorio.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format(MENSAJE, username)));
+        GrantedAuthority autorizacion = new SimpleGrantedAuthority("ROL_"+usuario.getRol().getNombre());
+        return new User(usuario.getUsername(),usuario.getPassword(), Collections.singletonList(autorizacion));
     }
 }
