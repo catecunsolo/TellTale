@@ -77,7 +77,7 @@ public class RolControlador {
     }
 
     @GetMapping("/editar/{id_rol}")
-    public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws MiExcepcion {
+    public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws Exception {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
