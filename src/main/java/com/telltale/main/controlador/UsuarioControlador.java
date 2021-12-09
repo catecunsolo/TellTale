@@ -30,7 +30,7 @@ public class UsuarioControlador {
 }
 
 @PostMapping("/guardar")
-    public RedirectView guardarUsuario(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam Rol rol, RedirectAttributes a) throws MiExcepcion {
+    public RedirectView guardarUsuario(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam Rol rol, RedirectAttributes a) throws Exception {
     RedirectView redirectView = new RedirectView("/usuario");
     try{
         usuarioServicio.crearUsuario(username,email,password,rol);
@@ -50,7 +50,7 @@ public ModelAndView obtenerUsuarios(){
 }
 
 @PostMapping("/modificar")
-    public RedirectView modificarUsuario(@RequestParam Integer id_usuario, @RequestParam String email, @RequestParam String password,RedirectAttributes a) throws MiExcepcion {
+    public RedirectView modificarUsuario(@RequestParam Integer id_usuario, @RequestParam String email, @RequestParam String password,RedirectAttributes a) throws Exception {
 try{
     usuarioServicio.modificarUsuario(id_usuario, email, password);
     a.addFlashAttribute("success","Usuario modificado exitosamente.");
