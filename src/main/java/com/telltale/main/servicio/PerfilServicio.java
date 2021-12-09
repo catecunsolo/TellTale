@@ -39,14 +39,8 @@ public class PerfilServicio {
     }
 
     @Transactional
-    public void modificarPerfil(Integer id_perfil, String nombre, String apellido, String descripcion, Boolean alta) {
-        perfilRepositorio.modificarPerfil(id_perfil, nombre, apellido, descripcion, alta);
-
-    }
-
-    @Transactional
-    public void altaPerfil(Integer id_perfil) {
-        perfilRepositorio.altaPerfil(id_perfil);
+    public void modificarPerfil(Integer id_perfil, String nombre, String apellido, String descripcion) {
+        perfilRepositorio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
 
     }
 
