@@ -17,15 +17,13 @@ public class PerfilServicio {
     private PerfilRepositorio perfilRepositorio;
 
     @Transactional
-    public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario, List<Historia> historias) {
+    public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) {
 
         Perfil perfil = new Perfil();
         perfil.setNombre(nombre);
         perfil.setApellido(apellido);
         perfil.setUsuario(usuario);
         perfil.setDescripcion(descripcion);
-        perfil.setHistorias(historias);
-        perfil.setAlta(true);
         perfilRepositorio.save(perfil);
     }
 
