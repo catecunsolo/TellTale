@@ -28,8 +28,8 @@ public class Perfil {
     @Column(nullable = false)
     private String descripcion;
     
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean alta;
+    
+    private Categoria categoriaDelDia;
     @OneToOne
     private Usuario usuario;
     
@@ -71,13 +71,14 @@ public class Perfil {
         this.descripcion = descripcion;
     }
 
-    public Boolean getAlta() {
-        return alta;
+    public Categoria getCategoriaDelDia() {
+        return categoriaDelDia;
     }
 
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setCategoriaDelDia(Categoria categoriaDelDia) {
+        this.categoriaDelDia = categoriaDelDia;
     }
+    
 
     public Usuario getUsuario() {
         return usuario;
@@ -110,7 +111,6 @@ public class Perfil {
         this.nombre = nombre;
         this.apellido = apellido;
         this.descripcion = descripcion;
-        this.alta = alta;
         this.usuario = usuario;
         this.fechaModificacion = fechaModificacion;
         this.historias = historias;
