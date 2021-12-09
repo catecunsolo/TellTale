@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,7 +29,7 @@ public class Perfil {
     @Column(nullable = false)
     private String descripcion;
     
-    
+    @ManyToOne
     private Categoria categoriaDelDia;
     @OneToOne
     private Usuario usuario;
