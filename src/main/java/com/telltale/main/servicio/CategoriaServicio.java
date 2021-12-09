@@ -3,7 +3,6 @@ package com.telltale.main.servicio;
 
 
 import com.telltale.main.entidad.Categoria;
-import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.repositorio.CategoriaRepositorio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,11 @@ public class CategoriaServicio {
     private CategoriaRepositorio categoriaRepositorio;
     
     @Transactional
-    public void crearCategoria(String nombre) throws MiExcepcion{
+    public void crearCategoria(String nombre) throws Exception{
         Categoria categoria = new Categoria();
         
         if (categoriaRepositorio.buscarCategoriaPorNombre(nombre)!= null){
-            throw new MiExcepcion("Categoria existente en el servidor");
+            throw new Exception("Categoria existente en el servidor");
         }
         categoria.setNombre(nombre);
         categoria.setVoto(0);

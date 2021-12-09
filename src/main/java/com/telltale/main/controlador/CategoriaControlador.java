@@ -1,7 +1,6 @@
 package com.telltale.main.controlador;
 
 import com.telltale.main.entidad.Categoria;
-import com.telltale.main.excepcion.MiExcepcion;
 import com.telltale.main.servicio.CategoriaServicio;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -69,8 +68,8 @@ public class CategoriaControlador {
         try{
             categoriaServicio.crearCategoria(nombre);
              ra.addFlashAttribute("exito-name","Se ha creado la categoria con exito");
-        }catch( MiExcepcion me){
-            ra.addFlashAttribute("error-name", me.getMessage());
+        }catch( Exception e){
+            ra.addFlashAttribute("error-name", e.getMessage());
             rv.setUrl("/categorias/crear");
         }
         
