@@ -29,13 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-/* //DESCOMENTAR >> cuando UsuarioServicio implemente UserDetailsService
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsServic
-        e(usuarioServicio).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsService(usuarioServicio).passwordEncoder(passwordEncoder);
     }
-*/
 
 /* //DESCOMENTAR SOLO SI ES NECESARIO >> este método se usa para habilitar los elementos visuales antes de estar logueado en la webapp
     @Override
@@ -49,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception {
         security
                 .authorizeRequests()
-                .antMatchers("/img/*", "/js/*").permitAll() //REVISAR >> hay que agregar "/usuario/crear", "/usuario/guardar" para que los usuarios puedan registrarse sin estar logueados
+                .antMatchers("/css/*", "/img/*", "/js/*").permitAll() //REVISAR >> hay que agregar "/usuario/crear", "/usuario/guardar" para que los usuarios puedan registrarse sin estar logueados
                 .antMatchers("/**").permitAll() //.permitAll() o .authenticated()
                 .and()
                 .formLogin()
