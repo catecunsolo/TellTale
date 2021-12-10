@@ -41,7 +41,7 @@ public class PerfilControlador {
 
     @PostMapping("/guardar")
     public RedirectView guardaPerfil(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String descripcion, @RequestParam Usuario usuario) {
+            @RequestParam String descripcion, @RequestParam Usuario usuario)throws Exception {
         perfilServicio.crearPerfil(nombre, apellido, descripcion, usuario);
         return new RedirectView("/perfil");
 
@@ -49,7 +49,7 @@ public class PerfilControlador {
 
     @PostMapping("/modificar")
     public RedirectView modificarPerfil(@RequestParam Integer id_perfil, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String descripcion) {
+            @RequestParam String apellido, @RequestParam String descripcion)throws Exception {
         perfilServicio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
         return new RedirectView("/perfil");
     }
