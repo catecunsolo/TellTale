@@ -17,8 +17,8 @@ public class PerfilServicio {
     private PerfilRepositorio perfilRepositorio;
 
     @Transactional
-    public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) {
-
+    public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) throws Exception {
+        validarNulo(nombre, apellido, descripcion);
         Perfil perfil = new Perfil();
         perfil.setNombre(nombre);
         perfil.setApellido(apellido);
@@ -39,9 +39,42 @@ public class PerfilServicio {
     }
 
     @Transactional
-    public void modificarPerfil(Integer id_perfil, String nombre, String apellido, String descripcion) {
+    public void modificarPerfil(Integer id_perfil, String nombre, String apellido, String descripcion)throws Exception {
+        validarNulo(nombre,apellido,descripcion);
         perfilRepositorio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
 
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void validarNulo(String nombre, String apellido, String descripcion) throws Exception {
+        if (nombre.trim().isEmpty() || nombre == null) {
+            throw new Exception("El nombre es obligatorio");
+        }
+        if (apellido.trim().isEmpty() || apellido == null) {
+            throw new Exception("El apellido es obligatorio");
+        }
+        if (descripcion.trim().isEmpty() || descripcion == null) {
+            throw new Exception("La descripcion es obligatoria");
+
+        }
     }
 
     @Transactional
