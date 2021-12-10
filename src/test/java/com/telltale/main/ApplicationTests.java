@@ -1,5 +1,6 @@
 package com.telltale.main;
 
+import com.telltale.main.entidad.Categoria;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Rol;
 import com.telltale.main.entidad.Usuario;
@@ -192,6 +193,49 @@ class ApplicationTests {
 		perfil7.setUsuario(usuarioRepositorio.findByEmail("marcosfrites@mail.com").get());
 		perfil7.setFechaModificacion(LocalDate.now());
 		perfilRepositorio.save(perfil7);
+	}
+
+	@Test
+	public void testCategoriaRepositorio_deleteAll() { //método para borrar, desde CategoriaRepositorio, todos los datos cargados en la tabla CATEGORIA de la DB
+		categoriaRepositorio.deleteAll();
+	}
+
+	@Test
+	public void testCategoriaRepositorio_save() { //método para cargar datos, desde CategoriaRepositorio, a la tabla CATEGORIA de la DB
+		Categoria categoria1 = new Categoria();
+		categoria1.setNombre("Categoria 1");
+		categoria1.setVoto(0);
+		categoriaRepositorio.save(categoria1);
+
+		Categoria categoria2 = new Categoria();
+		categoria2.setNombre("Categoria 2");
+		categoria2.setVoto(0);
+		categoriaRepositorio.save(categoria2);
+
+		Categoria categoria3 = new Categoria();
+		categoria3.setNombre("Categoria 3");
+		categoria3.setVoto(0);
+		categoriaRepositorio.save(categoria3);
+
+		Categoria categoria4 = new Categoria();
+		categoria4.setNombre("Categoria 4");
+		categoria4.setVoto(0);
+		categoriaRepositorio.save(categoria4);
+
+		Categoria categoria5 = new Categoria();
+		categoria5.setNombre("Categoria 5");
+		categoria5.setVoto(0);
+		categoriaRepositorio.save(categoria5);
+
+		Categoria categoria6 = new Categoria();
+		categoria6.setNombre("Categoria 6");
+		categoria6.setVoto(0);
+		categoriaRepositorio.save(categoria6);
+
+		Categoria categoria7 = new Categoria();
+		categoria7.setNombre("Categoria 7");
+		categoria7.setVoto(0);
+		categoriaRepositorio.save(categoria7);
 	}
 
 }
