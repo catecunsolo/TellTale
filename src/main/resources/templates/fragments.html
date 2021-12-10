@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Business Casual - Start Bootstrap Theme</title>
-    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <title>TellTale-Compartir Historias</title>
+    <link rel="icon" type="image/x-icon" th:href="@{./favicon.ico}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://kit.fontawesome.com/8827b26416.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -28,10 +28,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.html">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.html">About</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.html">Products</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" href="login">Ingresar/Registrarse</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" href="perfil">Mi Perfil</a></li>
                     </ul>
                 </div>
             </div>
