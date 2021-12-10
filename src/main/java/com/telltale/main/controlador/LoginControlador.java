@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping(value = {"/login", "/signin"})
 public class LoginControlador {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
