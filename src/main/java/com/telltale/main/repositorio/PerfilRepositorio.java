@@ -13,8 +13,8 @@ public interface PerfilRepositorio extends JpaRepository<Perfil, Integer>  {
     
     
      @Modifying
-    @Query("UPDATE Perfil p SET p.nombre = :nombre, p.apellido = :apellido, p.descripcion =:descripcion WHERE p.id_perfil = :id_perfil")
+    @Query("UPDATE Perfil p SET p.nombre = :nombre, p.apellido = :apellido, p.descripcion =:descripcion  WHERE p.id_perfil = :id_perfil")
     void modificarPerfil( @Param("id_perfil")Integer id_perfil, @Param("nombre") String nombre,@Param("apellido") String apellido,@Param("descripcion") String descripcion);
-
+ 
     }
 
