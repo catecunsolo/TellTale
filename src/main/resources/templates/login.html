@@ -6,48 +6,47 @@
         <header th:replace="fragments :: header">
         </header>
         <main>
-            <div class="container">
-                <div class="d-flex justify-content-center h-100">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Sign In</h2>
-                            <div class="d-flex justify-content-end social_icon">
-                                <span><i class="fab fa-facebook-square"></i></span>
-                                <span><i class="fab fa-google-plus-square"></i></span>
-                                <span><i class="fab fa-twitter-square"></i></span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="username">
+            <div class="container login-container">
+                <div class="row">
+                    <div class="col login-form-1 form-control">
+                        <h3>INGRESAR</h3>
 
-                                </div>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    </div>
-                                    <input type="password" class="form-control" placeholder="password">
-                                </div>
-                                <div class="row align-items-center remember">
-                                    <input type="checkbox">Remember Me
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Login" class="btn float-right login_btn">
-                                </div>
-                            </form>
+                        <div class="form-control">
+                            <label for="LogEmail">Email *</label>
+                            <input id="LogEmail" type="text" class="form-control" placeholder="Email" value="" />
                         </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center links">
-                                Don't have an account?<a href="#">Sign Up</a>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="#">Forgot your password?</a>
-                            </div>
+                        <div class="form-control">*
+                            <input type="password" class="form-control" placeholder="Contraseña" value="" />
                         </div>
+                        <div class="form-control">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-control">
+                            <a href="#" class="btnForgetPwd">Forget Password?</a>
+                        </div>
+                    </div>
+                    <div class="col login-logo text-center">
+                        <img th:src="@{../img/book.png}" alt="book logo" width="150px"/>
+                    </div>
+                    <div class="col signin-form form-control">
+                        <h3>REGISTRARSE</h3>
+                        <div class="form-control">*
+                            <input type="text" class="form-control" placeholder="Tu Email"/>
+                        </div>
+                        <div class="form-control">*
+                            <input type="password" class="form-control" placeholder="Contraseña"/>
+                        </div>
+                        <div class="form-control">*
+                            <input type="password" class="form-control" placeholder="Repetir Contraseña"/>
+                        </div>
+                        <div class="form-control">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-control">
+
+                            <a href="#" class="btnForgetPwd" value="Login">Forget Password?</a>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

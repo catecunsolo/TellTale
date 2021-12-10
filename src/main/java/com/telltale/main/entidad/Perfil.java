@@ -2,13 +2,9 @@ package com.telltale.main.entidad;
 
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
+import com.sun.org.glassfish.gmbal.ManagedAttribute;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -28,8 +24,9 @@ public class Perfil {
     @Column(nullable = false)
     private String descripcion;
     
-    
+    @ManyToOne
     private Categoria categoriaDelDia;
+
     @OneToOne
     private Usuario usuario;
     

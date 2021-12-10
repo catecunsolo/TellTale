@@ -50,7 +50,7 @@ public class PerfilControlador {
     @PostMapping("/modificar")
     public RedirectView modificarPerfil(@RequestParam Integer id_perfil, @RequestParam String nombre,
             @RequestParam String apellido, @RequestParam String descripcion, @RequestParam Boolean alta) {
-        perfilServicio.modificarPerfil(id_perfil, nombre, apellido, descripcion, alta);
+        perfilServicio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
         return new RedirectView("/perfil");
     }
 
