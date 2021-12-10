@@ -35,11 +35,14 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private RolServicio rolServicio;
+
     private final String MENSAJE = "Este usuario no existe. %s";
 
     @Transactional
     public Usuario crearUsuario(String username, String email, String password, Rol rol) throws Exception {
-        validar(username, email, password);
+        validar(username, email, password,rol);
         usuario = new Usuario();
         usuario.setUsername(username);
         usuario.setEmail(email);
@@ -59,7 +62,7 @@ public class UsuarioServicio implements UserDetailsService {
             usuario = buscarUsuarioPorId(id_usuario);
         } catch (Exception exception) {
             exception.printStackTrace();
-            throw new MiExcepcion("Error--> Ocurrió un error al buscar usuario por id.");
+            throw new Exception("Error--> Ocurrió un error al buscar usuario por id.");
         }
         usuario.setEmail(email);
         usuario.setPassword(password);
@@ -87,10 +90,11 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioOptional.orElse(null);
     }
 
-    public void validar(String username, String email, String password) throws Exception {
+    public void validar(String username, String email, String password,Rol rol) throws Exception {
         validarUsername(username);
         validarPassword(password);
         validarEmail(email);
+        validarRol(rol);
     }
 
     //después hacer interfaz para evitar los métodos repetitivos
@@ -123,6 +127,13 @@ public class UsuarioServicio implements UserDetailsService {
         if (password.length() < 7) {
             throw new Exception("Error--> La contraseña no puede contener menos de 8 carácteres.");
         }
+    }
+
+    public void validarRol(Rol rol) throws Exception{
+        if(rol == null){
+            throw new Exception("Error--> El rol no puede estar vacío.");
+        }
+        rolServicio.existeRol(rol.getNombre());
     }
 
     @Override
