@@ -1,5 +1,6 @@
 package com.telltale.main;
 
+import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Rol;
 import com.telltale.main.entidad.Usuario;
 import com.telltale.main.repositorio.*;
@@ -120,6 +121,77 @@ class ApplicationTests {
 		usuario7.setRol(rolRepositorio.findByNombreIgnoreCase("USER"));
 		usuario7.setAlta(true);
 		usuarioRepositorio.save(usuario7);
+	}
+
+	@Test
+	public void testPerfilRepositorio_deleteAll() { //método para borrar, desde PerfilRepositorio, todos los datos cargados en la tabla PERFIL de la DB
+		perfilRepositorio.deleteAll();
+	}
+
+	@Test
+	public void testPerfilRepositorio_save() { //método para cargar datos, desde PerfilRepositorio, a la tabla PERFIL de la DB
+		Perfil perfil1 = new Perfil();
+		perfil1.setNombre("Caterina");
+		perfil1.setApellido("Cunsolo");
+		perfil1.setDescripcion("Integrante backend del proyecto TellTale");
+		perfil1.setCategoriaDelDia(null);
+		perfil1.setUsuario(usuarioRepositorio.findByEmail("catecunsolo@mail.com").get());
+		perfil1.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil1);
+
+		Perfil perfil2 = new Perfil();
+		perfil2.setNombre("Mirna");
+		perfil2.setApellido("Diaz");
+		perfil2.setDescripcion("Integrante backend del proyecto TellTale");
+		perfil2.setCategoriaDelDia(null);
+		perfil2.setUsuario(usuarioRepositorio.findByEmail("mirnadiaz@mail.com").get());
+		perfil2.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil2);
+
+		Perfil perfil3 = new Perfil();
+		perfil3.setNombre("Bianca");
+		perfil3.setApellido("Dente");
+		perfil3.setDescripcion("Integrante frontend del proyecto TellTale");
+		perfil3.setCategoriaDelDia(null);
+		perfil3.setUsuario(usuarioRepositorio.findByEmail("biandente@mail.com").get());
+		perfil3.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil3);
+
+		Perfil perfil4 = new Perfil();
+		perfil4.setNombre("Vilma");
+		perfil4.setApellido("Garcia");
+		perfil4.setDescripcion("Integrante backend del proyecto TellTale");
+		perfil4.setCategoriaDelDia(null);
+		perfil4.setUsuario(usuarioRepositorio.findByEmail("vilmagarcia@mail.com").get());
+		perfil4.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil4);
+
+		Perfil perfil5 = new Perfil();
+		perfil5.setNombre("Sebastian");
+		perfil5.setApellido("Gimenez");
+		perfil5.setDescripcion("Integrante backend del proyecto TellTale");
+		perfil5.setCategoriaDelDia(null);
+		perfil5.setUsuario(usuarioRepositorio.findByEmail("sebagimenez@mail.com").get());
+		perfil5.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil5);
+
+		Perfil perfil6 = new Perfil();
+		perfil6.setNombre("Juanfe");
+		perfil6.setApellido("Romero");
+		perfil6.setDescripcion("Integrante frontend del proyecto TellTale");
+		perfil6.setCategoriaDelDia(null);
+		perfil6.setUsuario(usuarioRepositorio.findByEmail("juanferomero@mail.com").get());
+		perfil6.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil6);
+
+		Perfil perfil7 = new Perfil();
+		perfil7.setNombre("Marcos");
+		perfil7.setApellido("Frites");
+		perfil7.setDescripcion("Integrante backend del proyecto TellTale");
+		perfil7.setCategoriaDelDia(null);
+		perfil7.setUsuario(usuarioRepositorio.findByEmail("marcosfrites@mail.com").get());
+		perfil7.setFechaModificacion(LocalDate.now());
+		perfilRepositorio.save(perfil7);
 	}
 
 }
