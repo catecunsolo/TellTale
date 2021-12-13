@@ -70,6 +70,18 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
+    public void modificarPassword(Integer id_usuario, String password) throws Exception{
+        validarPassword(password);
+        try {
+            usuario = buscarUsuarioPorId(id_usuario);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new Exception("Error--> Ocurrió un error al buscar usuario por id.");
+        }
+        usuario.setPassword(password);
+    }
+
+    @Transactional
     public void altaUsuario(Integer id_usuario) {
         usuarioRepositorio.altaUsuario(id_usuario, true);
     }
@@ -89,6 +101,26 @@ public class UsuarioServicio implements UserDetailsService {
         Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(id_usuario);
         return usuarioOptional.orElse(null);
     }
+
+    @Transactional(readOnly = true)
+    public Usuario buscarUsuarioPorEmail(String email){
+        Optional<Usuario>usuarioOptional=usuarioRepositorio.findByEmail(email);
+        return usuarioOptional.orElse(null);
+    }
+
+/*    //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
+    @Transactional
+    public void recuperoPassword(String username, String email) throws Exception {
+     try{
+        usuario=buscarUsuarioPorEmail(email);
+        if(usuario.getUsername().equals(username)&&usuario.getEmail().equals(email)){
+            modificarPassword(usuario.getId_usuario(),);
+        }
+     }catch (Exception exception){
+         throw new Exception("Error --> Error al buscar usuario por email al recuperar contraseña.");
+     }
+    }*/
+
 
     public void validar(String username, String email, String password,Rol rol) throws Exception {
         validarUsername(username);
@@ -110,7 +142,7 @@ public class UsuarioServicio implements UserDetailsService {
             }
         }
         if (usuarioRepositorio.existsUsuarioByUsername(username)) {
-            throw new Exception("Error --> Este nombre de usuario ya existe.");
+            throw new Exception("Error --> El nombre de usuario ya existe.");
         }
     }
 
@@ -131,7 +163,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void validarRol(Rol rol) throws Exception{
         if(rol == null){
-            throw new Exception("Error--> El rol no puede estar vacío.");
+            throw new Exception("Error--> El rol no puede estar vacío/nulo.");
         }
         rolServicio.existeRol(rol.getNombre());
     }
