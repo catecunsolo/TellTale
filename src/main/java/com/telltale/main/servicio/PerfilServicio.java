@@ -15,7 +15,9 @@ public class PerfilServicio {
 
     @Autowired
     private PerfilRepositorio perfilRepositorio;
-
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    
     @Transactional
     public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) throws Exception {
         validarNulo(nombre, apellido, descripcion);
@@ -45,6 +47,15 @@ public class PerfilServicio {
 
     }
 
+    @Transactional(readOnly=true)
+    public Perfil buscarPerfilPorIdUsuario(int id) throws Exception{
+        Usuario usuario = usuarioServicio.buscarUsuarioPorId(id);
+        Perfil perfil= perfilRepositorio.buscarPerfilPorIdUsuario(usuario);
+        if (perfil==null) {
+            throw new Exception("No existe un perfil asociado a ese usuario");
+        }
+        return perfil;
+    }
     
     
     
