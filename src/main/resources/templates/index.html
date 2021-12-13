@@ -5,6 +5,7 @@
     <body>
         <header th:replace="fragments :: header">
         </header>
+        
         <section class="page-section clearfix">
             <div class="container">
                 <div class="intro">
@@ -32,31 +33,31 @@
                                 <span class="section-heading-upper">FÁCIL Y GRATUITO</span>
                                 <span class="section-heading-lower">¡REGISTRATE!</span>
                             </h2>
+
                             <section class="contador-principal">
-                              
                               <div class="contador">
                               <i class="fas fa-pen-fancy fa-3x"></i>
-                              <div class="contador-cantidad" data-cantidad-total="600">
+                              <div class="contador-cantidad">
                                 <h2 class="section-heading mb-4">
-                                <span class="section-heading-lower">0</span>
+                                <span class="section-heading-lower"data-toggle="counterUp">630</span>
                                 <span class="section-heading-upper">Historias</span>
                                 </h2>
                               </div>
                             </div>
                             <div class="contador">
                               <i class="fas fa-user-circle fa-3x"></i>
-                              <div class="contador-cantidad" data-cantidad-total="340">
+                              <div class="contador-cantidad">
                                 <h2 class="section-heading mb-4">
-                                <span class="section-heading-lower">0</span>
+                                <span class="section-heading-lower"data-toggle="counterUp">340</span>
                                 <span class="section-heading-upper">Usuarios</span>
                                   </h2>
                               </div>
                             </div>
                             <div class="contador">
                             <i class="fas fa-comments fa-3x"></i>
-                              <div class="contador-cantidad" data-cantidad-total="860">
+                              <div class="contador-cantidad">
                                 <h2 class="section-heading mb-4">
-                                <span class="section-heading-lower">0</span>
+                                <span class="section-heading-lower" data-toggle="counterUp">860</span>
                                 <span class="section-heading-upper">Interacciones</span>
                               </h2>
                               </div>
@@ -68,6 +69,14 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+          // jQuery counterUp
+          $('[data-toggle="counterUp"]').counterUp({
+              delay: 15,
+              time: 1500
+          });
+      </script>
+    
 
 <!--SECCION HISTORIAS RELACIONADAS-->
 
@@ -130,6 +139,8 @@
           </div>
       </section>
 
+  
+
 <!--SECCION HISTORIA INDIVIDUAL-->
 
       <section class="page-section">
@@ -147,14 +158,17 @@
               <div class="product-item-description d-flex ms-auto">
                   <div class="bg-faded p-5 rounded"><p class="mb-0">Mi abuela hacía las mejores medialunas del mundo. Antes de prepararlas, me hacía describirlas con un adjetivo a elección, como "pluscuamperfectas", "maravillosas", etc. Ella después hacía de cuenta que cocinaba las medialunas según mis instrucciones.</p>
                     <p>
-                      <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios" aria-expanded="false" aria-controls="comentarios">
                         Comentarios
                       </button>
+                      <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
+                        Comentar
+                      </button>
                     </p>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="comentarios">
                       <ol class="list-group list-group-numbered">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
-                          <div class="ms-2 me-auto">
+                          <div class="ms-2 me-auto mb-3">
                             <div class="fw-bold">Subheading</div>
                             Content for list item
                           </div>
@@ -175,6 +189,17 @@
                           <span class="badge bg-primary rounded-pill">♥</span>
                         </li>
                       </ol>
+                    </div>
+                    <div class="collapse" id="comentar">
+                      <form class="row g-3">
+                        <div class="mb-3 mt-3">
+                          <label for="exampleFormControlTextarea1" class="form-label">Escribe tu comentario</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="col-auto">
+                          <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                   

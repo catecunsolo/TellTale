@@ -28,7 +28,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-
 @Entity
 public class Historia {
 
@@ -38,7 +37,7 @@ public class Historia {
     @Column(nullable = false)
     private String titulo;
     //Imagen portada
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "text")
     private String historia;
     private Integer meGusta;
     private Integer noMeGusta;
@@ -53,6 +52,7 @@ public class Historia {
     private LocalDate fechaCreacion;
     @LastModifiedDate
     private LocalDate fechaUltModificacion;
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean alta;
 
    

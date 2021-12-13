@@ -19,7 +19,7 @@ public class CategoriaServicio {
     @Transactional
     public void crearCategoria(String nombre) throws MiExcepcion{
         Categoria categoria = new Categoria();
-        
+
         if (categoriaRepositorio.buscarCategoriaPorNombre(nombre)!= null){
             throw new MiExcepcion("Categoria existente en el servidor");
         }
@@ -27,32 +27,33 @@ public class CategoriaServicio {
         categoria.setVoto(0);
         categoriaRepositorio.save(categoria);
     }
-    
+
     @Transactional
-    public void modificarCategoria(Integer id_categoria, String nombre){
+    public void modificarCategoria(Integer id_categoria, String nombre) {
         categoriaRepositorio.modificarCategoria(id_categoria, nombre);
     }
-    
+
     @Transactional(readOnly = true)
-    public Categoria buscarCategoriaPorId(Integer id_categoria){
+    public Categoria buscarCategoriaPorId(Integer id_categoria) {
         Categoria categoria = categoriaRepositorio.buscarCategoriaPorId(id_categoria);
         return categoria;
     }
+
     @Transactional(readOnly = true)
-    public Categoria buscarCategoriaPorNombre(String nombre){
+    public Categoria buscarCategoriaPorNombre(String nombre) {
         Categoria categoria = categoriaRepositorio.buscarCategoriaPorNombre(nombre);
         return categoria;
     }
-    
+
     @Transactional(readOnly = true)
-    public List<Categoria> verTodosCategoria(){
+    public List<Categoria> verTodosCategoria() {
         return categoriaRepositorio.findAll();
     }
-  
+
     @Transactional
-    public void eliminarCategoria(Integer id_categoria){
-       categoriaRepositorio.deleteById(id_categoria);
+    public void eliminarCategoria(Integer id_categoria) {
+        categoriaRepositorio.deleteById(id_categoria);
     }
-    
-    
+
+
 }
