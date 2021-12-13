@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: head">
+    </head>
+    <body>
+        <header th:replace="fragments :: header">
+        </header>
+
+        
+<!--VISTA PARA USUARIO QUE AÙN NO SUBIÒ UNA HISTORIA-->
+
+
+
+<!--VISTA FORMULARIO HISTORIA-->
+<section class="page-section cta">
+    <div class="container col-8">
+      <h1 class="site-heading text-center text-faded d-none d-lg-block">
+        <span class="site-heading-upper">CONTÁ TU HISTORIA</span>
+    </h1>
+      <div class="cta-inner bg-faded rounded mb-4">
+        <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
+      <form>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select class="form-select" aria-label="Default select example" id="categoria">
+              <option value="disabled selected">--Selecciona una de la lista--</option>
+              <option value="1">Categoria 1</option>
+              <option value="2">Categoria 2</option>
+              <option value="3">Categoria 3</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input class="form-control" id="titulo"></input>
+          </div>
+          <div class="mb-3">
+            <label for="txt-historia" class="form-label">Tu historia</label>
+            <textarea class="form-control" id="txt-historia" rows="6"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+  </div>
+    </div>
+  </section>
+  
+
+<!--VISTA PARA USUARIO QUE YA SUBIÒ UNA HISTORIA-->
+
+<section class="page-section cta2">
+    <div class="container">
+      <div class="col-xl-9 mx-auto">
+        <div class="cta-inner bg-faded text-center rounded mb-4">
+          <h2 class="section-heading">
+              <span class="section-heading-upper">LEE LAS DEMÁS</span>
+              <span class="section-heading-lower text-secondary">HISTORIAS SOBRE {TEMA}!</span>
+          </h2>
+          </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div clas="col">
+            <div class="card mb-4">
+              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+              <div class="card-body">
+                  <div class="small text-muted">January 1, 2021</div>
+                  <h2 class="card-title h4">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                  <a class="btn btn-primary" href="#!">Read more →</a>
+              </div>
+          </div>
+          </div>
+          <div clas="col">
+            <div class="card mb-4">
+              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+              <div class="card-body">
+                  <div class="small text-muted">January 1, 2021</div>
+                  <h2 class="card-title h4">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                  <a class="btn btn-primary" href="#!">Read more →</a>
+              </div>
+          </div>
+          </div>
+          <div clas="col">
+            <div class="card mb-4">
+              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+              <div class="card-body">
+                  <div class="small text-muted">January 1, 2021</div>
+                  <h2 class="card-title h4">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                  <a class="btn btn-primary" href="#!">Read more →</a>
+              </div>
+          </div>
+          </div>
+          <div clas="col">
+            <div class="card mb-4">
+              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+              <div class="card-body">
+                  <div class="small text-muted">January 1, 2021</div>
+                  <h2 class="card-title h4">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                  <a class="btn btn-primary" href="#!">Read more →</a>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+        <footer th:replace="fragments :: footer"></footer>
+    </body>
+</html>

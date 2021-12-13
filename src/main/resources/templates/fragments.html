@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>TellTale-Compartir Historias</title>
+    <link rel="icon" type="image/x-icon" th:href="@{./favicon.ico}" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://kit.fontawesome.com/8827b26416.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+
+    <link th:href="@{../css/styles.css}" rel="stylesheet" />
+
+            <!-- jQuery Library -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+            <!-- Counts JS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+</head>
+<body>
+    <header th:fragment="header">
+        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+            <span class="site-heading-lower text-primary mb-3">TellTale</span>
+            <span class="site-heading-upper">HISTORIA <span class="text-secondary">X</span> HISTORIA</span>
+        </h1>
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">TellTale</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" href="historias.html">Historias del día</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" href="perfil">Mi Perfil</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" href="login">Ingresar/Registrarse</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main th:fragment="main">
+
+    </main>
+    <footer th:fragment="footer" class="footer text-faded text-center py-5">
+        <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2021</p></div>
+        <!-- Jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../js/scripts.js"></script>
+
+        
+    </footer>
+</body>
+</html>
