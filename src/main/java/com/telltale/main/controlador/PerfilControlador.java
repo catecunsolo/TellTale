@@ -2,18 +2,21 @@ package com.telltale.main.controlador;
 
 import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
+import com.telltale.main.entidad.Rol;
 import com.telltale.main.entidad.Usuario;
 import com.telltale.main.servicio.PerfilServicio;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/perfil")
@@ -22,6 +25,71 @@ public class PerfilControlador {
     @Autowired
     PerfilServicio perfilServicio;
 
+    @GetMapping
+    public ModelAndView verMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+        HttpSession session = (HttpSession) request.getSession();
+        ModelAndView modelAndView = new ModelAndView("perfil");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("perfil", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("perfil", null);
+        } else {
+            try {
+                modelAndView.addObject("action", "perfil");
+                modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())));
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/");
+            }
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/editar")
+    public ModelAndView editarMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+        HttpSession session = (HttpSession) request.getSession();
+        ModelAndView modelAndView = new ModelAndView("perfil");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("perfil", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("perfil", null);
+        } else {
+            try {
+                modelAndView.addObject("action", "guardar");
+                modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())));
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/");
+            }
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/guardar")
+    public RedirectView guardarCambiosMiPerfil(@ModelAttribute Perfil perfil, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/perfil");
+        try {
+            perfilServicio.modificarPerfil(perfil.getId_perfil(), perfil.getNombre(), perfil.getApellido(), perfil.getDescripcion());
+            redirectAttributes.addFlashAttribute("success", "El Perfil se ha modificado exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+            redirectAttributes.addFlashAttribute("perfil", perfil);
+            redirectView.setUrl("/perfil/editar");
+        }
+        return redirectView;
+    }
+
+/*
     @GetMapping
     public ModelAndView verTodosPerfil() {
         ModelAndView mav = new ModelAndView("perfiles");
@@ -36,7 +104,6 @@ public class PerfilControlador {
         mav.addObject("titile", "Crear Perfil");
         mav.addObject("action", "guardae");
         return mav;
-
     }
 
     @PostMapping("/guardar")
@@ -44,7 +111,6 @@ public class PerfilControlador {
             @RequestParam String descripcion, @RequestParam Usuario usuario)throws Exception {
         perfilServicio.crearPerfil(nombre, apellido, descripcion, usuario);
         return new RedirectView("/perfil");
-
     }
 
     @PostMapping("/modificar")
@@ -59,4 +125,7 @@ public class PerfilControlador {
         perfilServicio.eliminarPerfil(id_perfil);
         return new RedirectView("/perfil");
     }
+
+*/
+
 }

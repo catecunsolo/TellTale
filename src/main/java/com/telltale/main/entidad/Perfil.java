@@ -1,121 +1,71 @@
 package com.telltale.main.entidad;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-public class Perfil {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "perfil", schema = "telltale")
+@EntityListeners(AuditingEntityListener.class)
+public class Perfil implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_perfil;
-    
-    @Column(nullable = false)
+
+    @Column(name = "nombre", nullable = false,  columnDefinition = "VARCHAR(50)")
     private String nombre;
-    
-    @Column(nullable = false)
+
+    @Column(name = "apellido", columnDefinition = "VARCHAR(50)")
     private String apellido;
-    
-    @Column(nullable = false)
+
+    @Column(name = "redes", columnDefinition = "VARCHAR(255)")
+    private String redes;
+
+    @OneToOne
+    private Imagen avatar;
+
+    @Column(name = "descripcion", columnDefinition = "VARCHAR(255)")
     private String descripcion;
-    
+
     @ManyToOne
     private Categoria categoriaDelDia;
+
     @OneToOne
     private Usuario usuario;
-    
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDate fechaCreacion;
+
     @LastModifiedDate
-    private LocalDate fechaModificacion;
-    
+    private LocalDate fechaUltModificacion;
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean alta;
+
     @OneToMany(mappedBy = "perfil")
     private List<Historia> historias;
 
-    public Integer getId_perfil() {
-        return id_perfil;
-    }
+    @OneToMany(mappedBy = "perfil")
+    private List<HistoriaFavorita> historiasFav;
 
-    public void setId_perfil(Integer id_perfil) {
-        this.id_perfil = id_perfil;
-    }
+    @OneToMany(mappedBy = "perfil")
+    private List<Comentario> comentarios;
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Categoria getCategoriaDelDia() {
-        return categoriaDelDia;
-    }
-
-    public void setCategoriaDelDia(Categoria categoriaDelDia) {
-        this.categoriaDelDia = categoriaDelDia;
-    }
-    
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public LocalDate getFechaModificacion() {
-        return fechaModificacion;
-    }
-
-    public void setFechaModificacion(LocalDate fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-    public List<Historia> getHistorias() {
-        return historias;
-    }
-
-    public void setHistorias(List<Historia> historias) {
-        this.historias = historias;
-    }
-
-    public Perfil() {
-    }
-
-    public Perfil(String nombre, String apellido, String descripcion, Boolean alta, Usuario usuario, LocalDate fechaModificacion, List<Historia> historias) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.descripcion = descripcion;
-        this.usuario = usuario;
-        this.fechaModificacion = fechaModificacion;
-        this.historias = historias;
-    }
-
-   
 }
