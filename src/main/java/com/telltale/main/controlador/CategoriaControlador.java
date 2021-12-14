@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -26,21 +25,26 @@ public class CategoriaControlador {
     CategoriaServicio categoriaServicio;
 
     @GetMapping
-    public ModelAndView verTodosCategoria(HttpServletRequest request) throws Exception {
+    public ModelAndView verTodosCategoria(HttpServletRequest request,
+            RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("categorias");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
-        if (map != null) {
-            mav.addObject("error", map.get("exito-name"));
+
+        try {
+            if (map != null) {
+                mav.addObject("exito", map.get("exito-name"));
+                mav.addObject("error", map.get("error-name"));
+            } else {
+                mav.addObject("categorias", categoriaServicio.verTodosCategoria());
+            }
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error-name", e.getMessage());
+            mav.setViewName("redirect:/categorias");
         }
-        mav.addObject("categorias", categoriaServicio.verTodosCategoria());
         return mav;
     }
 
-    /**
-     * *
-     * redireccionar en un get mav.setViewName("redirect:/usuario");
-     */
-    @GetMapping("/crear")
+       @GetMapping("/crear")
     public ModelAndView crearCategoria(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("categoria-formulario");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
@@ -57,7 +61,7 @@ public class CategoriaControlador {
 
     @GetMapping("/editar/ {id_categoria}")
     public ModelAndView editarCategoria(@PathVariable Integer id_categoria,
-            HttpServletRequest request,RedirectAttributes attributes) {
+            HttpServletRequest request, RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("autor-formulario");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
         try {
@@ -71,8 +75,8 @@ public class CategoriaControlador {
             mav.addObject("tittle", "Editar Categoria");
             mav.addObject("action", "modificar");
         } catch (Exception e) {
-             attributes.addFlashAttribute("error", e.getMessage());
-             mav.setViewName("redirect:/categorias");
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/categorias");
         }
         return mav;
     }
