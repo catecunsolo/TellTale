@@ -35,16 +35,6 @@ public class Categoria implements Serializable {
     @Column(name = "voto", nullable = false, columnDefinition = "INT")
     private Integer voto;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDate fechaCreacion;
-
-    @LastModifiedDate
-    private LocalDate fechaUltModificacion;
-
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private Boolean alta;
-
     @OneToMany(mappedBy = "categoria" )
     private List <Historia> historias;
 

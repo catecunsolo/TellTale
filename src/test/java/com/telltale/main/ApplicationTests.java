@@ -77,7 +77,6 @@ class ApplicationTests {
 	public void testUsuarioRepositorio_deleteAll() { //método para borrar, desde UsuarioRepositorio, todos los datos cargados en la tabla USUARIO de la DB
 		usuarioRepositorio.deleteAll();
 	}
-*/
 
 	@Test
 	public void testUsuarioRepositorio_save() { //método para cargar datos, desde UsuarioRepositorio, a la tabla USUARIO de la DB
@@ -152,7 +151,6 @@ class ApplicationTests {
 		usuarioRepositorio.save(usuario7);
 	}
 
-	/*
         @Test
         public void testPerfilRepositorio_deleteAll() { //método para borrar, desde PerfilRepositorio, todos los datos cargados en la tabla PERFIL de la DB
             perfilRepositorio.deleteAll();
@@ -224,91 +222,62 @@ class ApplicationTests {
             perfilRepositorio.save(perfil7);
         }
 
-    */
 	@Test
 	public void testCategoriaRepositorio_deleteAll() { //método para borrar, desde CategoriaRepositorio, todos los datos cargados en la tabla CATEGORIA de la DB
 		categoriaRepositorio.deleteAll();
 	}
+    */
+
 
 	@Test
 	public void testCategoriaRepositorio_save() { //método para cargar datos, desde CategoriaRepositorio, a la tabla CATEGORIA de la DB
 		Categoria categoria = new Categoria();
 		categoria.setNombre("PANQUEQUE");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("MEDIALUNAS");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("GÁRGOLA");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("SAUCE");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("COLIBRÍ");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("MONTAÑA");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("MAR");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("CRUCERO");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("TRABAJO");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
 		categoria = new Categoria();
 		categoria.setNombre("AMOR");
-		categoria.setFechaCreacion(LocalDate.now());
-		categoria.setFechaUltModificacion(LocalDate.now());
-		categoria.setAlta(true);
 		categoria.setVoto((int) ((Math.random())*100)+1);
 		categoriaRepositorio.save(categoria);
 
