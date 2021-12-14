@@ -37,7 +37,7 @@ public class HistoriaControlador {
     private CategoriaServicio categoriaServicio;
     @Autowired
     private PerfilServicio perfilServicio;
-
+    
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -55,7 +55,7 @@ public class HistoriaControlador {
     public RedirectView guardar(@RequestParam("titulo") String titulo, @RequestParam("historia") String historia,
             @RequestParam("id_categoria") int id_categoria, RedirectAttributes attributes, HttpSession session) {
         RedirectView rv = new RedirectView("/historia");
-
+        
         try {
             historiaServicio.crearHistoria(titulo, historia,
                     perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getId())),
