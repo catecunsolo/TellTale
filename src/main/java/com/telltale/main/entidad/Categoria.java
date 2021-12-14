@@ -1,73 +1,51 @@
-
 package com.telltale.main.entidad;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 
 @Entity
-public class Categoria {
-    
-   @Id  
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer id_categoria;
- 
-   @Column(nullable = false, unique = true)
-private String nombre;
-   
-private Integer voto;
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "categoria", schema = "telltale")
+@EntityListeners(AuditingEntityListener.class)
+public class Categoria implements Serializable {
 
-@OneToMany(mappedBy = "categoria" )
-private List <Historia> historias;
+    private static final long serialVersionUID = 1L;
 
-    public Categoria() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_categoria;
 
-    public Categoria(Integer id_categoria, 
-            String nombre, Integer voto, List<Historia> historias) {
-        this.id_categoria = id_categoria;
-        this.nombre = nombre;
-        this.voto = voto;
-        this.historias = historias;
-    }
+    @Column(name = "nombre", nullable = false, unique = true, columnDefinition = "VARCHAR(20)")
+    private String nombre;
 
-    public Integer getId_categoria() {
-        return id_categoria;
-    }
+    @Column(name = "voto", nullable = false, columnDefinition = "INT")
+    private Integer voto;
 
-    public void setId_categoria(Integer id_categoria) {
-        this.id_categoria = id_categoria;
-    }
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDate fechaCreacion;
 
-    public String getNombre() {
-        return nombre;
-    }
+    @LastModifiedDate
+    private LocalDate fechaUltModificacion;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean alta;
 
-    public Integer getVoto() {
-        return voto;
-    }
-
-    public void setVoto(Integer voto) {
-        this.voto = voto;
-    }
-
-    public List<Historia> getHistorias() {
-        return historias;
-    }
-
-    public void setHistorias(List<Historia> historias) {
-        this.historias = historias;
-    }
-
-    
+    @OneToMany(mappedBy = "categoria" )
+    private List <Historia> historias;
 
 }

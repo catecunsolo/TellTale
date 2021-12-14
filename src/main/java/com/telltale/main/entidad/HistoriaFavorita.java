@@ -17,24 +17,23 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario", schema = "telltale")
+@Table(name = "historiaFavorita", schema = "telltale")
 @EntityListeners(AuditingEntityListener.class)
-public class Usuario implements Serializable {
+public class HistoriaFavorita implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
+    private Integer id_historiaFav;
 
-    @Column(name = "username", nullable = false, unique = true, columnDefinition = "VARCHAR(20)")
-    private String username;
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Historia historia;
 
-    @Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
-    private String email;
-
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
-    private String password;
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Perfil perfil;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -45,9 +44,5 @@ public class Usuario implements Serializable {
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean alta;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Rol rol;
 
 }

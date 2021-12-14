@@ -1,64 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.telltale.main.entidad;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- *
- * @author silvia
- */
-@Getter
-@Setter
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Historia {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "historia", schema = "telltale")
+@EntityListeners(AuditingEntityListener.class)
+public class Historia  implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_historia;
+
     @Column(nullable = false)
     private String titulo;
-    //Imagen portada
+
+    @OneToOne
+    private Imagen portada;
+
     @Column(nullable = false,columnDefinition = "text")
     private String historia;
+
+    @Column(name = "meGusta", nullable = false, columnDefinition = "INT")
     private Integer meGusta;
+
+    @Column(name = "noMeGusta", nullable = false, columnDefinition = "INT")
     private Integer noMeGusta;
+
     @ManyToOne
     @JoinColumn(nullable=false)
     private Categoria categoria;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Perfil perfil;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDate fechaCreacion;
+
     @LastModifiedDate
     private LocalDate fechaUltModificacion;
-    @Column(columnDefinition = "TINYINT(1)")
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean alta;
 
-   
-    
-    public Historia() {
-    }
-  
- 
+    @OneToMany(mappedBy = "historia")
+    private List<HistoriaFavorita> historiasFav;
+
+    @OneToMany(mappedBy = "historia")
+    private List<Comentario> comentarios;
+
 }
