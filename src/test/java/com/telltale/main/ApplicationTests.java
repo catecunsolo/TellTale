@@ -2,6 +2,7 @@ package com.telltale.main;
 
 import com.telltale.main.entidad.*;
 import com.telltale.main.repositorio.*;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -30,23 +31,53 @@ class ApplicationTests {
 	void contextLoads() {
 	}
 
+/*
 	@Test
 	public void testRolRepositorio_deleteAll() { //método para borrar, desde RolRepositorio, todos los datos cargados en la tabla ROL de la DB
 		rolRepositorio.deleteAll();
 	}
+*/
 
 	@Test
 	public void testRolRepositorio_save() { //método para cargar datos, desde RolRepositorio, a la tabla ROL de la DB
-		rolRepositorio.save(new Rol(null, "SUPER"));
-		rolRepositorio.save(new Rol(null, "ADMIN"));
-		rolRepositorio.save(new Rol(null, "MODER"));
-		rolRepositorio.save(new Rol(null, "USER"));
+		Rol rol;
+
+		rol = new Rol();
+		rol.setNombre("SUPER");
+		rol.setFechaCreacion(LocalDate.now());
+		rol.setFechaUltModificacion(LocalDate.now());
+		rol.setAlta(true);
+		rolRepositorio.save(rol);
+
+		rol = new Rol();
+		rol.setNombre("ADMIN");
+		rol.setFechaCreacion(LocalDate.now());
+		rol.setFechaUltModificacion(LocalDate.now());
+		rol.setAlta(true);
+		rolRepositorio.save(rol);
+
+		rol = new Rol();
+		rol.setNombre("MODER");
+		rol.setFechaCreacion(LocalDate.now());
+		rol.setFechaUltModificacion(LocalDate.now());
+		rol.setAlta(true);
+		rolRepositorio.save(rol);
+		rol = new Rol();
+
+		rol.setNombre("USER");
+		rol.setFechaCreacion(LocalDate.now());
+		rol.setFechaUltModificacion(LocalDate.now());
+		rol.setAlta(true);
+		rolRepositorio.save(rol);
+
 	}
 
+/*
 	@Test
 	public void testUsuarioRepositorio_deleteAll() { //método para borrar, desde UsuarioRepositorio, todos los datos cargados en la tabla USUARIO de la DB
 		usuarioRepositorio.deleteAll();
 	}
+*/
 
 	@Test
 	public void testUsuarioRepositorio_save() { //método para cargar datos, desde UsuarioRepositorio, a la tabla USUARIO de la DB
@@ -121,77 +152,79 @@ class ApplicationTests {
 		usuarioRepositorio.save(usuario7);
 	}
 
-	@Test
-	public void testPerfilRepositorio_deleteAll() { //método para borrar, desde PerfilRepositorio, todos los datos cargados en la tabla PERFIL de la DB
-		perfilRepositorio.deleteAll();
-	}
+	/*
+        @Test
+        public void testPerfilRepositorio_deleteAll() { //método para borrar, desde PerfilRepositorio, todos los datos cargados en la tabla PERFIL de la DB
+            perfilRepositorio.deleteAll();
+        }
 
-	@Test
-	public void testPerfilRepositorio_save() { //método para cargar datos, desde PerfilRepositorio, a la tabla PERFIL de la DB
-		Perfil perfil1 = new Perfil();
-		perfil1.setNombre("Caterina");
-		perfil1.setApellido("Cunsolo");
-		perfil1.setDescripcion("Integrante backend del proyecto TellTale");
-		perfil1.setCategoriaDelDia(null);
-		perfil1.setUsuario(usuarioRepositorio.findByEmail("catecunsolo@mail.com").get());
-		perfil1.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil1);
+        @Test
+        public void testPerfilRepositorio_save() { //método para cargar datos, desde PerfilRepositorio, a la tabla PERFIL de la DB
+            Perfil perfil1 = new Perfil();
+            perfil1.setNombre("Caterina");
+            perfil1.setApellido("Cunsolo");
+            perfil1.setDescripcion("Integrante backend del proyecto TellTale");
+            perfil1.setCategoriaDelDia(null);
+            perfil1.setUsuario(usuarioRepositorio.findByEmail("catecunsolo@mail.com").get());
+            perfil1.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil1);
 
-		Perfil perfil2 = new Perfil();
-		perfil2.setNombre("Mirna");
-		perfil2.setApellido("Diaz");
-		perfil2.setDescripcion("Integrante backend del proyecto TellTale");
-		perfil2.setCategoriaDelDia(null);
-		perfil2.setUsuario(usuarioRepositorio.findByEmail("mirnadiaz@mail.com").get());
-		perfil2.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil2);
+            Perfil perfil2 = new Perfil();
+            perfil2.setNombre("Mirna");
+            perfil2.setApellido("Diaz");
+            perfil2.setDescripcion("Integrante backend del proyecto TellTale");
+            perfil2.setCategoriaDelDia(null);
+            perfil2.setUsuario(usuarioRepositorio.findByEmail("mirnadiaz@mail.com").get());
+            perfil2.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil2);
 
-		Perfil perfil3 = new Perfil();
-		perfil3.setNombre("Bianca");
-		perfil3.setApellido("Dente");
-		perfil3.setDescripcion("Integrante frontend del proyecto TellTale");
-		perfil3.setCategoriaDelDia(null);
-		perfil3.setUsuario(usuarioRepositorio.findByEmail("biandente@mail.com").get());
-		perfil3.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil3);
+            Perfil perfil3 = new Perfil();
+            perfil3.setNombre("Bianca");
+            perfil3.setApellido("Dente");
+            perfil3.setDescripcion("Integrante frontend del proyecto TellTale");
+            perfil3.setCategoriaDelDia(null);
+            perfil3.setUsuario(usuarioRepositorio.findByEmail("biandente@mail.com").get());
+            perfil3.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil3);
 
-		Perfil perfil4 = new Perfil();
-		perfil4.setNombre("Vilma");
-		perfil4.setApellido("Garcia");
-		perfil4.setDescripcion("Integrante backend del proyecto TellTale");
-		perfil4.setCategoriaDelDia(null);
-		perfil4.setUsuario(usuarioRepositorio.findByEmail("vilmagarcia@mail.com").get());
-		perfil4.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil4);
+            Perfil perfil4 = new Perfil();
+            perfil4.setNombre("Vilma");
+            perfil4.setApellido("Garcia");
+            perfil4.setDescripcion("Integrante backend del proyecto TellTale");
+            perfil4.setCategoriaDelDia(null);
+            perfil4.setUsuario(usuarioRepositorio.findByEmail("vilmagarcia@mail.com").get());
+            perfil4.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil4);
 
-		Perfil perfil5 = new Perfil();
-		perfil5.setNombre("Sebastian");
-		perfil5.setApellido("Gimenez");
-		perfil5.setDescripcion("Integrante backend del proyecto TellTale");
-		perfil5.setCategoriaDelDia(null);
-		perfil5.setUsuario(usuarioRepositorio.findByEmail("sebagimenez@mail.com").get());
-		perfil5.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil5);
+            Perfil perfil5 = new Perfil();
+            perfil5.setNombre("Sebastian");
+            perfil5.setApellido("Gimenez");
+            perfil5.setDescripcion("Integrante backend del proyecto TellTale");
+            perfil5.setCategoriaDelDia(null);
+            perfil5.setUsuario(usuarioRepositorio.findByEmail("sebagimenez@mail.com").get());
+            perfil5.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil5);
 
-		Perfil perfil6 = new Perfil();
-		perfil6.setNombre("Juanfe");
-		perfil6.setApellido("Romero");
-		perfil6.setDescripcion("Integrante frontend del proyecto TellTale");
-		perfil6.setCategoriaDelDia(null);
-		perfil6.setUsuario(usuarioRepositorio.findByEmail("juanferomero@mail.com").get());
-		perfil6.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil6);
+            Perfil perfil6 = new Perfil();
+            perfil6.setNombre("Juanfe");
+            perfil6.setApellido("Romero");
+            perfil6.setDescripcion("Integrante frontend del proyecto TellTale");
+            perfil6.setCategoriaDelDia(null);
+            perfil6.setUsuario(usuarioRepositorio.findByEmail("juanferomero@mail.com").get());
+            perfil6.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil6);
 
-		Perfil perfil7 = new Perfil();
-		perfil7.setNombre("Marcos");
-		perfil7.setApellido("Frites");
-		perfil7.setDescripcion("Integrante backend del proyecto TellTale");
-		perfil7.setCategoriaDelDia(null);
-		perfil7.setUsuario(usuarioRepositorio.findByEmail("marcosfrites@mail.com").get());
-		perfil7.setFechaModificacion(LocalDate.now());
-		perfilRepositorio.save(perfil7);
-	}
+            Perfil perfil7 = new Perfil();
+            perfil7.setNombre("Marcos");
+            perfil7.setApellido("Frites");
+            perfil7.setDescripcion("Integrante backend del proyecto TellTale");
+            perfil7.setCategoriaDelDia(null);
+            perfil7.setUsuario(usuarioRepositorio.findByEmail("marcosfrites@mail.com").get());
+            perfil7.setFechaModificacion(LocalDate.now());
+            perfilRepositorio.save(perfil7);
+        }
 
+    */
 	@Test
 	public void testCategoriaRepositorio_deleteAll() { //método para borrar, desde CategoriaRepositorio, todos los datos cargados en la tabla CATEGORIA de la DB
 		categoriaRepositorio.deleteAll();
@@ -199,42 +232,89 @@ class ApplicationTests {
 
 	@Test
 	public void testCategoriaRepositorio_save() { //método para cargar datos, desde CategoriaRepositorio, a la tabla CATEGORIA de la DB
-		Categoria categoria1 = new Categoria();
-		categoria1.setNombre("Categoria 1");
-		categoria1.setVoto(0);
-		categoriaRepositorio.save(categoria1);
+		Categoria categoria = new Categoria();
+		categoria.setNombre("PANQUEQUE");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria2 = new Categoria();
-		categoria2.setNombre("Categoria 2");
-		categoria2.setVoto(0);
-		categoriaRepositorio.save(categoria2);
+		categoria = new Categoria();
+		categoria.setNombre("MEDIALUNAS");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria3 = new Categoria();
-		categoria3.setNombre("Categoria 3");
-		categoria3.setVoto(0);
-		categoriaRepositorio.save(categoria3);
+		categoria = new Categoria();
+		categoria.setNombre("GÁRGOLA");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria4 = new Categoria();
-		categoria4.setNombre("Categoria 4");
-		categoria4.setVoto(0);
-		categoriaRepositorio.save(categoria4);
+		categoria = new Categoria();
+		categoria.setNombre("SAUCE");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria5 = new Categoria();
-		categoria5.setNombre("Categoria 5");
-		categoria5.setVoto(0);
-		categoriaRepositorio.save(categoria5);
+		categoria = new Categoria();
+		categoria.setNombre("COLIBRÍ");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria6 = new Categoria();
-		categoria6.setNombre("Categoria 6");
-		categoria6.setVoto(0);
-		categoriaRepositorio.save(categoria6);
+		categoria = new Categoria();
+		categoria.setNombre("MONTAÑA");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
 
-		Categoria categoria7 = new Categoria();
-		categoria7.setNombre("Categoria 7");
-		categoria7.setVoto(0);
-		categoriaRepositorio.save(categoria7);
+		categoria = new Categoria();
+		categoria.setNombre("MAR");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
+
+		categoria = new Categoria();
+		categoria.setNombre("CRUCERO");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
+
+		categoria = new Categoria();
+		categoria.setNombre("TRABAJO");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
+
+		categoria = new Categoria();
+		categoria.setNombre("AMOR");
+		categoria.setFechaCreacion(LocalDate.now());
+		categoria.setFechaUltModificacion(LocalDate.now());
+		categoria.setAlta(true);
+		categoria.setVoto((int) ((Math.random())*100)+1);
+		categoriaRepositorio.save(categoria);
+
 	}
 
+/*
 	@Test
 	public void testHistoriaRepositorio_deleteAll() { //método para borrar, desde HistoriaRepositorio, todos los datos cargados en la tabla HISTORIA de la DB
 		historiaRepositorio.deleteAll();
@@ -326,4 +406,6 @@ class ApplicationTests {
 		historia7.setAlta(true);
 		historiaRepositorio.save(historia7);
 	}
+*/
+
 }
