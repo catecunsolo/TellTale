@@ -9,14 +9,14 @@
     <div class="container login-container page-section cta">
         <div class="row">
             <div class="col-xl-6 mx-auto signin-form cta-inner bg-faded rounded mb-4">
-                <form action="" method="post" id="fileForm" role="form">
+                <form th:action="@{/logincheck}" method="post" id="fileForm" role="form">
                     <fieldset>
                         <legend class="cta-inner bg-faded rounded mb-4 text-secondary fs-2 text-center">INGRESAR</legend>
                         <div class="text-center mb-2"><i class="fas fa-user-circle fa-3x off"></i></div>
                         <div class="form-group mb-3">
-                            <label for="emailLog"><span class="req">* </span> Correo: </label>
-                            <input class="form-control" required type="text" name="email" id="emailLog"
-                                   onchange="email_validate(this.value, 'log');"/>
+                            <label for="emailLog"><span class="req">* </span> Username o Email </label>
+                            <input class="form-control" required type="text" name="username" id="emailLog" />
+                            <!--onchange="email_validate(this.value, 'log');"-->
                             <div class="status" id="status"></div>
                         </div>
 

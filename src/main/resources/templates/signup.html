@@ -9,14 +9,19 @@
             <div class="container login-container page-section cta">
                 <div class="row">
                     <div class="col-xl-6 mx-auto signin-form cta-inner bg-faded rounded mb-4">
-                        <form action="" method="post" id="registerForm" role="form">
+                        <form th:action="@{/signup/register}" method="post" id="registerForm" role="form">
                             <fieldset>
                                 <legend class="cta-inner bg-faded rounded mb-4 text-secondary fs-2 text-center">REGISTRARSE</legend>
                                 <div class="text-center mb-2"><i class="fas fa-pen-square fa-3x off"></i></div>
                                 <div class="form-group">
                                     <label for="emailReg"><span class="req">* </span> Email: </label>
-                                    <input class="form-control" required type="text" name="email" id = "emailReg"  onchange="email_validate(this.value, 'reg');" />
+                                    <input class="form-control" required type="text" name="mail" id = "emailReg"  onchange="email_validate(this.value, 'reg');" />
                                     <div class="status" id="statusReg"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="usernameReg"><span class="req">* </span> Username: </label>
+                                    <input class="form-control" required type="text" name="username" id = "usernameReg" minlength="8" maxlength="16" /> <!--onchange="email_validate(this.value, 'reg');"-->
                                 </div>
 
                                 <div class="form-group">
@@ -24,7 +29,7 @@
                                     <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16"  id="pass1" /> </p>
 
                                     <label for="pass2"><span class="req">* </span> Confirmar contraseña: </label>
-                                    <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
+                                    <input required name="password2" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
                                     <span id="confirmMessage" class="confirmMessage"></span>
                                 </div>
                                 <hr/>
