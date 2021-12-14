@@ -17,6 +17,7 @@ public class CategoriaServicio {
     public void crearCategoria(String nombre, Integer id_categoria, Integer voto) throws Exception {
         Categoria categoria = new Categoria();
 
+
         if (categoriaRepositorio.buscarCategoriaPorNombre(nombre) != null) {
             throw new Exception("Categoria existente en el servidor");
         }
@@ -25,6 +26,7 @@ public class CategoriaServicio {
         }
         if (categoria==null) {
             throw new Exception("la categoria se encuentra vacia");
+
         }
         categoria.setNombre(nombre);
         categoria.setVoto(0);
@@ -72,10 +74,12 @@ public class CategoriaServicio {
           if (categoria == null) {
             throw new Exception("No se encontró la categoria");
         }
+
         return categoria;
     }
 
     @Transactional(readOnly = true)
+
     public List<Categoria> verTodosCategoria() throws Exception {
         List<Categoria> categorias = categoriaRepositorio.findAll();
         if (categorias.isEmpty()) {

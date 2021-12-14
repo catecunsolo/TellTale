@@ -22,6 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class HistoriaServicio {
     @Autowired
     private HistoriaRepositorio repository;
+    @Autowired
+    private CategoriaServicio categoriaServicio;
+    
+    
     
     @Transactional
     public void crearHistoria(String titulo, String historia, Perfil perfil,Categoria categoria) throws Exception{
@@ -116,6 +120,15 @@ public class HistoriaServicio {
         List<Historia> historias = repository.findAll();
         if (historias.isEmpty()) {
             throw new Exception("No hay historias");
+        }
+        return historias;
+    }
+    
+    @Transactional(readOnly=true)
+    public List<Historia> verHistoriasPorCategoria(Categoria categoria) throws Exception{
+        List<Historia> historias = repository.buscarPorCategoria(categoria);
+        if (historias.isEmpty()) {
+            throw new Exception("No hay historias en esta categoría");
         }
         return historias;
     }

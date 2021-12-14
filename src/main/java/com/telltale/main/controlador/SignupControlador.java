@@ -14,14 +14,14 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = {"/login"})
-public class LoginControlador {
+@RequestMapping(value = {"/signup"})
+public class SignupControlador {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
-    public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("login");
+    public ModelAndView signin(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("signup");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
             modelAndView.addObject("success", flashMap.get("success"));
@@ -39,5 +39,3 @@ public class LoginControlador {
     }
 
 }
-
-

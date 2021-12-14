@@ -35,11 +35,14 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private RolServicio rolServicio;
+
     private final String MENSAJE = "Este usuario no existe. %s";
 
     @Transactional
     public Usuario crearUsuario(String username, String email, String password, Rol rol) throws Exception {
-        validar(username, email, password);
+        validar(username, email, password,rol);
         usuario = new Usuario();
         usuario.setUsername(username);
         usuario.setEmail(email);
@@ -59,11 +62,23 @@ public class UsuarioServicio implements UserDetailsService {
             usuario = buscarUsuarioPorId(id_usuario);
         } catch (Exception exception) {
             exception.printStackTrace();
-            throw new MiExcepcion("Error--> Ocurrió un error al buscar usuario por id.");
+            throw new Exception("Error--> Ocurrió un error al buscar usuario por id.");
         }
         usuario.setEmail(email);
         usuario.setPassword(password);
         usuarioRepositorio.save(usuario);
+    }
+
+    @Transactional
+    public void modificarPassword(Integer id_usuario, String password) throws Exception{
+        validarPassword(password);
+        try {
+            usuario = buscarUsuarioPorId(id_usuario);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new Exception("Error--> Ocurrió un error al buscar usuario por id.");
+        }
+        usuario.setPassword(password);
     }
 
     @Transactional
@@ -87,10 +102,31 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioOptional.orElse(null);
     }
 
-    public void validar(String username, String email, String password) throws Exception {
+    @Transactional(readOnly = true)
+    public Usuario buscarUsuarioPorEmail(String email){
+        Optional<Usuario>usuarioOptional=usuarioRepositorio.findByEmail(email);
+        return usuarioOptional.orElse(null);
+    }
+
+/*    //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
+    @Transactional
+    public void recuperoPassword(String username, String email) throws Exception {
+     try{
+        usuario=buscarUsuarioPorEmail(email);
+        if(usuario.getUsername().equals(username)&&usuario.getEmail().equals(email)){
+            modificarPassword(usuario.getId_usuario(),);
+        }
+     }catch (Exception exception){
+         throw new Exception("Error --> Error al buscar usuario por email al recuperar contraseña.");
+     }
+    }*/
+
+
+    public void validar(String username, String email, String password,Rol rol) throws Exception {
         validarUsername(username);
         validarPassword(password);
         validarEmail(email);
+        validarRol(rol);
     }
 
     //después hacer interfaz para evitar los métodos repetitivos
@@ -106,7 +142,7 @@ public class UsuarioServicio implements UserDetailsService {
             }
         }
         if (usuarioRepositorio.existsUsuarioByUsername(username)) {
-            throw new Exception("Error --> Este nombre de usuario ya existe.");
+            throw new Exception("Error --> El nombre de usuario ya existe.");
         }
     }
 
@@ -123,6 +159,13 @@ public class UsuarioServicio implements UserDetailsService {
         if (password.length() < 7) {
             throw new Exception("Error--> La contraseña no puede contener menos de 8 carácteres.");
         }
+    }
+
+    public void validarRol(Rol rol) throws Exception{
+        if(rol == null){
+            throw new Exception("Error--> El rol no puede estar vacío/nulo.");
+        }
+        rolServicio.existeRol(rol.getNombre());
     }
 
     @Override
