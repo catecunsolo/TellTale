@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,6 @@ public class CategoriaControlador {
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
         if (map != null) {
             mav.addObject("error", map.get("exito-name"));
-
         }
         mav.addObject("categorias", categoriaServicio.verTodosCategoria());
         return mav;
@@ -47,10 +47,9 @@ public class CategoriaControlador {
         if (map != null) {
             mav.addObject("error", map.get("error-name"));
             mav.addObject("categoria", map.get("categoria"));
-        }else{
+        } else {
             mav.addObject("categoria", new Categoria());
         }
-        
         mav.addObject("tittle", "Crear Categoria");
         mav.addObject("action", "guardar");
         return mav;
@@ -58,24 +57,32 @@ public class CategoriaControlador {
 
     @GetMapping("/editar/ {id_categoria}")
     public ModelAndView editarCategoria(@PathVariable Integer id_categoria,
-            HttpServletRequest request) throws Exception {
-         ModelAndView mav = new ModelAndView("autor-formulario");
+            HttpServletRequest request,RedirectAttributes attributes) {
+        ModelAndView mav = new ModelAndView("autor-formulario");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
-         if (map != null) {
-            mav.addObject("error", map.get("error-name"));
-            mav.addObject("categoria", map.get("categoria"));
-        }else{  mav.addObject("categoria", categoriaServicio.buscarCategoriaPorId(id_categoria));}
-       
-        mav.addObject("tittle", "Editar Categoria");
-        mav.addObject("action", "modificar");
+        try {
+            if (map != null) {
+                mav.addObject("error", map.get("error-name"));
+                mav.addObject("categoria", map.get("categoria"));
+            } else {
+                mav.addObject("categoria", categoriaServicio.buscarCategoriaPorId(id_categoria));
+            }
+
+            mav.addObject("tittle", "Editar Categoria");
+            mav.addObject("action", "modificar");
+        } catch (Exception e) {
+             attributes.addFlashAttribute("error", e.getMessage());
+             mav.setViewName("redirect:/categorias");
+        }
         return mav;
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String nombre, RedirectAttributes ra) {
+    public RedirectView guardar(@RequestParam String nombre, @RequestParam Integer id_categoria,
+            @RequestParam Integer voto, RedirectAttributes ra) {
         RedirectView rv = new RedirectView("/categorias");
         try {
-            categoriaServicio.crearCategoria(nombre, Integer.MIN_VALUE, Integer.SIZE);
+            categoriaServicio.crearCategoria(nombre, id_categoria, voto);
             ra.addFlashAttribute("exito-name", "Se ha creado la categoria con exito");
         } catch (Exception e) {
             ra.addFlashAttribute("error-name", e.getMessage());
@@ -86,10 +93,21 @@ public class CategoriaControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam("id-categoria") Integer id_categoria,
-            @RequestParam("nombre") String nombre, @RequestParam("voto") Integer voto) throws Exception {
-        categoriaServicio.modificarCategoria(id_categoria, nombre, voto);
-        return new RedirectView("/categorias");
+    public RedirectView modificar(@ModelAttribute Categoria categoria, @RequestParam String nombre,
+            @RequestParam Integer id_categoria,
+            @RequestParam Integer voto,
+            RedirectAttributes attributes) {
+        RedirectView rv = new RedirectView("/categorias");
+        try {
+            categoriaServicio.modificarCategoria(id_categoria, nombre, voto);
+            attributes.addFlashAttribute("exito name", "Se ha modificado la categoria exitosamente");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("categoria", categoria);
+            attributes.addFlashAttribute("error-name", e.getMessage());
+            rv.setUrl("/categorias/editar/" + categoria.getId_categoria());
+        }
+
+        return rv;
     }
 
     @PostMapping("/eliminar/{id}")
