@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: head">
+    </head>
+    <body>
+        <header th:replace="fragments :: header">
+        </header>
+
+        
+<!--SECCION SUGERIR TEMA-->
+
+<section class="page-section cta">
+    <div class="container">
+        <div class="col-xl-9 mx-auto d-flex justify-content-center">
+        <div class="cta-inner bg-faded text-center rounded">
+          <h2 class="section-heading mb-4 me-auto">
+            <span class="section-heading-upper">Mañana puede salir elegido</span>
+            <span class="section-heading-lower text-secondary text-wrap">SUGERÍ UN TEMA</span>
+        </h2>
+        <form>
+          <input type="text" class="form-control mb-3" id="tema-sugerido">
+          <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+        </form>
+          </div>
+    
+    </div>
+    </div>
+    </section>
+
+        <footer th:replace="fragments :: footer"></footer>
+    </body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" th:fragment="html">
 <head th:fragment="head">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -39,7 +39,7 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" href="historias.html">Historias del día</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" href="perfil">Mi Perfil</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" href="login">Ingresar</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" href="singup">Registrarse</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" href="signup">Registrarse</a></li>
                     </ul>
                 </div>
             </div>
