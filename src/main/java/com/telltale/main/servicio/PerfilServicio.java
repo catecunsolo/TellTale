@@ -17,15 +17,19 @@ public class PerfilServicio {
     private PerfilRepositorio perfilRepositorio;
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Transactional
     public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) throws Exception {
-        validarNulo(nombre, apellido, descripcion);
+        //validarNulo(nombre, apellido, descripcion);
         Perfil perfil = new Perfil();
         perfil.setNombre(nombre);
         perfil.setApellido(apellido);
-        perfil.setUsuario(usuario);
+        perfil.setRedes(null);
+        perfil.setAvatar(null);
         perfil.setDescripcion(descripcion);
+        perfil.setCategoriaDelDia(null);
+        perfil.setUsuario(usuario);
+        perfil.setAlta(true);
         perfilRepositorio.save(perfil);
     }
 
@@ -56,25 +60,25 @@ public class PerfilServicio {
         }
         return perfil;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void validarNulo(String nombre, String apellido, String descripcion) throws Exception {
         if (nombre.trim().isEmpty() || nombre == null) {
             throw new Exception("El nombre es obligatorio");
