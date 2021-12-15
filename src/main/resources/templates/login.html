@@ -12,18 +12,18 @@
                 <form th:action="@{/logincheck}" method="post" id="fileForm" role="form">
                     <fieldset>
                         <legend class="cta-inner bg-faded rounded mb-4 text-secondary fs-2 text-center">INGRESAR</legend>
-                        <div class="text-center mb-2"><i class="fas fa-user-circle fa-3x off"></i></div>
+                        <div class="text-center mb-2"><i id="iconLog" class="fas fa-laugh fa-3x off"></i></div>
                         <div class="form-group mb-3">
                             <label for="emailLog"><span class="req">* </span> Username o Email </label>
-                            <input class="form-control" required type="text" name="username" id="emailLog" />
-                            <!--onchange="email_validate(this.value, 'log');"-->
+                            <input class="form-control" required type="text" name="username" id="emailLog" onkeydown="emailPass();"/>
+                            <!---->
                             <div class="status" id="status"></div>
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="passLog"><span class="req">* </span> Password: </label>
                             <input required name="password" type="password" class="form-control inputpass" minlength="4"
-                                   maxlength="16" id="passLog"/> </p>
+                                   maxlength="16" id="passLog" onkeydown="facePass()"/> </p>
                         </div>
                         <hr/>
                         <div class="form-group mb-3">
