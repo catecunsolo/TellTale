@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CategoriaServicio {
 
+    public List<Categoria> listaCategoriasDelDia;
+
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
 
@@ -104,18 +106,18 @@ public class CategoriaServicio {
     }
 
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
     public void actualizarCategoria() throws Exception {
         List<Categoria> listaCategoria = verTodosCategoria();
-        List<Categoria>listaCategoriasDelDia=new ArrayList<>();
+        listaCategoriasDelDia=new ArrayList<>();
         Collections.shuffle(listaCategoria);
         for(int i = 0; i<3;i++){
             listaCategoriasDelDia.add(listaCategoria.get(i));
         }
-        System.out.println(listaCategoriasDelDia.get(0).getNombre());
+/*        System.out.println(listaCategoriasDelDia.get(0).getNombre());
         System.out.println(listaCategoriasDelDia.get(1).getNombre());
         System.out.println(listaCategoriasDelDia.get(2).getNombre());
-        System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");*/
     }
 
 }
