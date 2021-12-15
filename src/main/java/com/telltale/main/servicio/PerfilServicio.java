@@ -1,5 +1,6 @@
 package com.telltale.main.servicio;
 
+import com.telltale.main.entidad.Categoria;
 import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Usuario;
@@ -60,10 +61,25 @@ public class PerfilServicio {
         }
         return perfil;
     }
-
-
-
-
+    
+    @Transactional
+    public void setearCategoriaDelDia(int id_perfil,Categoria categoria) throws Exception{
+        Perfil perfil = perfilRepositorio.findById(id_perfil).orElse(null);
+        if (perfil==null) {
+            throw new Exception("No existe un perfil asociado a ese usuario");
+        }
+        perfil.setCategoriaDelDia(categoria);
+        perfilRepositorio.save(perfil);
+    }
+    
+    @Transactional
+    public void bajaCateDelDia(){
+        List<Perfil> perfiles = perfilRepositorio.findAll();
+        for (Perfil perfil : perfiles) {
+            perfil.setCategoriaDelDia(null);
+            perfilRepositorio.save(perfil);
+        }
+    }
 
 
 
