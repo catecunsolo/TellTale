@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception {
         security
                 .authorizeRequests()
-                .antMatchers("/css/*", "/img/*", "/js/*", "/signup", "/signup/register").permitAll() //REVISAR >> hay que agregar "/usuario/crear", "/usuario/guardar" para que los usuarios puedan registrarse sin estar logueados
+                .antMatchers("/css/*", "/img/*", "/js/*", "/", "/signup", "/signup/register").permitAll() //REVISAR >> hay que agregar "/usuario/crear", "/usuario/guardar" para que los usuarios puedan registrarse sin estar logueados
                 .antMatchers("/**").authenticated() //.permitAll() o .authenticated()
                 .and()
                 .formLogin()
