@@ -22,10 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HistoriaServicio {
     @Autowired
     private HistoriaRepositorio repository;
-    @Autowired
-    private CategoriaServicio categoriaServicio;
-    
-    
     
     @Transactional
     public void crearHistoria(String titulo, String historia, Perfil perfil,Categoria categoria) throws Exception{

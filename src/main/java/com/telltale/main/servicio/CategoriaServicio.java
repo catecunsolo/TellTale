@@ -12,7 +12,7 @@ public class CategoriaServicio {
 
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
-
+    
     @Transactional
     public void crearCategoria(String nombre, Integer id_categoria, Integer voto) throws Exception {
         Categoria categoria = new Categoria();
@@ -99,5 +99,5 @@ public class CategoriaServicio {
         }
         categoriaRepositorio.deleteById(id_categoria);
     }
-
-}
+    
+        }
