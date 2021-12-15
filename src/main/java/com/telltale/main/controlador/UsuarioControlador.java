@@ -49,7 +49,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/ver-todos")
-/*    @PreAuthorize("hasRole('ADMIN')")*/
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
     public ModelAndView obtenerUsuarios() {
         ModelAndView modelAndView = new ModelAndView("usuario");
         modelAndView.addObject("usuarios", usuarioServicio.verTodosUsuario());
@@ -57,7 +57,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/modificar")
-    /*    @PreAuthorize("hasAnyRole('USER','ADMIN')")*/
+    @PreAuthorize("hasAnyRole('USER','ADMIN','SUPER','MODER')")
     public RedirectView modificarUsuario(@RequestParam Integer id_usuario, @RequestParam String email, @RequestParam String password, RedirectAttributes a, HttpSession session) throws Exception {
         try {
             usuarioServicio.modificarUsuario(id_usuario, email, password);
@@ -75,7 +75,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/modificar/{id_usuario}")
-    /*    @PreAuthorize("hasAnyRole('USER','ADMIN')")*/
+    @PreAuthorize("hasAnyRole('USER','ADMIN','SUPER','MODER')")
     public ModelAndView modificarUsuario(@PathVariable Integer id_usuario) throws Exception {
         ModelAndView modelAndView = new ModelAndView("usuario-formulario");
         modelAndView.addObject("usuario", usuarioServicio.verTodosUsuario());
@@ -86,7 +86,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/baja/{id_usuario}")
-    /*    @PreAuthorize("hasAnyRole('USER','ADMIN')")*/
+    @PreAuthorize("hasAnyRole('USER','ADMIN','SUPER','MODER')")
     public RedirectView bajaUsuario(@PathVariable Integer id_usuario) {
         usuarioServicio.bajaUsuario(id_usuario);
         return new RedirectView("/usuario");

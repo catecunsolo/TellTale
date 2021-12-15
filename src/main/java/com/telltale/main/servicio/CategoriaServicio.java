@@ -2,13 +2,18 @@ package com.telltale.main.servicio;
 
 import com.telltale.main.entidad.Categoria;
 import com.telltale.main.repositorio.CategoriaRepositorio;
-import java.util.List;
+
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoriaServicio {
+
+    public List<Categoria> listaCategoriasDelDia;
 
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
@@ -98,6 +103,21 @@ public class CategoriaServicio {
             throw new Exception("No se encontró la categoria que intenta eliminar");
         }
         categoriaRepositorio.deleteById(id_categoria);
+    }
+
+
+    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
+    public void actualizarCategoria() throws Exception {
+        List<Categoria> listaCategoria = verTodosCategoria();
+        listaCategoriasDelDia=new ArrayList<>();
+        Collections.shuffle(listaCategoria);
+        for(int i = 0; i<3;i++){
+            listaCategoriasDelDia.add(listaCategoria.get(i));
+        }
+/*        System.out.println(listaCategoriasDelDia.get(0).getNombre());
+        System.out.println(listaCategoriasDelDia.get(1).getNombre());
+        System.out.println(listaCategoriasDelDia.get(2).getNombre());
+        System.out.println("--------------------------------------------------");*/
     }
 
 }
