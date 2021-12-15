@@ -5,9 +5,7 @@ import com.telltale.main.entidad.CategoriaDelDia;
 import com.telltale.main.repositorio.CategoriaDelDiaRepositorio;
 import com.telltale.main.repositorio.CategoriaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,6 @@ public class CategoriaDelDiaServicio {
     @Autowired
     private CategoriaDelDiaRepositorio categoriaDelDiaRepositorio;
 
-    @Transactional
     public void crearCategoriasDelDia() {
         List<Categoria> todasSegunVotosDesc = this.categoriaRepositorio.findByOrderByVotoDesc();
         CategoriaDelDia categoriaDelDia;
@@ -33,7 +30,6 @@ public class CategoriaDelDiaServicio {
         this.setearVotos(todasSegunVotosDesc);
     }
 
-    @Transactional
     public void setearVotos(List<Categoria> todasSegunVotosDesc) {
         for(Categoria categoria : todasSegunVotosDesc) {
             categoria.setVoto((int)((Math.random()*100)+1));
@@ -41,12 +37,11 @@ public class CategoriaDelDiaServicio {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<Categoria> buscarLasUltimasTresMasVotadas() {
         this.crearCategoriasDelDia();
         List<CategoriaDelDia> todasCategoriaDelDia = this.categoriaDelDiaRepositorio.findAll();
         List<Categoria> categorias = new ArrayList<Categoria>();
-        for (int i = categorias.size()-1; i > categorias.size()-4; i--) {
+        for (int i = todasCategoriaDelDia.size()-1; i > todasCategoriaDelDia.size()-4; i--) {
             categorias.add(todasCategoriaDelDia.get(i).getCategoria());
         }
         return categorias;
