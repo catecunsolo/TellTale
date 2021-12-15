@@ -14,6 +14,10 @@ import com.telltale.main.servicio.PerfilServicio;
 import com.telltale.main.servicio.UsuarioServicio;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 /**
@@ -33,60 +38,67 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/historia")
 public class HistoriaControlador {
-    
+
     @Autowired
     private HistoriaServicio historiaServicio;
     @Autowired
     private CategoriaServicio categoriaServicio;
     @Autowired
     private PerfilServicio perfilServicio;
-    
+
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    //implementa las categorias del dia
     @PostMapping("/crear")
-    public ModelAndView crear(HttpSession session) {
+    public ModelAndView crear(HttpSession session, @RequestParam("categoria") Categoria categoria) {
         ModelAndView mv = new ModelAndView("historias");
+        try {
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            if (perfil.getCategoriaDelDia() != null) {
+                mv.setViewName("redirect:/historia");
+            }
+        } catch (Exception e) {
+            mv.setViewName("redirect:/");
+        }
+
         mv.addObject("action", "crear");
-        Perfil perfil = perfilServicio.buscarPerfilPorId(Integer.parseInt(session.getId()));
-        mv.addObject("categoria",perfil.getCategoriaDelDia());
+        mv.addObject("categoria", categoria);
+
         return mv;
     }
-    
+
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam("titulo") String titulo, @RequestParam("historia") String historia,
-        RedirectAttributes attributes, HttpSession session) {
+            RedirectAttributes attributes, HttpSession session, @RequestParam("categoria") Categoria categoria) {
         RedirectView rv = new RedirectView("/historia");
-        
+
         try {
-            Perfil perfil= perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getId()));
-            historiaServicio.crearHistoria(titulo, historia,perfil,perfil.getCategoriaDelDia());
-            attributes.addFlashAttribute("exito-name", "Historia guardada");
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            historiaServicio.crearHistoria(titulo, historia, perfil, categoria);
+            perfilServicio.setearCategoriaDelDia(perfil.getId_perfil(), categoria);
+            attributes.addFlashAttribute("success-name", "Historia guardada");
         } catch (Exception e) {
             attributes.addFlashAttribute("error-name", e.getMessage());
             rv.setUrl("/historia/crear");
         }
-        
+
         return rv;
     }
-    
+
     @GetMapping()
-    public ModelAndView historia(HttpSession session) {
-        ModelAndView mv = new ModelAndView("historia");
-        mv.addObject("action", "historias");
+    public ModelAndView historia(HttpSession session,HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("historias");
+        Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
+        if (map != null) {
+            mv.addObject("error", map.get("error-name"));
+            mv.addObject("success", map.get("success-name"));
+        }
+        
         try {
-            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getId()));
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
             Categoria categoria = perfil.getCategoriaDelDia();
             if (categoria == null) {
-                //aca tengo que poner la ruta del controlador de categorias
                 mv.setViewName("redirect:/");
-//                mv.addObject("Historia1",
-//                        historiaServicio.verHistoriasPorCategoria(categoriaServicio.categoriasDelDia.get(0)).get(0));
-//                mv.addObject("Historia2",
-//                        historiaServicio.verHistoriasPorCategoria(categoriaServicio.categoriasDelDia.get(1)).get(0));
-//                mv.addObject("Historia3",
-//                        historiaServicio.verHistoriasPorCategoria(categoriaServicio.categoriasDelDia.get(2)).get(0));
             } else {
                 List<Historia> historias = historiaServicio.verHistoriasPorCategoria(categoria);
                 List<Historia> historiasCortadas = Collections.EMPTY_LIST;
@@ -98,28 +110,74 @@ public class HistoriaControlador {
                     }
                     historiasCortadas.add(historia);
                 }
-                mv.addObject("historias", historiasCortadas);
+                mv.addObject("listaHistorias", historiasCortadas);
                 mv.addObject("categoria", categoria);
             }
         } catch (Exception e) {
-            mv.addObject("error-name", e.getMessage());
+            mv.setViewName("redirect:/");
         }
-        
+
+        mv.addObject("action", "historias");
         return mv;
-        
     }
-    
+
     @GetMapping("/{id}")
-    public ModelAndView historiaEnParticular(@PathVariable int id,RedirectAttributes ra){
+    public ModelAndView historiaEnParticular(@PathVariable int id, RedirectAttributes ra, HttpSession session) {
         ModelAndView mv = new ModelAndView("historia");
-        mv.addObject("action",id);
-        try{
-            mv.addObject("historia", historiaServicio.buscarHistoriaPorId(id));
-        }catch(Exception e){
+        mv.addObject("action", id);
+        try {
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            Historia historia = historiaServicio.buscarHistoriaPorId(id);
+            if (perfil.getCategoriaDelDia() == null
+                    || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria()) {
+                mv.setViewName("redirect:/historia");
+            }
+            mv.addObject("historia", historia);
+            if (true) {
+
+            }
+        } catch (Exception e) {
             ra.addFlashAttribute("error-name", e.getMessage());
             mv.setViewName("redirect:/historia");
         }
+
         return mv;
-        
+
     }
+    
+    //CONTROLADORES PARA IMPLEMENTAR DESPUES
+
+//    @GetMapping("/misHistorias")
+//    public ModelAndView misHistorias(HttpSession session,HttpServletRequest request) {
+//        ModelAndView mv = new ModelAndView("historias");
+//        Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
+//        if (map != null) {
+//            mv.addObject("error", map.get("error-name"));
+//        }
+//        try {
+//            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+//            List<Historia> historias = perfil.getHistorias();
+//            mv.addObject("historias", historias);
+//            mv.addObject("action", "misHistorias");
+//        } catch (Exception e) {
+//            mv.addObject("error", e.getMessage());
+//        }
+//        return mv;
+//    }
+//
+//    @PostMapping("/baja/{id}")
+//    public RedirectView baja(@PathVariable("id") int id, HttpSession session,RedirectAttributes ra) {
+//        RedirectView rv = new RedirectView("/historia/misHistorias");
+//        try {
+//            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+//            Historia historia = historiaServicio.buscarHistoriaPorId(id);
+//            if (historia.getPerfil().getId_perfil() == perfil.getId_perfil()) {
+//                historiaServicio.baja(id);
+//
+//            }
+//        } catch (Exception e) {
+//            ra.addFlashAttribute("error-name", e.getMessage());
+//        }
+//        return rv;
+//    }
 }

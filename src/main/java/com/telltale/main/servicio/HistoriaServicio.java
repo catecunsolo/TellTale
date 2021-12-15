@@ -9,11 +9,8 @@ import com.telltale.main.entidad.Categoria;
 import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.repositorio.HistoriaRepositorio;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,17 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HistoriaServicio {
     @Autowired
     private HistoriaRepositorio repository;
-    @Autowired
-    private CategoriaServicio categoriaServicio;
-    
-    public List<String> listaDePrueba;
-    
-    @Scheduled(fixedRate = 3000)
-    public void Prueba(){
-        List<String> letras = Arrays.asList("a","b","c");
-        Collections.shuffle(letras);
-        listaDePrueba=letras;
-    }
     
     @Transactional
     public void crearHistoria(String titulo, String historia, Perfil perfil,Categoria categoria) throws Exception{
