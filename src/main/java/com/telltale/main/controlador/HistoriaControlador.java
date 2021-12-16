@@ -49,11 +49,19 @@ public class HistoriaControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @PostMapping("/crear")
-    public ModelAndView crear(HttpSession session, @RequestParam("categoria") Categoria categoria) {
+    @GetMapping("/crear")
+    public ModelAndView crear(HttpSession session, @RequestParam("categoria") Integer id_categoria) {
         ModelAndView mv = new ModelAndView("historias");
         try {
             Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            mv.addObject("perfilLogueado", perfil);
+            Categoria categoriaElegida = categoriaServicio.buscarCategoriaPorId(id_categoria);
+            mv.addObject("categoriaElegida", categoriaElegida);
+            Historia historia = new Historia();
+            historia.setPerfil(perfil);
+            historia.setCategoria(categoriaElegida);
+            mv.addObject("historia", historia);
+
             if (perfil.getCategoriaDelDia() != null) {
                 mv.setViewName("redirect:/historia");
             }
@@ -62,7 +70,6 @@ public class HistoriaControlador {
         }
 
         mv.addObject("action", "crear");
-        mv.addObject("categoria", categoria);
 
         return mv;
     }

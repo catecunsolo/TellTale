@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: head">
+    </head>
+    <body>
+        <header th:replace="fragments :: header">
+        </header>
+        <div th:if="${listaUsuarios.isEmpty()}">
+            <h5> Todavía no hay usuarios cargados</h5>
+        </div>
+        <div class="table-responsive" th:unless="${listaUsuarios.isEmpty()}">
+            <table class="table table-hover table-sm table-bordered">
+                <thead class="table-secondary text-center">
+                    <tr>
+                        <th class="col-md-4" scope="col">Id</th>
+                        <th class="col-md-2" scope="col">Username</th>
+                        <th class="col-md-2" scope="col">Email</th>
+                        <th class="col-md-2" scope="col">Password</th>
+                        <th class="col-md-2" scope="col">Fecha Creacion</th>
+                        <th class="col-md-2" scope="col">Fecha Modificación</th>
+                        <th class="col-md-2" scope="col">Rol</th>
+                        <th class="col-md-2" scope="col">Alta</th>
+                        <th class="col-md-4" scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${listaUsuarios}">
+                    <td class="col-md-4 " th:text="${usuario.id_usuario}"></td>
+                    <td class="col-md-4 " th:text="${usuario.username}"></td>
+                    <td class="col-md-4 " th:text="${usuario.email}"></td>
+                    <td class="col-md-4 " th:text="${usuario.password}"></td>
+                    <td class="col-md-2 " th:text="${#temporals.format(usuario.fechaCreacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
+                    <td class="col-md-2 " th:text="${#temporals.format(usuario.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
+                    <td class="col-md-2 " th:text="${usuario.rol}" style="text-align: center"></td>
+                    <td class="col-md-2 " th:text="${usuario.alta}" style="text-align: center"></td>
+                    <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${usuario.alta}">
+                      <a class="btn btn-secondary btn-sm" th:href="@{/usuarios/editar/__${usuario.id}__}">Editar</a>
+                
+                    <span th:case="true"> <form
+                      method="post"
+                      th:action="@{/usuarios/eliminar/__${usuario.id}__}"
+                    >
+                      <button class="btn btn-danger btn-sm" type="submit"> Dar de baja
+                      </button> </form> </span>
+      
+                      <span th:case="false"> <form
+                        method="post"
+                        th:action="@{/usuarios/darAlta/__${usuario.id}__}"
+                      >
+                        <button class="btn btn-success btn-sm" type="submit"> Dar de alta
+                        </button> </form> </span>
+                  </td>   
+                 </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer th:replace="fragments :: footer"></footer>
+    </body>
+</html>

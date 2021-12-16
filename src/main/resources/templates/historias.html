@@ -17,21 +17,26 @@
         </h2>
         <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
       <form autocomplete="off" class="need-validation" id="formulario" method="POST"
-      novalidate th:action="@{/historias/crear}" th:object="${historia}">
-      <input th:field="*{id_historia}" type="hidden"/>
-      <input th:field="*{alta}" type="hidden"/>
-      <input th:field="*{meGusta}" type="hidden"/>
-      <input th:field="*{noMeGusta}" type="hidden"/>
-      <input th:field="*{portada}" type="hidden"/>
-      <input th:field="*{perfil}" type="hidden"/>
-      <input th:field="*{fechaCreacion}" type="hidden"/>
-      <input th:field="*{fechaUltModificacion}" type="hidden"/>
-      <input th:field="*{historiasFav}" type="hidden"/>
-      <input th:field="*{comentarios}" type="hidden"/>
+      novalidate th:action="@{/historia/guardar}" th:object="${historia}">
+
+                <input th:field="*{id_historia}" type="hidden"/>
+                <input th:field="*{alta}" type="hidden"/>
+                <input th:field="*{meGusta}" type="hidden"/>
+                <input th:field="*{noMeGusta}" type="hidden"/>
+                <input th:field="*{portada}" type="hidden"/>
+                <input th:field="${perfilLogueado}" type="hidden"/>
+                <input th:field="*{perfil}" type="hidden"/>
+                <input th:field="*{fechaCreacion}" type="hidden"/>
+                <input th:field="*{fechaUltModificacion}" type="hidden"/>
+                <input th:field="*{historiasFav}" type="hidden"/>
+                <input th:field="*{comentarios}" type="hidden"/>
+                <input th:field="*{categoria}" type="hidden"/>
+
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="">Categoría: <span th:text="${perfil.categoriaDelDia}"></span></span>
+                  <span class="input-group-text" id="">Categoría:  <span th:text="${categoriaElegida.nombre}"></span> </span>
             </div>
+
             <div class="input-group-append">
             <a class="btn btn-outline-primary" href="/">Cambiar</a>
             </div>
@@ -135,6 +140,7 @@
                           </div>
                         </form>
                       </div>
+                      <a class="btn btn-primary btn-lg" href="historias">Volver a la lista de historias</a>
                     </div>
                     
                   </div>
