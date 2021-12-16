@@ -29,7 +29,7 @@ public class PerfilControlador {
     PerfilServicio perfilServicio;
 
     @GetMapping
-      public ModelAndView verMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+    public ModelAndView verMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
         HttpSession session = (HttpSession) request.getSession();
         ModelAndView modelAndView = new ModelAndView("perfil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -91,9 +91,8 @@ public class PerfilControlador {
         }
         return redirectView;
     }
-    
-    
-     @GetMapping("/todos")
+
+    @GetMapping("/todos")
     public ModelAndView verTodosPerfil(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("perfiles");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
@@ -138,9 +137,34 @@ public class PerfilControlador {
         return new RedirectView("/perfil");
     }
 
+    @GetMapping("/{id}")
+    public ModelAndView verOtroPerfil(@PathVariable int id, HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("perfil");
+        HttpSession session = (HttpSession) request.getSession();
+        if (id == (int) session.getAttribute("id_usuario")) {
+            modelAndView.setViewName("redirect:/perfil");
+        } else {
+            Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+            if (flashMap != null) {
+                modelAndView.addObject("success", flashMap.get("success"));
+                modelAndView.addObject("error", flashMap.get("error"));
+                modelAndView.addObject("perfil", null);
+            }
+            if (error != null) {
+                modelAndView.addObject("error", error);
+                modelAndView.addObject("perfil", null);
+            } else {
+                try {
+                    modelAndView.addObject("action", "perfil_id");
+                    modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(id));
+                    modelAndView.addObject("id_nuevo", id);
 
+                } catch (Exception excepcion) {
+                    modelAndView.addObject("error", excepcion.getMessage());
+                    modelAndView.setViewName("redirect:/");
+                }
+            }
+        }
+        return modelAndView;
+    }
 }
-
-
-
-

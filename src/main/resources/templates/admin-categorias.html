@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: head">
+    </head>
+    <body>
+        <header th:replace="fragments :: header">
+        </header>
+        <div th:if="${listaCategorias.isEmpty()}">
+            <h5> Todavía no hay categorías cargadas.</h5>
+        </div>
+        <div class="table-responsive" th:unless="${listaCategorias.isEmpty()}">
+            <table class="table table-hover table-sm table-bordered">
+                <thead class="table-secondary text-center">
+                    <tr>
+                        <th class="col-md-4" scope="col">Id</th>
+                        <th class="col-md-2" scope="col">Nombre</th>
+                        <th class="col-md-2" scope="col">Voto</th>
+                        
+                        <th class="col-md-4" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="categoria : ${listaCategorias}">
+                    <td class="col-md-4 " th:text="${categoria.id_categoria}"></td>
+                    <td class="col-md-4 " th:text="${categoria.nombre}"></td>
+                    <td class="col-md-2 " th:text="${categoria.voto}" style="text-align: center"></td>
+                    <td class="col-2 px-md-2 d-flex justify-content-around w-100">
+                    <span> <form
+                      method="post"
+                      th:action="@{/categoria/eliminar/__${categoria.id_categoria}__}"
+                    >
+                      <button class="btn btn-danger btn-sm" type="submit"> Eliminar
+                      </button> </form> </span>
+                      
+                  </td>   
+                 </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer th:replace="fragments :: footer"></footer>
+    </body>
+</html>
