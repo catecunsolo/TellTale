@@ -48,7 +48,7 @@
           </div>
           <div class="mb-3">
             <label for="historia" class="form-label">Tu historia</label>
-            <textarea type="text"  class="form-control" id="historia" placeholder="Escribí aquí" <!--required th:field="*{historia}"--> rows="6" ></textarea>
+            <textarea type="text"  class="form-control" id="historia" placeholder="Escribí aquí" required th:field="*{historia}" rows="6" ></textarea>
             <div class="invalid-feedback">Tenés que escribir una historia para poder enviarla.</div>
           </div>
           <button type="submit" class="btn btn-primary">Enviar</button>
@@ -67,7 +67,7 @@
                 <div class="cta-inner bg-faded text-center rounded mb-4">
                   <h2 class="section-heading">
                       <span class="section-heading-upper">LEE LAS DEMÁS</span>
-                      <span class="section-heading-lower text-secondary">HISTORIAS SOBRE</span><span class="section-heading-lower text-secondary" th:text="${historia.categoria}" ></span></span>
+                      <span class="section-heading-lower text-secondary">HISTORIAS SOBRE</span><span class="section-heading-lower text-secondary" th:text="${categoria.nombre}" ></span></span>
                   </h2>
                   </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -78,7 +78,7 @@
                           <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
                           <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
                           <p class="card-text" th:text="${historia.historia}"></p>
-                          <a class="btn btn-primary" href="#!">Leer más →</a>
+                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
                       </div>
                   </div>
                   </div>
@@ -86,8 +86,60 @@
               </div>
             </div>
         </section>
+        
+        <!--SECCION MISHISTORIAS(para ver las historias propias)-->
   
+          <section th:if="${action == 'misHistorias'}" class="page-section cta2">
+            <div class="container">
+              <div class="col-xl-9 mx-auto">
+                <div class="cta-inner bg-faded text-center rounded mb-4">
+                  <h2 class="section-heading">
+                      <span class="section-heading-lower text-secondary">HISTORIAS DE</span><span class="section-heading-lower text-secondary" th:text="${session.username}" ></span></span>
+                  </h2>
+                  </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                  <div class="col" th:each="historia : ${listaHistorias}">
+                    <div class="card mb-4">
+                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                      <div class="card-body">
+                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                          <p class="card-text" th:text="${historia.historia}"></p>
+                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
     
+        <!--SECCION OTRASHISTORIAS(para ver las historias de otra people)-->
+  
+          <section th:if="${action == 'otrasHistorias'}" class="page-section cta2">
+            <div class="container">
+              <div class="col-xl-9 mx-auto">
+                <div class="cta-inner bg-faded text-center rounded mb-4">
+                  <h2 class="section-heading">
+                      <span class="section-heading-lower text-secondary">HISTORIAS DE</span><span class="section-heading-lower text-secondary" th:text="${nombreUsuario}" ></span></span>
+                  </h2>
+                  </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                  <div class="col" th:each="historia : ${listaHistorias}">
+                    <div class="card mb-4">
+                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                      <div class="card-body">
+                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                          <p class="card-text" th:text="${historia.historia}"></p>
+                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
   
   <!--SECCION HISTORIA INDIVIDUAL (historias/id-historia)-->
   
@@ -98,7 +150,7 @@
                     <div class="bg-faded p-5 d-flex me-auto rounded">
                         <h2 class="section-heading mb-0">
                           <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
-                            <span class="text-muted" th:text="${historia.categoria}"></span></span>
+                            <span class="text-muted" th:text="${historia.categoria.nombre}"></span></span>
                             <span class="section-heading-lower text-secondary" th:text="${historia.titulo}"></span>
                         </h2>
                     </div>
@@ -125,7 +177,7 @@
                                     </li>
                         </ol>
                       </div>
-                      <div class="collapse" id="comentar">
+                      <!--<div class="collapse" id="comentar">
                         <form class="row g-3 need-validation" autocomplete="off" id="formulario" method="POST"
                         novalidate th:action="@{/historias/comentar}" th:object="${comentario}">
                         <input th:field="*{}" type="hidden"/>
@@ -138,8 +190,8 @@
                             <button type="submit" class="btn btn-primary mb-3">Enviar</button>
                           </div>
                         </form>
-                      </div>
-                      <a class="btn btn-primary btn-lg" href="historias">Volver a la lista de historias</a>
+                      </div>-->
+                      <a class="btn btn-primary btn-lg" th:href="@{/historia}">Volver a la lista de historias</a>
                     </div>
                     
                   </div>
