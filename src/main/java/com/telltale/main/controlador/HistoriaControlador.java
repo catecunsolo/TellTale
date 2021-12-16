@@ -54,8 +54,13 @@ public class HistoriaControlador {
         ModelAndView mv = new ModelAndView("historias");
         try {
             Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
-            mv.addObject("categoria", categoriaServicio.buscarCategoriaPorId(id_categoria));
-            mv.addObject("historia", new Historia());
+            mv.addObject("perfilLogueado", perfil);
+            Categoria categoriaElegida = categoriaServicio.buscarCategoriaPorId(id_categoria);
+            mv.addObject("categoriaElegida", categoriaElegida);
+            Historia historia = new Historia();
+            historia.setPerfil(perfil);
+            historia.setCategoria(categoriaElegida);
+            mv.addObject("historia", historia);
 
             if (perfil.getCategoriaDelDia() != null) {
                 mv.setViewName("redirect:/historia");
