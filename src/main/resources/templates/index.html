@@ -100,9 +100,12 @@
                         </h2>
                         <form>
                         <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-primary btn-lg" type="submit" th:each="categoria : ${topicos}" th:text="${categoria.nombre}">SAUCE</button>
+<!--
                           <button class="btn btn-primary btn-lg" type="submit">SAUCE</button>
                           <button class="btn btn-primary btn-lg" type="submit">GÁRGOLA</button>
                           <button class="btn btn-primary btn-lg" type="submit">MEDIALUNAS</button>
+-->
                         </div>
                         </form>
                     </div>
