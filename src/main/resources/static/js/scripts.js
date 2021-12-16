@@ -90,7 +90,8 @@ const Countdown = (() => {
 
     //let nextMidnight = new Date();
     //nextMidnight.setHours(24,0,0,0);
-    let nextTime = new Date(new Date().getTime() + 10000);
+    let descontar = 10000;
+    let nextTime = new Date(new Date().getTime() + descontar);
 
     const getRemainingTime = () => {
         let now = new Date();
