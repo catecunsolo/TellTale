@@ -134,10 +134,10 @@ public class UsuarioServicio implements UserDetailsService {
         if (username == null) {
             throw new Exception("Error--> El nombre de usuario no puede estar vacío.");
         }
-        if (username.length() > 12) {
-            throw new Exception("Error--> El nombre de usuario no puede contener más de 12 carácteres.");
+        if (username.length() > 16) {
+            throw new Exception("Error--> El nombre de usuario no puede contener más de 16 carácteres.");
         } else {
-            if (username.length() < 7) {
+            if (username.length() <= 7) {
                 throw new Exception("Error--> El nombre de usuario debe contener al menos 8 caracteres.");
             }
         }
@@ -156,8 +156,12 @@ public class UsuarioServicio implements UserDetailsService {
         if (password == null) {
             throw new Exception("Error--> La contraseña no puede estar vacía.");
         }
-        if (password.length() < 7) {
+        if (password.length() <= 7) {
             throw new Exception("Error--> La contraseña no puede contener menos de 8 carácteres.");
+        }
+
+        if (password.length() > 16) {
+            throw new Exception("Error--> La contraseña no puede contener mas de 16 carácteres.");
         }
     }
 
@@ -171,6 +175,7 @@ public class UsuarioServicio implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        usuario = new Usuario();
         if (username.contains("@")) {
             usuario = usuarioRepositorio.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(String.format(MENSAJE, username)));
         } else {

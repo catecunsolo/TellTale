@@ -1,10 +1,5 @@
 package com.telltale.main.entidad;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,29 +8,30 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "historia", schema = "telltale")
+@Table(name = "comentario", schema = "telltale")
 @EntityListeners(AuditingEntityListener.class)
-public class Historia  implements Serializable {
+public class Comentario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_historia;
+    private Integer id_comentario;
 
-    @Column(nullable = false)
-    private String titulo;
+    @Column(name = "asunto", nullable = false, columnDefinition = "VARCHAR(50)")
+    private String asunto;
 
-    @OneToOne
-    private Imagen portada;
-
-    @Column(nullable = false,columnDefinition = "text")
-    private String historia;
+    @Column(name = "comentario", nullable = false, columnDefinition = "VARCHAR(255)")
+    private String comentario;
 
     @Column(name = "meGusta", nullable = false, columnDefinition = "INT")
     private Integer meGusta;
@@ -45,11 +41,11 @@ public class Historia  implements Serializable {
 
     @ManyToOne
     @JoinColumn(nullable=false)
-    private Categoria categoria;
+    private Perfil perfil;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
-    private Perfil perfil;
+    @JoinColumn(nullable=false)
+    private Historia historia;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -60,11 +56,5 @@ public class Historia  implements Serializable {
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean alta;
-
-    @OneToMany(mappedBy = "historia")
-    private List<HistoriaFavorita> historiasFav;
-
-    @OneToMany(mappedBy = "historia")
-    private List<Comentario> comentarios;
 
 }

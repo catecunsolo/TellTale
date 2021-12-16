@@ -1,5 +1,6 @@
 package com.telltale.main.servicio;
 
+import com.telltale.main.entidad.Categoria;
 import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Usuario;
@@ -17,15 +18,19 @@ public class PerfilServicio {
     private PerfilRepositorio perfilRepositorio;
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Transactional
     public void crearPerfil(String nombre, String apellido, String descripcion, Usuario usuario) throws Exception {
-        validarNulo(nombre, apellido, descripcion);
+        //validarNulo(nombre, apellido, descripcion);
         Perfil perfil = new Perfil();
         perfil.setNombre(nombre);
         perfil.setApellido(apellido);
-        perfil.setUsuario(usuario);
+        perfil.setRedes(null);
+        perfil.setAvatar(null);
         perfil.setDescripcion(descripcion);
+        perfil.setCategoriaDelDia(null);
+        perfil.setUsuario(usuario);
+        perfil.setAlta(true);
         perfilRepositorio.save(perfil);
     }
 
@@ -57,24 +62,39 @@ public class PerfilServicio {
         return perfil;
     }
     
+    @Transactional
+    public void setearCategoriaDelDia(int id_perfil,Categoria categoria) throws Exception{
+        Perfil perfil = perfilRepositorio.findById(id_perfil).orElse(null);
+        if (perfil==null) {
+            throw new Exception("No existe un perfil asociado a ese usuario");
+        }
+        perfil.setCategoriaDelDia(categoria);
+        perfilRepositorio.save(perfil);
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @Transactional
+    public void bajaCateDelDia(){
+        List<Perfil> perfiles = perfilRepositorio.findAll();
+        for (Perfil perfil : perfiles) {
+            perfil.setCategoriaDelDia(null);
+            perfilRepositorio.save(perfil);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void validarNulo(String nombre, String apellido, String descripcion) throws Exception {
         if (nombre.trim().isEmpty() || nombre == null) {
             throw new Exception("El nombre es obligatorio");

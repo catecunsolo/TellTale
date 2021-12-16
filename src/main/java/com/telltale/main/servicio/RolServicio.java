@@ -78,6 +78,21 @@ public class RolServicio {
     }
 
     @Transactional(readOnly = true)
+    public Rol buscarRolPorNombre(String nombre) throws Exception {
+        try {
+            Rol rol = rolRepositorio.findByNombreIgnoreCase(nombre);
+            if (rol == null) {
+                throw new MiExcepcion("No se ha encontrado un Rol con el número de ID indicado");
+            } else {
+                return rol;
+            }
+        } catch (Exception excepcion) {
+            throw new Exception("Algo ha sucedido y no se ha podido procesar la búsqueda de Rol, por ID, en la base de datos." +
+                    "\n - Descripción del error: " + excepcion.getMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
     public boolean existeRol(String nombre) throws Exception {
         try {
             return (rolRepositorio.findByNombreIgnoreCase(nombre) != null) ? true : false;
