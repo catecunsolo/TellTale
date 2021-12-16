@@ -27,7 +27,7 @@ public class HomeControlador {
         return modelAndView;
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     public void rellenarTopicos() {
         topicos = categoriaDelDiaServicio.buscarLasUltimasTresMasVotadas();
     }
