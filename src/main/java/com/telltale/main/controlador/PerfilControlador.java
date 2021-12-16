@@ -5,6 +5,9 @@ import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Rol;
 import com.telltale.main.entidad.Usuario;
 import com.telltale.main.servicio.PerfilServicio;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import static org.apache.coyote.http11.Constants.a;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,7 @@ public class PerfilControlador {
     PerfilServicio perfilServicio;
 
     @GetMapping
-    public ModelAndView verMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+      public ModelAndView verMiPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
         HttpSession session = (HttpSession) request.getSession();
         ModelAndView modelAndView = new ModelAndView("perfil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -88,36 +91,45 @@ public class PerfilControlador {
         }
         return redirectView;
     }
-
-/*
-    @GetMapping
-    public ModelAndView verTodosPerfil() {
+    
+    
+     @GetMapping("/todos")
+    public ModelAndView verTodosPerfil(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("perfiles");
+        Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
+        if (map != null) {
+            mav.addObject("error", map.get("exito-name"));
+        }
         mav.addObject("perfiles", perfilServicio.verTodosPerfil());
+
         return mav;
     }
 
     @GetMapping("/crear")
-    public ModelAndView crearPerfil() {
+    public ModelAndView crearPerfil(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("perfil-formulario");
+        Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
+        if (map != null) {
+            mav.addObject("error", map.get("error-name"));
+        }
         mav.addObject("perfil", new Perfil());
         mav.addObject("titile", "Crear Perfil");
         mav.addObject("action", "guardae");
         return mav;
     }
 
-    @PostMapping("/guardar")
-    public RedirectView guardaPerfil(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String descripcion, @RequestParam Usuario usuario)throws Exception {
-        perfilServicio.crearPerfil(nombre, apellido, descripcion, usuario);
-        return new RedirectView("/perfil");
-    }
-
     @PostMapping("/modificar")
     public RedirectView modificarPerfil(@RequestParam Integer id_perfil, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String descripcion)throws Exception {
-        perfilServicio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
+            @RequestParam String apellido, @RequestParam String descripcion, RedirectAttributes a) throws Exception {
+        try {
+            perfilServicio.modificarPerfil(id_perfil, nombre, apellido, descripcion);
+            a.addFlashAttribute("success", "Perfil modificado exitosamente.");
+        } catch (Exception exception) {
+            a.addFlashAttribute("error", "Error --> Modificando perfil--> " + exception.getMessage());
+        }
+
         return new RedirectView("/perfil");
+
     }
 
     @PostMapping("/eliminar/{id_perfil}")
@@ -126,6 +138,9 @@ public class PerfilControlador {
         return new RedirectView("/perfil");
     }
 
-*/
 
 }
+
+
+
+
