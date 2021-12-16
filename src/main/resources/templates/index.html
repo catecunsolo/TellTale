@@ -90,7 +90,7 @@
         <!--SECCION ELECCIÓN TEMA (INDEX PARA LOGUEADOS)-->
 
 
-        <section class="page-section cta2" sec:authorize="isAnonymous()"><!--cambiar esto, está anonimo para probarlo-->
+        <section class="page-section cta2" sec:authorize="isAuthenticated()"><!--cambiar esto, está anonimo para probarlo-->
             <div class="container">
                 <div class="col-xl-9 mx-auto">
                     <div class="cta-inner bg-faded text-center rounded">
@@ -102,7 +102,7 @@
                         <div>TIEMPO HASTA LAS PROXIMAS CATEGORIAS:</div>
                         <div class="display-3 text-secondary" id="countdown-two"></div>
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <a class="btn btn-primary btn-lg" type="submit" th:each="categoria : ${topicos}" th:text="${categoria.nombre}"></a>
+                            <a class="btn btn-primary btn-lg" th:href="@{/historia/crear(categoria=${categoria.getId_categoria()})}" th:each="categoria : ${topicos}" th:text="${categoria.nombre}"></a>
 <!--
                           <button class="btn btn-primary btn-lg" type="submit">SAUCE</button>
                           <button class="btn btn-primary btn-lg" type="submit">GÁRGOLA</button>
