@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head th:replace="fragments :: head">
     </head>
     <body>
         <header th:replace="fragments :: header">
         </header>
         
+        <!--SECCION INTRO (index para todos)-->
+
         <section class="page-section clearfix">
             <div class="container">
                 <div class="intro">
@@ -22,9 +24,11 @@
             </div>
         </section>
 
-        <!--SECCION LLAMADA A REGISTRO-->
 
-        <section class="page-section cta">
+
+        <!--SECCION LLAMADA A REGISTRO (INDEX PARA NO-LOGUEADOS)-->
+
+        <section class="page-section cta" sec:authorize="isAnonymous()">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-9 mx-auto">
@@ -65,7 +69,7 @@
                            
                             </section>
                             <div>
-                              <a class="btn btn-primary btn-lg" href="#">¡Quiero ser parte!</a>
+                              <a class="btn btn-primary btn-lg" href="signup">¡Quiero ser parte!</a>
                               <a class="btn btn-outline-primary btn-lg" href="login">Ya tengo un usuario</a>
                             </div>
                         </div>
@@ -81,342 +85,12 @@
           });
       </script>
     
- <!--VISTA PERFIL-->
- <section class="page-section clearfix">
-  <div class="container">
-    <div class="col-xl-6 mx-auto">
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-pills card-header-tabs ms-auto">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#!">Bio</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#!">Ver historias</a>
-      </li></ul>
-  </div>
-  <div class="card-body">
-    <div col-3>
-    <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic"> </div>
-  
-    <h5 class="card-title">Nombre de usuario</h5>
-    <h5 class="text-secondary mb-4">@username</h5>
-    <h6><i class="fas fa-pen-fancy me-1 pe-1"></i> 20 escritas <i class="fas fa-star ms-2 me-1 pe-1"></i> 42 favoritas</h6>
-    <p class="card-text p-2">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam excepturi incidunt enim et. Ex consectetur sapiente voluptas earum unde libero, doloribus quis distinctio. Repudiandae suscipit incidunt consectetur architecto rem quisquam.
-    </p>
-    <a href="#" class="btn btn-secondary mb-1">Editar perfil</a>
-  </div>
-</div>
-  </div>
-  </div>
-</div>
-</section>
-
-<!--VISTA COMPLETAR PERFIL-->
-<section class="page-section cta">
-  <div class="container">
-    <div class="col-xl-6 mx-auto">
-    <div class="cta-inner bg-faded rounded mb-4">
-      <h2 class="section-heading">
-        <span class="section-heading-lower text-secondary text-center">Completá tu perfil</span>
-    </h2>
-      <div class="text-center"><i class="fas fa-user-circle fa-3x off"></i></div>
-    <form>
-        <div class="mb-3">
-          <label for="apellido" class="form-label">Nombre</label>
-          <input id="nombre" type="text" name="nombre" class="form-control" required></input>
-          <div class="invalid-feedback text-start">El nombre es obligatorio</div>
-        </div>
-        <div class="mb-3">
-          <label for="apellido" class="form-label">Apellido</label>
-          <input class="form-control" id="apellido"></input>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="usuario" class="form-label">Username</label>
-          <input id="usuario" type="text" name="usuario" class="form-control" required></input>
-          <div class="invalid-feedback text-start">El username es obligatorio</div>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Bio</label>
-          <textarea class="form-control" id="descripcion" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-    </form>
-    </div>
-</div>
-  </div>
-</section>
-
-<!--VISTA EDITAR PERFIL-->
-<section class="page-section cta">
-  <div class="container">
-    <div class="col-xl-6 mx-auto">
-    <div class="cta-inner bg-faded rounded mb-4">
-      <h2 class="section-heading">
-        <span class="section-heading-lower text-secondary text-center">Editá tu perfil</span>
-    </h2>
-      <div class="text-center"><i class="fas fa-user-circle fa-3x off"></i></div>
-    <form>
-        <div class="mb-3">
-          <label for="apellido" class="form-label">Nombre</label>
-          <input id="nombre" type="text" name="nombre" class="form-control"></input>
-          <div class="invalid-feedback text-start">El nombre es obligatorio</div>
-        </div>
-        <div class="mb-3">
-          <label for="apellido" class="form-label">Apellido</label>
-          <input id="apellido" type="text" name="apellido" class="form-control"></input>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="usuario" class="form-label">Username</label>
-          <input id="usuario" type="text" name="usuario" class="form-control"></input>
-          <div class="invalid-feedback text-start">El username es obligatorio</div>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Bio</label>
-          <textarea class="form-control" id="descripcion" type="text" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-    </form>
-    </div>
-</div>
-  </div>
-</section>
-
-<!--VISTA REGISTRO-->
-<section class="page-section cta">
-  <div class="container">
-    <div class="col-xl-6 mx-auto">
-    <div class="cta-inner bg-faded rounded mb-4">
-      <h2 class="section-heading">
-        <span class="section-heading-lower text-secondary text-center">Registrate</span>
-    </h2>
-      <div class="text-center mb-2"><i class="fas fa-user-circle fa-3x off"></i></div>
-  <form>
-    <div class="mb-3">
-      <input id="correo" type="email" name="correo" placeholder="Correo" class="form-control" required/>
-      <div class="invalid-feedback text-start">El correo es obligatorio</div>
-    </div>
-    <div class="mb-3">
-      <input id="clave" type="password" name="clave" placeholder="Contraseña" class="form-control" required/>
-      <div class="invalid-feedback text-start">La contraseña es obligatoria</div>
-    </div>
-    <div class="mb-3">
-      <input id="username" type="text" name="username" placeholder="Username" class="form-control" required/>
-      <div class="invalid-feedback text-start">El nombre de usuario es obligatorio</div>
-    </div>
-    <button type="submit" class="btn btn-primary">Registrarme</button>
-    </form> 
-</div>
-</div>
-  </div>
-</section>
 
 
-<!--VISTA LOGIN-->
-<section class="page-section cta">
-  <div class="container">
-    <div class="col-xl-6 mx-auto">
-    <div class="cta-inner bg-faded rounded mb-4">
-      <h2 class="section-heading">
-        <span class="section-heading-lower text-secondary text-center">INGRESAR</span>
-    </h2>
-      <div class="text-center mb-2"><i class="fas fa-user-circle fa-3x off"></i></div>
-  <form>
-    <div class="mb-3">
-      <input id="correo" type="email" name="correo" placeholder="Correo" class="form-control" required/>
-      <div class="invalid-feedback text-start">El correo es obligatorio</div>
-    </div>
-    <div class="mb-3">
-      <input id="clave" type="password" name="clave" placeholder="Contraseña" class="form-control" required/>
-      <div class="invalid-feedback text-start">La contraseña es obligatoria</div>
-    </div>
-    <button type="submit" class="btn btn-primary">Ingresar</button>
-    </form> 
-</div>
-</div>
-  </div>
-</section>
+        <!--SECCION ELECCIÓN TEMA (INDEX PARA LOGUEADOS)-->
 
 
-<!--VISTA FORMULARIO HISTORIA-->
-<section class="page-section cta">
-  <div class="container">
-    <div class="col-xl-9 mx auto"></div>
-       <div class="cta-inner bg-faded rounded mb-4">
-        <h2 class="section-heading">
-          <span class="section-heading-lower text-secondary text-center">CONTÁ TU HISTORIA</span>
-      </h2>
-      <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
-    <form>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="">Categoría: {categoría elegida}</span>
-          </div>
-          <div class="input-group-append">
-          <a class="btn btn-outline-primary" href="/">Cambiar</a>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="titulo" class="form-label">Título</label>
-          <input class="form-control" id="titulo"></input>
-        </div>
-        <div class="mb-3">
-          <label for="txt-historia" class="form-label">Tu historia</label>
-          <textarea class="form-control" id="txt-historia" rows="6"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-</div>
-</div>
-  </div>
-</section>
-
-
-<!--SECCION HISTORIAS RELACIONADAS-->
-
-        <section class="page-section cta2">
-          <div class="container">
-            <div class="col-xl-9 mx-auto">
-              <div class="cta-inner bg-faded text-center rounded mb-4">
-                <h2 class="section-heading">
-                    <span class="section-heading-upper">LEE LAS DEMÁS</span>
-                    <span class="section-heading-lower text-secondary">HISTORIAS SOBRE {TEMA}!</span>
-                </h2>
-                </div>
-              <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div clas="col">
-                  <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                    <div class="card-body">
-                        <div class="small text-muted">January 1, 2021</div>
-                        <h2 class="card-title h4">Título de la historia</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                        <a class="btn btn-primary" href="#!">Leer más →</a>
-                    </div>
-                </div>
-                </div>
-                <div clas="col">
-                  <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                    <div class="card-body">
-                      <div class="small text-muted">January 1, 2021</div>
-                      <h2 class="card-title h4">Título de la historia</h2>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                      <a class="btn btn-primary" href="#!">Leer más →</a>
-                  </div>
-                </div>
-                </div>
-                <div clas="col">
-                  <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                    <div class="card-body">
-                      <div class="small text-muted">January 1, 2021</div>
-                      <h2 class="card-title h4">Título de la historia</h2>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                      <a class="btn btn-primary" href="#!">Leer más →</a>
-                  </div>
-                </div>
-                </div>
-                <div clas="col">
-                  <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                    <div class="card-body">
-                      <div class="small text-muted">January 1, 2021</div>
-                      <h2 class="card-title h4">Título de la historia</h2>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                      <a class="btn btn-primary" href="#!">Leer más →</a>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </section>
-
-  
-
-<!--SECCION HISTORIA INDIVIDUAL-->
-
-      <section class="page-section">
-        <div class="container">
-          <div class="product-item">
-              <div class="product-item-title d-flex">
-                  <div class="bg-faded p-5 d-flex me-auto rounded">
-                      <h2 class="section-heading mb-0">
-                        <span class="section-heading-upper"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                        </i>USUARIO<span class="text-muted">    / {TEMA}</span></span>
-                          <span class="section-heading-lower text-secondary">Título de la historia</span>
-                      </h2>
-                  </div>
-              </div>
-              <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="../img/products-02.jpg" alt="..." />
-              <div class="product-item-description d-flex ms-auto">
-                  <div class="bg-faded p-5 rounded"><p class="mb-0">Mi abuela hacía las mejores medialunas del mundo. Antes de prepararlas, me hacía describirlas con un adjetivo a elección, como "pluscuamperfectas", "maravillosas", etc. Ella después hacía de cuenta que cocinaba las medialunas según mis instrucciones.</p>
-                    <p>
-                      <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios" aria-expanded="false" aria-controls="comentarios">
-                        Comentarios
-                      </button>
-                      <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
-                        Comentar
-                      </button>
-                    </p>
-                    <div class="collapse" id="comentarios">
-                      <ol class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                          <div class="ms-2 me-auto mb-3">
-                            <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                          </i>Usuario</div>
-                            Mirá vo :)
-                          </div>
-                          <p class="text-end text-muted">19-10-21 11:10</p>              
-                                  </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                          <div class="ms-2 me-auto mb-3">
-                            <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                            </i>Usuario</div>
-                            Jajajaja
-                          </div>
-                          <p class="text-end text-muted">19-10-21 13:26</p>              
-                                  </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                          <div class="ms-2 me-auto mb-3">
-                            <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                            </i>Usuario</div>
-                            Me pasooooo
-                          </div>
-                          <p class="text-end text-muted">19-10-21 20:30</p>              
-                                  </li>
-                     
-                      </ol>
-                    </div>
-                    <div class="collapse" id="comentar">
-                      <form class="row g-3">
-                        <div class="mb-3 mt-3">
-                          <label for="comentario" class="form-label">Escribí tu comentario</label>
-                          <textarea class="form-control" id="comentario" rows="3"></textarea>
-                        </div>
-                        <div class="col-auto">
-                          <button type="submit" class="btn btn-primary mb-3">Enviar</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  
-                </div>
-          </div>
-      </div>
-        </section>
-
-
-        <!--SECCION ELECCIÓN TEMA-->
-
-
-        <section class="page-section cta2">
+        <section class="page-section cta2" sec:authorize="isAnonymous()"><!--cambiar esto, está anonimo para probarlo-->
             <div class="container">
                 <div class="col-xl-9 mx-auto">
                     <div class="cta-inner bg-faded text-center rounded">
@@ -425,10 +99,15 @@
                             <span class="section-heading-lower text-secondary">Elegí un disparador</span>
                         </h2>
                         <form>
+                        <div>TIEMPO HASTA LAS PROXIMAS CATEGORIAS:</div>
+                        <div class="display-3 text-secondary" id="countdown-two"></div>
                         <div class="d-grid gap-2 col-6 mx-auto">
+                            <a class="btn btn-primary btn-lg" type="submit" th:each="categoria : ${topicos}" th:text="${categoria.nombre}"></a>
+<!--
                           <button class="btn btn-primary btn-lg" type="submit">SAUCE</button>
                           <button class="btn btn-primary btn-lg" type="submit">GÁRGOLA</button>
                           <button class="btn btn-primary btn-lg" type="submit">MEDIALUNAS</button>
+-->
                         </div>
                         </form>
                     </div>
@@ -437,46 +116,8 @@
             </div>
         </section>
 
-<!--SECCION VOTAR TEMA-->
 
-<section class="page-section cta">
-<div class="container">
-    <div class="col-xl-9 mx-auto d-flex justify-content-center">
-    <div class="cta-inner bg-faded text-center rounded">
-      <h2 class="section-heading mb-4 me-auto">
-        <span class="section-heading-upper">Mañana puede salir elegido</span>
-        <span class="section-heading-lower text-secondary text-wrap">SUGERÍ UN TEMA</span>
-    </h2>
-    <form>
-      <input type="text" class="form-control mb-3" id="tema-sugerido">
-      <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
-    </form>
-      </div>
-
-</div>
-</div>
-</section>
-
-<section class="page-section cta2">
-  <div class="container">
-      <div class="col-xl-9 mx-auto d-flex justify-content-center">
-      <div class="cta-inner bg-faded text-center rounded col-xl-9">
-       
-        <h2 class="section-heading mb-4">
-          <span class="section-heading-lower text-secondary">UPS</span>
-          <span class="section-heading-upper">OCURRIÓ UN ERROR</span>
-      </h2>
-
-       <img th:src="@{../img/monkey-pissed.gif}" alt="Gif de error" class="img-fluid mb-2 mb-lg-0 rounded">
-        <h1 th:text="${codigo}" class="mt-3"></h1>
-        <p th:text="${mensaje}"></p>
-        <a href="/" class="btn btn-primary">Ir a página principal</a>
-    </div>
-
-        </div>
-  
-  </div>
-  </section>
+        
 
         <footer th:replace="fragments :: footer"></footer>
     </body>

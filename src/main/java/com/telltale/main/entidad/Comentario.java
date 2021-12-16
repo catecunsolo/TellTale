@@ -17,24 +17,35 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario", schema = "telltale")
+@Table(name = "comentario", schema = "telltale")
 @EntityListeners(AuditingEntityListener.class)
-public class Usuario implements Serializable {
+public class Comentario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
+    private Integer id_comentario;
 
-    @Column(name = "username", nullable = false, unique = true, columnDefinition = "VARCHAR(20)")
-    private String username;
+    @Column(name = "asunto", nullable = false, columnDefinition = "VARCHAR(50)")
+    private String asunto;
 
-    @Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
-    private String email;
+    @Column(name = "comentario", nullable = false, columnDefinition = "VARCHAR(255)")
+    private String comentario;
 
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
-    private String password;
+    @Column(name = "meGusta", nullable = false, columnDefinition = "INT")
+    private Integer meGusta;
+
+    @Column(name = "noMeGusta", nullable = false, columnDefinition = "INT")
+    private Integer noMeGusta;
+
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Perfil perfil;
+
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Historia historia;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -45,9 +56,5 @@ public class Usuario implements Serializable {
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean alta;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Rol rol;
 
 }

@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head th:replace="fragments :: head">
     </head>
     <body>
         <header th:replace="fragments :: header">
         </header>
         <main>
-            <div class="container login-container">
+            <div class="container login-container page-section cta">
                 <div class="row">
-                    <div class="col login-logo text-center">
-                        <img th:src="@{../img/book.png}" alt="book logo" width="150px"/>
-                    </div>
-                    <div class="col signin-form form-control">
-                        <form action="" method="post" id="registerForm" role="form">
-                            <fieldset><legend class="text-center">Registrarse</legend>
+                    <div class="col-xl-6 mx-auto signin-form cta-inner bg-faded rounded mb-4">
+                        <form th:action="@{/signup/register}" method="post" id="registerForm" role="form">
+                            <fieldset>
+                                <legend class="cta-inner bg-faded rounded mb-4 text-secondary fs-2 text-center">REGISTRARSE</legend>
+                                <div class="text-center mb-2"><i id="iconLog" class="fas fa-pen-square fa-3x off"></i></div>
                                 <div class="form-group">
-                                    <label for="emailReg"><span class="req">* </span> Email Address: </label>
-                                    <input class="form-control" required type="text" name="email" id = "emailReg"  onchange="email_validate(this.value, 'reg');" />
+                                    <label for="emailReg"><span class="req">* </span> Email: </label>
+                                    <input class="form-control" required type="text" name="mail" id = "emailReg"  onchange="email_validate(this.value, 'reg');" />
                                     <div class="status" id="statusReg"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="pass1"><span class="req">* </span> Password: </label>
-                                    <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16"  id="pass1" /> </p>
+                                    <label for="usernameReg"><span class="req">* </span> Username: </label>
+                                    <input class="form-control" required type="text" name="username" id = "usernameReg" minlength="8" maxlength="16" /> <!--onchange="email_validate(this.value, 'reg');"-->
+                                </div>
 
-                                    <label for="pass2"><span class="req">* </span> Password Confirm: </label>
-                                    <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
+                                <div class="form-group">
+                                    <label for="pass1"><span class="req">* </span> Contraseña: </label>
+                                    <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16"  id="pass1"/> </p>
+
+                                    <label for="pass2"><span class="req">* </span> Confirmar contraseña: </label>
+                                    <input required name="password2" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
                                     <span id="confirmMessage" class="confirmMessage"></span>
                                 </div>
                                 <hr/>
                                 <div class="form-group">
-                                    <input class="btn btn-secondary" type="submit" name="submit_reg" id="registerSubmit" value="Registarse">
+                                    <input class="btn btn-primary" type="submit" name="submit_reg" id="registerSubmit" value="Registarse">
                                 </div>
                             </fieldset>
                         </form>
@@ -38,6 +42,38 @@
                 </div>
             </div>
         </main>
+
+
+<!--VISTA REGISTRO
+<section class="page-section cta">
+    <div class="container">
+      <div class="col-xl-6 mx-auto">
+      <div class="cta-inner bg-faded rounded mb-4">
+        <h2 class="section-heading">
+          <span class="section-heading-lower text-secondary text-center">Registrate</span>
+      </h2>
+        <div class="text-center mb-2"><i class="fas fa-user-circle fa-3x off"></i></div>
+    <form>
+      <div class="mb-3">
+        <input id="correo" type="email" name="correo" placeholder="Correo" class="form-control" required/>
+        <div class="invalid-feedback text-start">El correo es obligatorio</div>
+      </div>
+      <div class="mb-3">
+        <input id="clave" type="password" name="clave" placeholder="Contraseña" class="form-control" required/>
+        <div class="invalid-feedback text-start">La contraseña es obligatoria</div>
+      </div>
+      <div class="mb-3">
+        <input id="username" type="text" name="username" placeholder="Username" class="form-control" required/>
+        <div class="invalid-feedback text-start">El nombre de usuario es obligatorio</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Registrarme</button>
+      </form> 
+  </div>
+  </div>
+    </div>
+  </section>-->
+  
+
         <footer th:replace="fragments :: footer">
         </footer>
     </body>

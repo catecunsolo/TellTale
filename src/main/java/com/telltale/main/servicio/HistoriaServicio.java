@@ -9,6 +9,8 @@ import com.telltale.main.entidad.Categoria;
 import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.repositorio.HistoriaRepositorio;
+
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +26,6 @@ public class HistoriaServicio {
     private HistoriaRepositorio repository;
     @Autowired
     private CategoriaServicio categoriaServicio;
-    
-    
     
     @Transactional
     public void crearHistoria(String titulo, String historia, Perfil perfil,Categoria categoria) throws Exception{

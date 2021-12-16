@@ -17,24 +17,15 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario", schema = "telltale")
+@Table(name = "categoriaDelDia", schema = "telltale")
 @EntityListeners(AuditingEntityListener.class)
-public class Usuario implements Serializable {
+public class CategoriaDelDia  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
-
-    @Column(name = "username", nullable = false, unique = true, columnDefinition = "VARCHAR(20)")
-    private String username;
-
-    @Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
-    private String email;
-
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
-    private String password;
+    private Integer id;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -43,11 +34,7 @@ public class Usuario implements Serializable {
     @LastModifiedDate
     private LocalDate fechaUltModificacion;
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private Boolean alta;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Rol rol;
+    @OneToOne
+    private Categoria categoria;
 
 }

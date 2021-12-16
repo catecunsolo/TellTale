@@ -7,103 +7,139 @@
         </header>
 
         
-<!--VISTA PARA USUARIO QUE AÙN NO SUBIÒ UNA HISTORIA-->
-
-
-
-<!--VISTA FORMULARIO HISTORIA-->
-<section class="page-section cta">
-    <div class="container col-8">
-      <h1 class="site-heading text-center text-faded d-none d-lg-block">
-        <span class="site-heading-upper">CONTÁ TU HISTORIA</span>
-    </h1>
-      <div class="cta-inner bg-faded rounded mb-4">
+<!--VISTA FORMULARIO HISTORIA (para usuarios que no subieron nada)-->
+<section th:if="${action == 'crear'}" class="page-section cta">
+    <div class="container">
+      <div class="col-xl-9 mx auto"></div>
+         <div class="cta-inner bg-faded rounded mb-4">
+          <h2 class="section-heading">
+            <span class="section-heading-lower text-secondary text-center">CONTÁ TU HISTORIA</span>
+        </h2>
         <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
-      <form>
-          <div class="mb-3">
-            <label for="categoria" class="form-label">Categoria</label>
-            <select class="form-select" aria-label="Default select example" id="categoria">
-              <option value="disabled selected">--Selecciona una de la lista--</option>
-              <option value="1">Categoria 1</option>
-              <option value="2">Categoria 2</option>
-              <option value="3">Categoria 3</option>
-            </select>
+      <form autocomplete="off" class="need-validation" id="formulario" method="POST"
+      novalidate th:action="@{/historias/crear}" th:object="${historia}">
+      <input th:field="*{id_historia}" type="hidden"/>
+      <input th:field="*{alta}" type="hidden"/>
+      <input th:field="*{meGusta}" type="hidden"/>
+      <input th:field="*{noMeGusta}" type="hidden"/>
+      <input th:field="*{portada}" type="hidden"/>
+      <input th:field="*{perfil}" type="hidden"/>
+      <input th:field="*{fechaCreacion}" type="hidden"/>
+      <input th:field="*{fechaUltModificacion}" type="hidden"/>
+      <input th:field="*{historiasFav}" type="hidden"/>
+      <input th:field="*{comentarios}" type="hidden"/>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="">Categoría: <span th:text="${perfil.categoriaDelDia}"></span></span>
+            </div>
+            <div class="input-group-append">
+            <a class="btn btn-outline-primary" href="/">Cambiar</a>
+            </div>
           </div>
           <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
-            <input class="form-control" id="titulo"></input>
+            <input class="form-control" id="titulo" placeholder="Titulo" required th:field="*{titulo}" type="text"></input>
+            <div class="invalid-feedback">El título es obligatorio</div>
           </div>
           <div class="mb-3">
-            <label for="txt-historia" class="form-label">Tu historia</label>
-            <textarea class="form-control" id="txt-historia" rows="6"></textarea>
+            <label for="historia" class="form-label">Tu historia</label>
+            <textarea class="form-control" id="historia" placeholder="Escribí aquí" required th:field="*{historia}" rows="6" type="text"></textarea>
+            <div class="invalid-feedback">Tenés que escribir una historia para poder enviarla.</div>
           </div>
           <button type="submit" class="btn btn-primary">Enviar</button>
       </form>
   </div>
+  </div>
     </div>
   </section>
   
-
-<!--VISTA PARA USUARIO QUE YA SUBIÒ UNA HISTORIA-->
-
-<section class="page-section cta2">
-    <div class="container">
-      <div class="col-xl-9 mx-auto">
-        <div class="cta-inner bg-faded text-center rounded mb-4">
-          <h2 class="section-heading">
-              <span class="section-heading-upper">LEE LAS DEMÁS</span>
-              <span class="section-heading-lower text-secondary">HISTORIAS SOBRE {TEMA}!</span>
-          </h2>
-          </div>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div clas="col">
-            <div class="card mb-4">
-              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-              <div class="card-body">
-                  <div class="small text-muted">January 1, 2021</div>
-                  <h2 class="card-title h4">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                  <a class="btn btn-primary" href="#!">Read more →</a>
+  
+  <!--SECCION HISTORIAS RELACIONADAS (para usuarios que ya subieron la suya)-->
+  
+          <section th:if="${action == 'historias'}" class="page-section cta2">
+            <div class="container">
+              <div class="col-xl-9 mx-auto">
+                <div class="cta-inner bg-faded text-center rounded mb-4">
+                  <h2 class="section-heading">
+                      <span class="section-heading-upper">LEE LAS DEMÁS</span>
+                      <span class="section-heading-lower text-secondary">HISTORIAS SOBRE</span><span class="section-heading-lower text-secondary" th:text="${historia.categoria}" ></span></span>
+                  </h2>
+                  </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                  <div class="col" th:each="historia : ${listaHistorias}">
+                    <div class="card mb-4">
+                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                      <div class="card-body">
+                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                          <p class="card-text" th:text="${historia.historia}"></p>
+                          <a class="btn btn-primary" href="#!">Leer más →</a>
+                      </div>
+                  </div>
+                  </div>
+                </div>
               </div>
-          </div>
-          </div>
-          <div clas="col">
-            <div class="card mb-4">
-              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-              <div class="card-body">
-                  <div class="small text-muted">January 1, 2021</div>
-                  <h2 class="card-title h4">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                  <a class="btn btn-primary" href="#!">Read more →</a>
-              </div>
-          </div>
-          </div>
-          <div clas="col">
-            <div class="card mb-4">
-              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-              <div class="card-body">
-                  <div class="small text-muted">January 1, 2021</div>
-                  <h2 class="card-title h4">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                  <a class="btn btn-primary" href="#!">Read more →</a>
-              </div>
-          </div>
-          </div>
-          <div clas="col">
-            <div class="card mb-4">
-              <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-              <div class="card-body">
-                  <div class="small text-muted">January 1, 2021</div>
-                  <h2 class="card-title h4">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                  <a class="btn btn-primary" href="#!">Read more →</a>
-              </div>
-          </div>
-          </div>
+            </div>
+        </section>
+  
+    
+  
+  <!--SECCION HISTORIA INDIVIDUAL (historias/id-historia)-->
+  
+        <section th:if="${action == 'id'}" class="page-section">
+          <div class="container">
+            <div class="product-item">
+                <div class="product-item-title d-flex">
+                    <div class="bg-faded p-5 d-flex me-auto rounded">
+                        <h2 class="section-heading mb-0">
+                          <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
+                            <span class="text-muted" th:text="${historia.categoria}"></span></span>
+                            <span class="section-heading-lower text-secondary" th:text="${historia.titulo}"></span>
+                        </h2>
+                    </div>
+                </div>
+                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="../img/products-02.jpg" alt="..." />
+                <div class="product-item-description d-flex ms-auto">
+                    <div class="bg-faded p-5 rounded"><p class="mb-0" th:text="${historia.historia}">Mi abuela hacía las mejores medialunas del mundo. Antes de prepararlas, me hacía describirlas con un adjetivo a elección, como "pluscuamperfectas", "maravillosas", etc. Ella después hacía de cuenta que cocinaba las medialunas según mis instrucciones.</p>
+                      <p>
+                        <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios" aria-expanded="false" aria-controls="comentarios">
+                          Comentarios
+                        </button>
+                        <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
+                          Comentar
+                        </button>
+                      </p>
+                      <div class="collapse" id="comentarios">
+                        <ol class="list-group">
+                          <li class="list-group-item d-flex justify-content-between align-items-start" th:each="comentario : ${listaComentarios}">
+                            <div class="ms-2 me-auto mb-3">
+                              <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
+                            </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido}"></span></div>
+                              <p class="mb-0" th:text="${comentario.comentario}"></p>
+                            <span class="text-end text-muted" th:text="${comentario.fechaCreacion}"></span>
+                                    </li>
+                        </ol>
+                      </div>
+                      <div class="collapse" id="comentar">
+                        <form class="row g-3 need-validation" autocomplete="off" id="formulario" method="POST"
+                        novalidate th:action="@{/historias/comentar}" th:object="${comentario}">
+                        <input th:field="*{}" type="hidden"/>
+                        <input th:field="*{}" type="hidden"/>
+                          <div class="mb-3 mt-3">
+                            <label for="comentario" class="form-label" >Escribí tu comentario</label>
+                            <textarea class="form-control" id="comentario" placeholder="Escribí aquí" required th:field="*{comentario}" type="text" rows="3"></textarea>
+                          </div>
+                          <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    
+                  </div>
+            </div>
         </div>
-      </div>
-    </div>
-</section>
+          </section>
 
         <footer th:replace="fragments :: footer"></footer>
     </body>
