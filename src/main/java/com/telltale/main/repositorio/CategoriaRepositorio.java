@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoriaRepositorio  extends JpaRepository<Categoria, Integer>{
     
@@ -21,4 +23,6 @@ public interface CategoriaRepositorio  extends JpaRepository<Categoria, Integer>
       
       @Query("SELECT c FROM Categoria c WHERE c.id_categoria = :id_categoria")
       Categoria buscarCategoriaPorId(@Param ("id_categoria") Integer id_categoria);
+
+      List<Categoria> findByOrderByVotoDesc();
 }
