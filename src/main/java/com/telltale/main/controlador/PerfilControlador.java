@@ -93,7 +93,7 @@ public class PerfilControlador {
     }
     
     
-     @GetMapping
+     @GetMapping("/todos")
     public ModelAndView verTodosPerfil(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("perfiles");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
