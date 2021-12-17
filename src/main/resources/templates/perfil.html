@@ -8,109 +8,122 @@
 
 
 
- <!--VISTA PERFIL-->
- <section th:if="${action == 'perfil'}" class="page-section clearfix">
+<!--VISTA PERFIL-->
+<section th:if="${action == 'perfil'}" class="page-section clearfix">
     <div class="container">
-      <div class="col-xl-6 mx-auto">
-  <div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-pills card-header-tabs ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="true" href="#!">Bio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" th:href="@{/historia/misHistorias}">Ver historias</a>
-        </li></ul>
-    </div>
-    <div class="card-body">
-      <div col-3>
-      <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic"> </div>
+        <div class="col-xl-6 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-tabs ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="true" href="#!">Bio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/historia/misHistorias}">Ver historias</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div col-3>
+                        <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic"></div>
 
-        <h5 class="card-title" th:text="${perfil.nombre} + ' ' + ${perfil.apellido}">Nombre de usuario</h5>
-        <h5 class="text-secondary mb-4" th:text="${perfil.usuario.username}">@username</h5>
-      <h6><i class="fas fa-pen-fancy me-1 pe-1"></i> 20 escritas <i class="fas fa-star ms-2 me-1 pe-1"></i> 42 favoritas</h6>
-        <p class="card-text p-2" th:text="${perfil.descripcion}">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam excepturi incidunt enim et. Ex consectetur sapiente voluptas earum unde libero, doloribus quis distinctio. Repudiandae suscipit incidunt consectetur architecto rem quisquam.
-        </p>
-        <a th:href="@{/perfil/editar}" class="btn btn-secondary mb-1">Editar perfil</a>
+                    <h5 class="card-title" th:text="${perfil.nombre} + ' ' + ${perfil.apellido}">Nombre de usuario</h5>
+                    <h5 class="text-secondary mb-4" th:text="${perfil.usuario.username}">@username</h5>
+                    <h6><i class="fas fa-pen-fancy me-1 pe-1"></i> 20 escritas <i
+                            class="fas fa-star ms-2 me-1 pe-1"></i> 42 favoritas</h6>
+                    <p class="card-text p-2" th:text="${perfil.descripcion}">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam excepturi incidunt enim et. Ex
+                        consectetur sapiente voluptas earum unde libero, doloribus quis distinctio. Repudiandae suscipit
+                        incidunt consectetur architecto rem quisquam.
+                    </p>
+                    <a th:href="@{/perfil/editar}" class="btn btn-secondary mb-1">Editar perfil</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
     </div>
-    </div>
-  </div>
-  </section>
-  
-  <!--VISTA  PARA OTRO PERFIL-->
- <section th:if="${action == 'perfil_id'}" class="page-section clearfix">
-    <div class="container">
-      <div class="col-xl-6 mx-auto">
-  <div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-pills card-header-tabs ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="true" href="#!">Bio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" th:href="@{/historia/misHistorias/__${id_nuevo}__}">Ver historias</a>
-        </li></ul>
-    </div>
-    <div class="card-body">
-      <div col-3>
-      <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic"> </div>
+</section>
 
-        <h5 class="card-title" th:text="${perfil.nombre} + ' ' + ${perfil.apellido}">Nombre de usuario</h5>
-        <h5 class="text-secondary mb-4" th:text="${perfil.usuario.username}">@username</h5>
-      <h6><i class="fas fa-pen-fancy me-1 pe-1"></i> 20 escritas <i class="fas fa-star ms-2 me-1 pe-1"></i> 42 favoritas</h6>
-        <p class="card-text p-2" th:text="${perfil.descripcion}">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam excepturi incidunt enim et. Ex consectetur sapiente voluptas earum unde libero, doloribus quis distinctio. Repudiandae suscipit incidunt consectetur architecto rem quisquam.
-        </p>
-    </div>
-  </div>
-    </div>
-    </div>
-  </div>
-  </section>
-  
-  <!--VISTA COMPLETAR PERFIL (perfil/editar)-->
-  <section th:if="${action == 'guardar'}" class="page-section cta">
+<!--VISTA  PARA OTRO PERFIL-->
+<section th:if="${action == 'perfil_id'}" class="page-section clearfix">
     <div class="container">
-      <div class="col-xl-6 mx-auto">
-      <div class="cta-inner bg-faded rounded mb-4">
-        <h2 class="section-heading">
-          <span class="section-heading-lower text-secondary text-center">Completá tu perfil</span>
-      </h2>
-        <div class="text-center"><i class="fas fa-user-circle fa-3x off"></i></div>
-          <form method="POST" th:action="@{/perfil/__${action}__}" th:object="${perfil}">
-              <div class="mb-3">
-                  <input type="hidden" class="form-control" id="id_perfil" th:field="*{id_perfil}">
-              </div>
-              <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input id="nombre" type="text" name="nombre" class="form-control" th:field="*{nombre}" required />
-                  <div class="invalid-feedback text-start">El nombre es obligatorio</div>
-              </div>
-              <div class="mb-3">
-                  <label for="apellido" class="form-label">Apellido</label>
-                  <input id="apellido" type="text" name="apellido" class="form-control" th:field="*{apellido}" required />
-              </div>
-              <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input id="username" type="text" name="username" class="form-control" th:field="*{usuario.username}" required />
-                  <div class="invalid-feedback text-start">El username es obligatorio</div>
-                  </select>
-              </div>
-              <div class="mb-3">
-                  <label for="descripcion" class="form-label">Bio</label>
-                  <textarea class="form-control" name="descripcion" id="descripcion" rows="3" th:field="*{descripcion}"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Guardar cambios</button>
-          </form>
-      </div>
-  </div>
+        <div class="col-xl-6 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-tabs ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="true" href="#!">Bio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/historia/misHistorias/__${id_nuevo}__}">Ver
+                                historias</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div col-3>
+                        <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic"></div>
+
+                    <h5 class="card-title" th:text="${perfil.nombre} + ' ' + ${perfil.apellido}">Nombre de usuario</h5>
+                    <h5 class="text-secondary mb-4" th:text="${perfil.usuario.username}">@username</h5>
+                    <h6><i class="fas fa-pen-fancy me-1 pe-1"></i> 20 escritas <i
+                            class="fas fa-star ms-2 me-1 pe-1"></i> 42 favoritas</h6>
+                    <p class="card-text p-2" th:text="${perfil.descripcion}">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam excepturi incidunt enim et. Ex
+                        consectetur sapiente voluptas earum unde libero, doloribus quis distinctio. Repudiandae suscipit
+                        incidunt consectetur architecto rem quisquam.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
-  
-  <!--VISTA EDITAR PERFIL (perfil/crear)-->
+    </div>
+</section>
+
+<!--VISTA COMPLETAR PERFIL (perfil/editar)-->
+<section th:if="${action == 'guardar'}" class="page-section cta">
+    <div class="container">
+        <div class="col-xl-6 mx-auto">
+            <div class="cta-inner bg-faded rounded mb-4">
+                <h2 class="section-heading">
+                    <span class="section-heading-lower text-secondary text-center">Completá tu perfil</span>
+                </h2>
+                <div class="text-center"><i class="fas fa-user-circle fa-3x off"></i></div>
+                <form method="POST" th:action="@{/perfil/__${action}__}" th:object="${perfil}">
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="id_perfil" th:field="*{id_perfil}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input id="nombre" type="text" name="nombre" class="form-control" th:field="*{nombre}"
+                               required/>
+                        <div class="invalid-feedback text-start">El nombre es obligatorio</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input id="apellido" type="text" name="apellido" class="form-control" th:field="*{apellido}"
+                               required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input id="username" type="text" name="username" class="form-control"
+                               th:field="*{usuario.username}" required/>
+                        <div class="invalid-feedback text-start">El username es obligatorio</div>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Bio</label>
+                        <textarea class="form-control" name="descripcion" id="descripcion" rows="3"
+                                  th:field="*{descripcion}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--VISTA EDITAR PERFIL (perfil/crear)-->
 <!--
   <section th:if="${action == 'crear'}" class="page-section cta">
     <div class="container">
@@ -149,6 +162,6 @@
   </section>
   -->
 
-        <footer th:replace="fragments :: footer"></footer>
-    </body>
+<footer th:replace="fragments :: footer"></footer>
+</body>
 </html>
