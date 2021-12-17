@@ -5,12 +5,12 @@
     <body>
         <header th:replace="fragments :: header">
         </header>
-        <div th:if="${listaCategorias.isEmpty()}">
-            <h5> Todavía no hay categorías cargadas.</h5>
+        <div th:if="${categorias.isEmpty()}">
+            <h5> Todavía no hay categorías cargadas. <a th:href="@{/admin-categorias/crear}">Cargar Categoria.</a></h5>
         </div>
-        <div class="table-responsive" th:unless="${listaCategorias.isEmpty()}">
-            <table class="table table-hover table-sm table-bordered">
-                <thead class="table-secondary text-center">
+        <div class="table-responsive" th:unless="${categorias.isEmpty()}">
+            <table class="table table-green table-sm table-bordered text-white text-center">
+                <thead class="table-secondary text-center text-white">
                     <tr>
                         <th class="col-md-4" scope="col">Id</th>
                         <th class="col-md-2" scope="col">Nombre</th>
@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="categoria : ${listaCategorias}">
+                    <tr th:each="categoria : ${categorias}">
                     <td class="col-md-4 " th:text="${categoria.id_categoria}"></td>
                     <td class="col-md-4 " th:text="${categoria.nombre}"></td>
                     <td class="col-md-2 " th:text="${categoria.voto}" style="text-align: center"></td>
@@ -29,7 +29,7 @@
                       method="post"
                       th:action="@{/categoria/eliminar/__${categoria.id_categoria}__}"
                     >
-                      <button class="btn btn-danger btn-sm" type="submit"> Eliminar
+                      <button class="btn btn-success btn-sm" type="submit"> Eliminar
                       </button> </form> </span>
                       
                   </td>   

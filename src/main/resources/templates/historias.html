@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head th:replace="fragments :: head">
     </head>
     <body>
@@ -174,7 +174,8 @@
                             </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido}"></span></div>
                               <p class="mb-0" th:text="${comentario.comentario}"></p>
                             <span class="text-end text-muted" th:text="${comentario.fechaCreacion}"></span>
-                                    </li>
+                              </div>
+                          </li>
                         </ol>
                       </div>
                       <!--<div class="collapse" id="comentar">
