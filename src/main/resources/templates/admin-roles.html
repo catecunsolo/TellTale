@@ -28,18 +28,18 @@
                     <td class="col-md-2 " th:text="${#temporals.format(rol.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
                     <td class="col-md-2 " th:text="${rol.alta}" style="text-align: center"></td>
                     <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${rol.alta}">
-                      <a class="btn btn-secondary btn-sm" th:href="@{/roles/editar/__${rol.id}__}">Editar</a>
+                      <a class="btn btn-secondary btn-sm" th:href="@{/roles/editar/__${rol.id_rol}__}">Editar</a>
                 
                     <span th:case="true"> <form
                       method="post"
-                      th:action="@{/roles/eliminar/__${rol.id}__}"
+                      th:action="@{/roles/eliminar/__${rol.id_rol}__}"
                     >
                       <button class="btn btn-danger btn-sm" type="submit"> Dar de baja
                       </button> </form> </span>
       
                       <span th:case="false"> <form
                         method="post"
-                        th:action="@{/roles/darAlta/__${rol.id}__}"
+                        th:action="@{/roles/darAlta/__${rol.id_rol}__}"
                       >
                         <button class="btn btn-success btn-sm" type="submit"> Dar de alta
                         </button> </form> </span>
