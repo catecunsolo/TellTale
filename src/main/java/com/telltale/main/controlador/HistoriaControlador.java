@@ -136,8 +136,9 @@ public class HistoriaControlador {
         try {
             Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
             Historia historia = historiaServicio.buscarHistoriaPorId(id);
-            if (perfil.getCategoriaDelDia() == null
-                    || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria()) {
+            if ((perfil.getCategoriaDelDia() == null
+                    || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria())
+                    && historia.getPerfil().getId_perfil()!=perfil.getId_perfil()) {
                 mv.setViewName("redirect:/historia");
             }
             mv.addObject("historia", historia);
@@ -204,7 +205,7 @@ public class HistoriaControlador {
                 historiasCortadas.add(historia);
             }
             mv.addObject("listaHistorias", historiasCortadas);
-            mv.addObject("action", "misHistorias");
+            //mv.addObject("action", "misHistorias");
         } catch (Exception e) {
             mv.addObject("error", e.getMessage());
         }
