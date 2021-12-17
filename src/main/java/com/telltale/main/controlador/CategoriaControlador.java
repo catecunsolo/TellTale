@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/categorias")
+@RequestMapping("/admin-categorias")
 public class CategoriaControlador {
 
     @Autowired
@@ -28,7 +28,7 @@ public class CategoriaControlador {
     @GetMapping
     public ModelAndView verTodosCategoria(HttpServletRequest request,
             RedirectAttributes attributes) {
-        ModelAndView mav = new ModelAndView("categorias");
+        ModelAndView mav = new ModelAndView("admin-categorias");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -40,7 +40,7 @@ public class CategoriaControlador {
             }
         } catch (Exception e) {
             attributes.addFlashAttribute("error-name", e.getMessage());
-            mav.setViewName("redirect:/categorias");
+            mav.setViewName("redirect:/admin-categorias");
         }
         return mav;
     }
@@ -63,7 +63,7 @@ public class CategoriaControlador {
     @GetMapping("/editar/ {id_categoria}")
     public ModelAndView editarCategoria(@PathVariable Integer id_categoria,
             HttpServletRequest request, RedirectAttributes attributes) {
-        ModelAndView mav = new ModelAndView("autor-formulario");
+        ModelAndView mav = new ModelAndView("categoria-formulario");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
         try {
             if (map != null) {
@@ -77,7 +77,7 @@ public class CategoriaControlador {
             mav.addObject("action", "modificar");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/categorias");
+            mav.setViewName("redirect:/admin-categorias");
         }
         return mav;
     }
