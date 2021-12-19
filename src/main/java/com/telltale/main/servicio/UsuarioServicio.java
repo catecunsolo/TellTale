@@ -38,6 +38,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private RolServicio rolServicio;
 
+    @Autowired
+    private EmailServicio emailServicio;
+
     private final String MENSAJE = "Este usuario no existe. %s";
 
     @Transactional
@@ -51,6 +54,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setFechaCreacion(LocalDate.now());
         usuario.setFechaUltModificacion(LocalDate.now());
         usuario.setAlta(true);
+        emailServicio.sendMail(username, email); //envio de email por registro exitoso
         return usuarioRepositorio.save(usuario);
     }
 
