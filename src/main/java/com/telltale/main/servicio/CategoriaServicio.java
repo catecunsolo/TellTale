@@ -1,6 +1,7 @@
 package com.telltale.main.servicio;
 
 import com.telltale.main.entidad.Categoria;
+
 import com.telltale.main.repositorio.CategoriaRepositorio;
 
 import java.util.*;
@@ -102,7 +103,8 @@ public class CategoriaServicio {
         if (categoria == null) {
             throw new Exception("No se encontró la categoria que intenta eliminar");
         }
-        categoriaRepositorio.deleteById(id_categoria);
+
+        categoriaRepositorio.delete(categoria);
     }
 
 

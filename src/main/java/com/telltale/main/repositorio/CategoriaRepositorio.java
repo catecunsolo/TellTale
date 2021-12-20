@@ -25,4 +25,6 @@ public interface CategoriaRepositorio  extends JpaRepository<Categoria, Integer>
       Categoria buscarCategoriaPorId(@Param ("id_categoria") Integer id_categoria);
 
       List<Categoria> findByOrderByVotoDesc();
+
+
 }

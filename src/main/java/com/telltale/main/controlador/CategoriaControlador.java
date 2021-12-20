@@ -5,6 +5,7 @@ import com.telltale.main.servicio.CategoriaServicio;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class CategoriaControlador {
     CategoriaServicio categoriaServicio;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView verTodosCategoria(HttpServletRequest request,
             RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("admin-categorias");
@@ -46,6 +48,7 @@ public class CategoriaControlador {
     }
 
        @GetMapping("/crear")
+       @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView crearCategoria(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("categoria-formulario");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
@@ -61,6 +64,7 @@ public class CategoriaControlador {
     }
 
     @GetMapping("/editar/ {id_categoria}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarCategoria(@PathVariable Integer id_categoria,
             HttpServletRequest request, RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("categoria-formulario");
@@ -83,9 +87,10 @@ public class CategoriaControlador {
     }
 
     @PostMapping("/guardar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView guardar(@RequestParam String nombre, @RequestParam Integer id_categoria,
             @RequestParam Integer voto, RedirectAttributes ra) {
-        RedirectView rv = new RedirectView("/categorias");
+        RedirectView rv = new RedirectView("/admin-categorias");
         try {
             categoriaServicio.crearCategoria(nombre, id_categoria, voto);
             ra.addFlashAttribute("exito-name", "Se ha creado la categoria con exito");
@@ -98,16 +103,17 @@ public class CategoriaControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView modificar(@ModelAttribute Categoria categoria, @RequestParam String nombre,
             @RequestParam Integer id_categoria,
             @RequestParam Integer voto,
             RedirectAttributes attributes) {
-        RedirectView rv = new RedirectView("/categorias");
+        RedirectView rv = new RedirectView("/admin-categorias");
         try {
             categoriaServicio.modificarCategoria(id_categoria, nombre, voto);
             attributes.addFlashAttribute("exito name", "Se ha modificado la categoria exitosamente");
         } catch (Exception e) {
-            attributes.addFlashAttribute("categoria", categoria);
+            attributes.addFlashAttribute("admin-categorias", categoria);
             attributes.addFlashAttribute("error-name", e.getMessage());
             rv.setUrl("/categorias/editar/" + categoria.getId_categoria());
         }
@@ -116,12 +122,22 @@ public class CategoriaControlador {
     }
 
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminar(@PathVariable Integer id_categoria) throws Exception {
-        categoriaServicio.eliminarCategoria(id_categoria);
-        return new RedirectView("/categorias");
+    @PreAuthorize("hasRole('ADMIN')")
+    public RedirectView eliminar(RedirectAttributes attributes , @PathVariable Integer id_categoria) {
+        RedirectView rv = new RedirectView("/admin-categorias");
+        try {
+            categoriaServicio.eliminarCategoria(id_categoria);
+            attributes.addFlashAttribute("exito name","se ha eliminado la categoria con exito");
+        }catch(Exception e){
+            attributes.addFlashAttribute("error-name",e.getMessage());
+        }
+
+        return rv;
     }
 
+
     @GetMapping("del-dia")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView actualizarCategorias(){
         ModelAndView modelAndView = new ModelAndView("categorias");
         modelAndView.addObject("categorias-del-dia",categoriaServicio.listaCategoriasDelDia);
