@@ -16,28 +16,28 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rol")
-@PreAuthorize("hasRole('SUPER')")
+@RequestMapping("/roles")
 public class RolControlador {
 
     @Autowired
     private RolServicio rolServicio;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView verTodosRol(HttpServletRequest request, @RequestParam(required = false) String error) {
-        ModelAndView modelAndView = new ModelAndView("roles");
+        ModelAndView modelAndView = new ModelAndView("admin-roles");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
             modelAndView.addObject("success", flashMap.get("success"));
             modelAndView.addObject("error", flashMap.get("error"));
-            modelAndView.addObject("roles", null);
+            modelAndView.addObject("listaRoles", null);
         }
         if (error != null) {
             modelAndView.addObject("error", error);
-            modelAndView.addObject("roles", null);
+            modelAndView.addObject("listaRoles", null);
         } else {
             try {
-                modelAndView.addObject("roles", rolServicio.verTodosRol());
+                modelAndView.addObject("listaRoles", rolServicio.verTodosRol());
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
                 modelAndView.setViewName("redirect:/roles");
@@ -47,6 +47,7 @@ public class RolControlador {
     }
 
     @GetMapping("/crear")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView crearRol(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -63,6 +64,7 @@ public class RolControlador {
     }
 
     @PostMapping("/guardar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView guardarRol(@ModelAttribute Rol rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/rol");
         try {
@@ -77,6 +79,7 @@ public class RolControlador {
     }
 
     @GetMapping("/editar/{id_rol}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws Exception {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -93,6 +96,7 @@ public class RolControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView modificarRol(@ModelAttribute Rol rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/rol");
         try {
@@ -107,6 +111,7 @@ public class RolControlador {
     }
 
     @PostMapping("/delete/{id_roles}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView eliminarRol(@PathVariable Integer id_rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/roles");
         try {

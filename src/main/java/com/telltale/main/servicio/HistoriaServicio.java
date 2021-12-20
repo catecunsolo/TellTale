@@ -132,4 +132,14 @@ public class HistoriaServicio {
         }
         return historias;
     }
+    
+    @Transactional(readOnly=true)
+    public int cantidadDeHistorias(){
+        List<Historia> historias = repository.findAll();
+        if (historias==null) {
+            return 0;
+        }else{
+            return historias.size();
+        }
+    }
 }

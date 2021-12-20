@@ -1,203 +1,234 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head th:replace="fragments :: head">
     </head>
     <body>
         <header th:replace="fragments :: header">
         </header>
 
-        
-<!--VISTA FORMULARIO HISTORIA (para usuarios que no subieron nada)-->
-<section th:if="${action == 'crear'}" class="page-section cta">
-    <div class="container">
-      <div class="col-xl-9 mx auto"></div>
-         <div class="cta-inner bg-faded rounded mb-4">
-          <h2 class="section-heading">
-            <span class="section-heading-lower text-secondary text-center">CONTÁ TU HISTORIA</span>
-        </h2>
-        <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
-      <form autocomplete="off" class="need-validation" id="formulario" method="POST"
-      novalidate th:action="@{/historia/guardar}" th:object="${historia}">
 
-                <input th:field="*{id_historia}" type="hidden"/>
-                <input th:field="*{alta}" type="hidden"/>
-                <input th:field="*{meGusta}" type="hidden"/>
-                <input th:field="*{noMeGusta}" type="hidden"/>
-                <input th:field="*{portada}" type="hidden"/>
-                <input th:field="${perfilLogueado}" type="hidden"/>
-                <input th:field="*{perfil}" type="hidden"/>
-                <input th:field="*{fechaCreacion}" type="hidden"/>
-                <input th:field="*{fechaUltModificacion}" type="hidden"/>
-                <input th:field="*{historiasFav}" type="hidden"/>
-                <input th:field="*{comentarios}" type="hidden"/>
-                <input th:field="*{categoria}" type="hidden"/>
-
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Categoría:  <span th:text="${categoriaElegida.nombre}"></span> </span>
-            </div>
-
-            <div class="input-group-append">
-            <a class="btn btn-outline-primary" href="/">Cambiar</a>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input class="form-control" id="titulo" placeholder="Titulo" required th:field="*{titulo}" type="text"></input>
-            <div class="invalid-feedback">El título es obligatorio</div>
-          </div>
-          <div class="mb-3">
-            <label for="historia" class="form-label">Tu historia</label>
-            <textarea type="text"  class="form-control" id="historia" placeholder="Escribí aquí" required th:field="*{historia}" rows="6" ></textarea>
-            <div class="invalid-feedback">Tenés que escribir una historia para poder enviarla.</div>
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
-  </div>
-  </div>
-    </div>
-  </section>
-  
-  
-  <!--SECCION HISTORIAS RELACIONADAS (para usuarios que ya subieron la suya)-->
-  
-          <section th:if="${action == 'historias'}" class="page-section cta2">
+        <!--VISTA FORMULARIO HISTORIA (para usuarios que no subieron nada)-->
+        <section th:if="${action == 'crear'}" class="page-section cta">
             <div class="container">
-              <div class="col-xl-9 mx-auto">
-                <div class="cta-inner bg-faded text-center rounded mb-4">
-                  <h2 class="section-heading">
-                      <span class="section-heading-upper">LEE LAS DEMÁS</span>
-                      <span class="section-heading-lower text-secondary">HISTORIAS SOBRE</span><span class="section-heading-lower text-secondary" th:text="${categoria.nombre}" ></span></span>
-                  </h2>
-                  </div>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                  <div class="col" th:each="historia : ${listaHistorias}">
-                    <div class="card mb-4">
-                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                      <div class="card-body">
-                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
-                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
-                          <p class="card-text" th:text="${historia.historia}"></p>
-                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
-                      </div>
-                  </div>
-                  </div>
+                <div class="col-xl-9 mx auto"></div>
+                <div class="cta-inner bg-faded rounded mb-4">
+                    <h2 class="section-heading">
+                        <span class="section-heading-lower text-secondary text-center">CONTÁ TU HISTORIA</span>
+                    </h2>
+                    <div class="text-center"><i class="fas fa-pen-fancy fa-3x off"></i></div>
+                    <form autocomplete="off" class="need-validation" id="formulario" method="POST"
+                          novalidate th:action="@{/historia/guardar}" th:object="${historia}">
+
+                        <input th:field="*{id_historia}" type="hidden"/>
+                        <input th:field="*{alta}" type="hidden"/>
+                        <input th:field="*{meGusta}" type="hidden"/>
+                        <input th:field="*{noMeGusta}" type="hidden"/>
+                        <input th:field="*{portada}" type="hidden"/>
+                        <input th:field="${perfilLogueado}" type="hidden"/>
+                        <input th:field="*{perfil}" type="hidden"/>
+                        <input th:field="*{fechaCreacion}" type="hidden"/>
+                        <input th:field="*{fechaUltModificacion}" type="hidden"/>
+                        <!--<input th:field="*{historiasFav}" type="hidden"/>-->
+                        <input th:field="*{comentarios}" type="hidden"/>
+                        <input th:field="*{categoria}" type="hidden"/>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="">Categoría:  <span th:text="${categoriaElegida.nombre}"></span> </span>
+                            </div>
+
+                            <div class="input-group-append">
+                                <a class="btn btn-outline-primary" href="/">Cambiar</a>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input class="form-control" id="titulo" placeholder="Titulo" required th:field="*{titulo}" type="text"></input>
+                            <div class="invalid-feedback">El título es obligatorio</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="historia" class="form-label">Tu historia</label>
+                            <textarea type="text"  class="form-control" id="historia" placeholder="Escribí aquí" required th:field="*{historia}" rows="6" ></textarea>
+                            <div class="invalid-feedback">Tenés que escribir una historia para poder enviarla.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
                 </div>
-              </div>
+            </div>
             </div>
         </section>
-        
-        <!--SECCION MISHISTORIAS(para ver las historias propias)-->
-  
-          <section th:if="${action == 'misHistorias'}" class="page-section cta2">
+
+
+        <!--SECCION HISTORIAS RELACIONADAS (para usuarios que ya subieron la suya)-->
+
+        <section th:if="${action == 'historias'}" class="page-section cta2">
             <div class="container">
-              <div class="col-xl-9 mx-auto">
-                <div class="cta-inner bg-faded text-center rounded mb-4">
-                  <h2 class="section-heading">
-                      <span class="section-heading-lower text-secondary">HISTORIAS DE </span><span class="section-heading-lower text-secondary" th:text="${session.username}" ></span></span>
-                  </h2>
-                  </div>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                  <div class="col" th:each="historia : ${listaHistorias}">
-                    <div class="card mb-4">
-                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                      <div class="card-body">
-                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
-                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
-                          <p class="card-text" th:text="${historia.historia}"></p>
-                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
-                      </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </section>
-    
-        <!--SECCION OTRASHISTORIAS(para ver las historias de otra people)-->
-  
-          <section th:if="${action == 'otrasHistorias'}" class="page-section cta2">
-            <div class="container">
-              <div class="col-xl-9 mx-auto">
-                <div class="cta-inner bg-faded text-center rounded mb-4">
-                  <h2 class="section-heading">
-                      <span class="section-heading-lower text-secondary">HISTORIAS DE </span><span class="section-heading-lower text-secondary" th:text="${nombreUsuario}" ></span></span>
-                  </h2>
-                  </div>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                  <div class="col" th:each="historia : ${listaHistorias}">
-                    <div class="card mb-4">
-                      <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                      <div class="card-body">
-                          <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
-                          <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
-                          <p class="card-text" th:text="${historia.historia}"></p>
-                          <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
-                      </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </section>
-  
-  <!--SECCION HISTORIA INDIVIDUAL (historias/id-historia)-->
-  
-        <section th:if="${action == 'id'}" class="page-section">
-          <div class="container">
-            <div class="product-item">
-                <div class="product-item-title d-flex">
-                    <div class="bg-faded p-5 d-flex me-auto rounded">
-                        <h2 class="section-heading mb-0">
-                          <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
-                            <span class="text-muted" th:text="${historia.categoria.nombre}"></span></span>
-                            <span class="section-heading-lower text-secondary" th:text="${historia.titulo}"></span>
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner bg-faded text-center rounded mb-4">
+                        <h2 class="section-heading">
+                            <span class="section-heading-upper">LEE LAS DEMÁS</span>
+                            <span class="section-heading-lower text-secondary">HISTORIAS SOBRE</span><span class="section-heading-lower text-secondary" th:text="${categoria.nombre}" ></span></span>
                         </h2>
                     </div>
-                </div>
-                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="../img/products-02.jpg" alt="..." />
-                <div class="product-item-description d-flex ms-auto">
-                    <div class="bg-faded p-5 rounded"><p class="mb-0" th:text="${historia.historia}">Mi abuela hacía las mejores medialunas del mundo. Antes de prepararlas, me hacía describirlas con un adjetivo a elección, como "pluscuamperfectas", "maravillosas", etc. Ella después hacía de cuenta que cocinaba las medialunas según mis instrucciones.</p>
-                      <p>
-                        <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios" aria-expanded="false" aria-controls="comentarios">
-                          Comentarios
-                        </button>
-                        <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
-                          Comentar
-                        </button>
-                      </p>
-                      <div class="collapse" id="comentarios">
-                        <ol class="list-group">
-                          <li class="list-group-item d-flex justify-content-between align-items-start" th:each="comentario : ${listaComentarios}">
-                            <div class="ms-2 me-auto mb-3">
-                              <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                            </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido}"></span></div>
-                              <p class="mb-0" th:text="${comentario.comentario}"></p>
-                            <span class="text-end text-muted" th:text="${comentario.fechaCreacion}"></span>
-                                    </li>
-                        </ol>
-                      </div>
-                      <!--<div class="collapse" id="comentar">
-                        <form class="row g-3 need-validation" autocomplete="off" id="formulario" method="POST"
-                        novalidate th:action="@{/historias/comentar}" th:object="${comentario}">
-                        <input th:field="*{}" type="hidden"/>
-                        <input th:field="*{}" type="hidden"/>
-                          <div class="mb-3 mt-3">
-                            <label for="comentario" class="form-label" >Escribí tu comentario</label>
-                            <textarea class="form-control" id="comentario" placeholder="Escribí aquí" required th:field="*{comentario}" type="text" rows="3"></textarea>
-                          </div>
-                          <div class="col-auto">
-                            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
-                          </div>
-                        </form>
-                      </div>-->
-                      <a class="btn btn-primary btn-lg" th:href="@{/historia}">Volver a la lista de historias</a>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col" th:each="historia : ${listaHistorias}">
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                                    <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                                    <p class="card-text" th:text="${historia.historia}"></p>
+                                    <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                  </div>
+                </div>
             </div>
-        </div>
-          </section>
+        </section>
+
+        <!--SECCION MISHISTORIAS(para ver las historias propias)-->
+
+        <section th:if="${action == 'misHistorias'}" class="page-section cta2">
+            <div class="container">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner bg-faded text-center rounded mb-4">
+                        <h2 class="section-heading">
+                            <span class="section-heading-lower text-secondary">HISTORIAS DE </span><span class="section-heading-lower text-secondary" th:text="${session.username}" ></span></span>
+                        </h2>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col" th:each="historia : ${listaHistorias}">
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                                    <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                                    <p class="card-text" th:text="${historia.historia}"></p>
+                                    <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--SECCION OTRASHISTORIAS(para ver las historias de otra people)-->
+
+        <section th:if="${action == 'otrasHistorias'}" class="page-section cta2">
+            <div class="container">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner bg-faded text-center rounded mb-4">
+                        <h2 class="section-heading">
+                            <span class="section-heading-lower text-secondary">HISTORIAS DE </span><span class="section-heading-lower text-secondary" th:text="${nombreUsuario}" ></span></span>
+                        </h2>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col" th:each="historia : ${listaHistorias}">
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                                    <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                                    <p class="card-text" th:text="${historia.historia}"></p>
+                                    <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECCION HISTORIAS FAVORITAS -->
+        <section th:if="${action == 'favoritas'}" class="page-section cta2">
+            <div class="container">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner bg-faded text-center rounded mb-4">
+                        <h2 class="section-heading">
+                            <span class="section-heading-lower text-secondary">MIS HISTORIAS FAVORITAS</span>
+                        </h2>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col" th:each="historia : ${listaHistorias}">
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
+                                    <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
+                                    <p class="card-text" th:text="${historia.historia}"></p>
+                                    <a class="btn btn-primary" th:href="@{/historia/__${historia.id_historia}__}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--SECCION HISTORIA INDIVIDUAL (historias/id-historia)-->
+
+        <section th:if="${action == 'id'}" class="page-section">
+            <div class="container">
+                <div class="product-item">
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
+                                        <span class="text-muted" th:text="${historia.categoria.nombre}"></span></span>
+                                <span class="section-heading-lower text-secondary" th:text="${historia.titulo}"></span>
+                            </h2>
+                        </div>
+                    </div>
+                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="../img/products-02.jpg" alt="..." />
+                    <div class="product-item-description d-flex ms-auto">
+                        <div class="bg-faded p-5 rounded"><p class="mb-0" th:text="${historia.historia}">Mi abuela hacía las mejores medialunas del mundo. Antes de prepararlas, me hacía describirlas con un adjetivo a elección, como "pluscuamperfectas", "maravillosas", etc. Ella después hacía de cuenta que cocinaba las medialunas según mis instrucciones.</p>
+                            <p>
+                                <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios" aria-expanded="false" aria-controls="comentarios">
+                                    Comentarios
+                                </button>
+                                <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
+                                    Comentar
+                                </button>
+                                <form th:if="${noEsMiHistoria}" method="post" th:action="@{/historia/fav}">
+                                    <input name="historia" type="hidden" th:value="${historia.id_historia}"/>
+                                    <button class="btn btn-primary mt-2" type="submit" th:text="${isFav} ? 'disFav' : 'Fav'"  />
+                                </form>  
+                            </p>
+                            <div class="collapse" id="comentarios">
+                                <ol class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start" th:each="comentario : ${listaComentarios}">
+                                        <div class="ms-2 me-auto mb-3">
+                                            <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
+                                                    </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido}"></span></div>
+                                            <p class="mb-0" th:text="${comentario.comentario}"></p>
+                                            <span class="text-end text-muted" th:text="${comentario.fechaCreacion}"></span>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="collapse" id="comentar">
+                                <form class="row g-3 need-validation" autocomplete="off" id="formulario" method="POST"
+                                      novalidate th:action="@{/comentario/guardar}" th:object="${comentario_propio}" >
+                                    <input name="historia"  type="hidden" th:value="${historia.id_historia}"/>
+                                    <!--<input th:field="*{}" type="hidden"/>-->
+                                    <div class="mb-3 mt-3">-->
+                                        <label for="comentario" class="form-label" >Escribí tu comentario</label>
+                                        <textarea name="comentario" class="form-control" id="comentario" placeholder="Escribí aquí" required th:field="*{comentario}" type="text" rows="3" ></textarea> <!--  -->
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <a class="btn btn-primary btn-lg" th:href="@{/historia}">Volver a la lista de historias</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <footer th:replace="fragments :: footer"></footer>
     </body>

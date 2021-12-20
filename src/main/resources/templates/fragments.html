@@ -14,8 +14,9 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-
-    <link th:href="@{../css/styles.css}" rel="stylesheet" />
+    
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <!--<link th:href="@{../css/styles.css}" rel="stylesheet" />-->
 
             <!-- jQuery Library -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -25,12 +26,12 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
 </head>
 <body>
-    <header th:fragment="header">
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
-            <img src="../img/logo.png" />
+    <header class="text-center text-faded d-none d-lg-block mb-5" th:fragment="header">
+            <img th:src="@{../img/logo.png}" />
+        <h1 class="text-center text-faded">
             <span class="site-heading-upper">HISTORIA <span class="text-secondary">X</span> HISTORIA</span>
         </h1>
-        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+        <nav class="navbar navbar-collapse navbar-expand-md navbar-dark py-3" id="mainNav" th:fragment="navbar">
             <div class="container">
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">TellTale</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -39,6 +40,7 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" th:href="@{/historia}">Historias del día</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" th:href="@{/perfil}">Mi Perfil</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAuthenticated()" th:href="@{/logout}">Cerrar Sesion</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" th:href="@{/login}">Ingresar</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" sec:authorize="isAnonymous()" th:href="@{/signup}">Registrarse</a></li>
                     </ul>
