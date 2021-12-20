@@ -9,6 +9,20 @@
         
 <!--VISTA FORMULARIO HISTORIA (para usuarios que no subieron nada)-->
 <section th:if="${action == 'crear'}" class="page-section cta">
+    <!--ALERTAS-->
+    <section id="alertas">
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${success != null}" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${error != null}" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </section>
+    <!--FIN ALERTAS-->
+
     <div class="container">
       <div class="col-xl-9 mx auto"></div>
          <div class="cta-inner bg-faded rounded mb-4">

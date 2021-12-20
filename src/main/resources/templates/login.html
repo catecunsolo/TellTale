@@ -8,6 +8,25 @@
 
 <main>
     <div class="container login-container page-section cta">
+        <!--ALERTAS-->
+        <section id="alertas">
+            <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${success != null}" role="alert">
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${error != null}" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </section>
+
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${logout != null}" role="alert">
+            <span th:text="${logout}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!--FIN ALERTAS-->
         <div class="row">
             <div class="col-xl-6 mx-auto signin-form cta-inner bg-faded rounded mb-4">
                 <form th:action="@{/logincheck}" method="post" id="fileForm" role="form">

@@ -106,13 +106,15 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioOptional.orElse(null);
     }
 
+
+/*    //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
+
     @Transactional(readOnly = true)
     public Usuario buscarUsuarioPorEmail(String email){
         Optional<Usuario>usuarioOptional=usuarioRepositorio.findByEmail(email);
         return usuarioOptional.orElse(null);
     }
 
-/*    //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
     @Transactional
     public void recuperoPassword(String username, String email) throws Exception {
      try{
@@ -153,6 +155,9 @@ public class UsuarioServicio implements UserDetailsService {
     public void validarEmail(String email) throws Exception {
         if (email == null) {
             throw new Exception("Error--> El email no puede estar vacío.");
+        }
+        if(usuarioRepositorio.existsUsuarioByEmail(email)){
+                throw  new Exception("Error--> El mail ingresado ya está registrado.");
         }
     }
 
