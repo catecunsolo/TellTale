@@ -38,6 +38,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private RolServicio rolServicio;
 
+    @Autowired
+    private EmailServicio emailServicio;
+
     private final String MENSAJE = "Este usuario no existe. %s";
 
     @Transactional
@@ -51,6 +54,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setFechaCreacion(LocalDate.now());
         usuario.setFechaUltModificacion(LocalDate.now());
         usuario.setAlta(true);
+        emailServicio.sendMail(username, email); //envio de email por registro exitoso
         return usuarioRepositorio.save(usuario);
     }
 
@@ -181,7 +185,7 @@ public class UsuarioServicio implements UserDetailsService {
         } else {
             usuario = usuarioRepositorio.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format(MENSAJE, username)));
         }
-        GrantedAuthority autorizacion = new SimpleGrantedAuthority("ROL_" + usuario.getRol().getNombre());
+        GrantedAuthority autorizacion = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().getNombre());
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = requestAttributes.getRequest().getSession(true);
         session.setAttribute("id_usuario",usuario.getId_usuario());
