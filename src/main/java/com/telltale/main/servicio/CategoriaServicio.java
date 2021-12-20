@@ -1,6 +1,7 @@
 package com.telltale.main.servicio;
 
 import com.telltale.main.entidad.Categoria;
+
 import com.telltale.main.repositorio.CategoriaRepositorio;
 
 import java.util.*;
@@ -102,11 +103,12 @@ public class CategoriaServicio {
         if (categoria == null) {
             throw new Exception("No se encontró la categoria que intenta eliminar");
         }
-        categoriaRepositorio.deleteById(id_categoria);
+
+        categoriaRepositorio.delete(categoria);
     }
 
 
-    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
+//    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
     public void actualizarCategoria() throws Exception {
         List<Categoria> listaCategoria = verTodosCategoria();
         listaCategoriasDelDia=new ArrayList<>();

@@ -17,6 +17,12 @@ public class ErrorControlador implements ErrorController {
         String message = "";
         int codeResponse = response.getStatus();
         switch (codeResponse) {
+            case 301:
+                message = "¡Los recursos solicitados ya no se encuentran disponibles. Han sido removidos de manera permanente!";
+                break;
+            case 302:
+                message = "¡Los recursos solicitados ya no se encuentran disponibles. Han sido removidos temporalmente!";
+                break;
             case 403:
                 message = "¡No cuenta con los permisos necesarios para acceder al recurso solicitado!";
                 break;
@@ -25,6 +31,12 @@ public class ErrorControlador implements ErrorController {
                 break;
             case 500:
                 message = "¡Algo ha ocurrido en el servidor!";
+                break;
+            case 503:
+                message = "¡El servidor se encuentra temporalmente fuera de servicio!";
+                break;
+            case 504:
+                message = "¡El tiempo de espera de respuesta ha superado el máximo permitido!";
                 break;
             default:
                 message = "¡Error inesperado! Contacte con su administrador.";
