@@ -9,7 +9,20 @@
         <!--SECCION INTRO (index para todos)-->
 
         <section class="page-section clearfix">
-            <div class="container">
+            <!--ALERTAS-->
+            <section id="alertas">
+                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${success != null}" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mt-4 col-xl-6 text-align:center container" th:if="${logout != null}" role="alert">
+                    <span th:text="${logout}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                </section>
+                <!--FIN ALERTAS-->
+
+                <div class="container">
                 <div class="intro">
                     <img class="intro-img img-fluid mb-2 mb-lg-0 rounded" src="../img/foto-intro.jpeg" />
                     <div class="intro-text left-0 text-center bg-faded p-5 rounded">
