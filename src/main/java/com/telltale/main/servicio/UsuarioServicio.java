@@ -45,16 +45,20 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public Usuario crearUsuario(String username, String email, String password, Rol rol) throws Exception {
-        validar(username, email, password,rol);
-        usuario = new Usuario();
-        usuario.setUsername(username);
-        usuario.setEmail(email);
-        usuario.setPassword(encoder.encode(password));
-        usuario.setRol(rol);
-        usuario.setFechaCreacion(LocalDate.now());
-        usuario.setFechaUltModificacion(LocalDate.now());
-        usuario.setAlta(true);
-        emailServicio.sendMail(username, email); //envio de email por registro exitoso
+        try {
+            validar(username, email, password, rol);
+            usuario = new Usuario();
+            usuario.setUsername(username);
+            usuario.setEmail(email);
+            usuario.setPassword(encoder.encode(password));
+            usuario.setRol(rol);
+            usuario.setFechaCreacion(LocalDate.now());
+            usuario.setFechaUltModificacion(LocalDate.now());
+            usuario.setAlta(true);
+            emailServicio.sendMail(username, email); //envio de email por registro exitoso
+        }catch(Exception exception){
+            throw exception;
+        }
         return usuarioRepositorio.save(usuario);
     }
 
@@ -106,13 +110,14 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioOptional.orElse(null);
     }
 
-    @Transactional(readOnly = true)
+/*  //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
+
+        @Transactional(readOnly = true)
     public Usuario buscarUsuarioPorEmail(String email){
         Optional<Usuario>usuarioOptional=usuarioRepositorio.findByEmail(email);
         return usuarioOptional.orElse(null);
     }
 
-/*    //ESTO ES UN SIMULACRO DE CAMBIO DE CLAVE. A DEFINIR.
     @Transactional
     public void recuperoPassword(String username, String email) throws Exception {
      try{
@@ -153,6 +158,9 @@ public class UsuarioServicio implements UserDetailsService {
     public void validarEmail(String email) throws Exception {
         if (email == null) {
             throw new Exception("Error--> El email no puede estar vacío.");
+        }
+        if(email.equals(usuarioRepositorio.findByEmail(email).get().getEmail())){
+            throw  new Exception("Error--> El mail ingresado ya está registrado.");
         }
     }
 
