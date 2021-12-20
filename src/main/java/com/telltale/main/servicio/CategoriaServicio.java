@@ -106,7 +106,7 @@ public class CategoriaServicio {
     }
 
 
-    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
+//    @Scheduled(fixedRate = 3000) //milisegundos buscar cron = "0 0 0 * * *, zone ="
     public void actualizarCategoria() throws Exception {
         List<Categoria> listaCategoria = verTodosCategoria();
         listaCategoriasDelDia=new ArrayList<>();
