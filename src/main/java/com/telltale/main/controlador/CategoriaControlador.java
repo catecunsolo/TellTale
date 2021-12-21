@@ -115,7 +115,7 @@ public class CategoriaControlador {
         } catch (Exception e) {
             attributes.addFlashAttribute("admin-categorias", categoria);
             attributes.addFlashAttribute("error-name", e.getMessage());
-            rv.setUrl("/categorias/editar/" + categoria.getId_categoria());
+            rv.setUrl("/admin-categorias/editar/" + categoria.getId_categoria());
         }
 
         return rv;
