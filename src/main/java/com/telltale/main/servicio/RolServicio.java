@@ -39,11 +39,12 @@ public class RolServicio {
     }
 
     @Transactional
-    public Rol modificarRol(Integer id_rol, String nombre) throws Exception {
+    public Rol modificarRol(Integer id_rol, String nombre, Boolean alta) throws Exception {
         try {
             Rol rol = new Rol();
             rol.setId_rol(id_rol);
             rol.setNombre(nombre.toUpperCase());
+            rol.setAlta(alta);
             return rolRepositorio.save(rol);
         } catch (Exception excepcion) {
             throw new Exception("Algo ha sucedido y no se ha podido procesar la modificación de Rol en la base de datos." +
@@ -118,7 +119,7 @@ public class RolServicio {
         return this.crearRol(nombre);
     }
 
-    public Rol validarFormularioYModificar(Integer id_rol, String nombre) throws Exception {
+    public Rol validarFormularioYModificar(Integer id_rol, String nombre, Boolean alta) throws Exception {
         if (id_rol.toString().isEmpty() || id_rol.toString().trim() == null) {
             throw new Exception("El ID no puede estar vacío.");
         }
@@ -137,7 +138,7 @@ public class RolServicio {
         if (this.existeRol(nombre)) {
             throw new Exception("Ya se ha registrado un Rol con el mismo nombre.");
         }
-        return this.modificarRol(id_rol, nombre);
+        return this.modificarRol(id_rol, nombre, alta);
     }
 
 }
