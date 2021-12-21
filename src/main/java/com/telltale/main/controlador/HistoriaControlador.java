@@ -111,8 +111,8 @@ public class HistoriaControlador {
                 List<Historia> historiasCortadas = new ArrayList();
                 for (Historia historia : historias) {
                     String history = historia.getHistoria();
-                    if (history.length() > 90) {
-                        history = history.substring(0, 89);
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
                         historia.setHistoria(history);
                     }
                     historiasCortadas.add(historia);
@@ -143,7 +143,8 @@ public class HistoriaControlador {
             }
             if ((perfil.getCategoriaDelDia() == null
                     || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria())
-                    && historia.getPerfil().getId_perfil() != perfil.getId_perfil()) {
+                    && historia.getPerfil().getId_perfil() != perfil.getId_perfil()
+                    && !perfil.getHistoriasFav().contains(historia)) {
                 mv.setViewName("redirect:/historia");
             }
             mv.addObject("historia", historia);
@@ -174,8 +175,8 @@ public class HistoriaControlador {
             List<Historia> historiasCortadas = new ArrayList();
             for (Historia historia : historias) {
                 String history = historia.getHistoria();
-                if (history.length() > 90) {
-                    history = history.substring(0, 89);
+                if (history.length() > 87) {
+                    history = history.substring(0, 86).concat("...");
                     historia.setHistoria(history);
                 }
                 historiasCortadas.add(historia);
@@ -206,8 +207,8 @@ public class HistoriaControlador {
                 List<Historia> historiasCortadas = new ArrayList();
                 for (Historia historia : historias) {
                     String history = historia.getHistoria();
-                    if (history.length() > 90) {
-                        history = history.substring(0, 89);
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
                         historia.setHistoria(history);
                     }
                     historiasCortadas.add(historia);
@@ -239,7 +240,17 @@ public class HistoriaControlador {
         mv.addObject("action", "favoritas");
         try {
             Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
-            mv.addObject("listaHistorias", perfil.getHistoriasFav());
+            List<Historia> historias = perfil.getHistoriasFav();
+                List<Historia> historiasCortadas = new ArrayList();
+                for (Historia historia : historias) {
+                    String history = historia.getHistoria();
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
+                        historia.setHistoria(history);
+                    }
+                    historiasCortadas.add(historia);
+                }
+            mv.addObject("listaHistorias", historiasCortadas);
         } catch (Exception e) {
             mv.setViewName("redirect:/");
         }

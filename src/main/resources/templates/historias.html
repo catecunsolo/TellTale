@@ -160,7 +160,7 @@
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col" th:each="historia : ${listaHistorias}">
                             <div class="card mb-4 h-100">
-                                <a href="#!"><img class="card-img-top" src="../img/preview-historias.jpg" alt="..." /></a>
+                                <a href="#!"><img class="card-img-top" th:src="@{/img/preview-historias.jpg}" alt="..." /></a>
                                 <div class="card-body">
                                     <div class="small text-muted" th:text="${historia.fechaCreacion}"></div>
                                     <h2 class="card-title h4" th:text="${historia.titulo}"></h2>
@@ -214,7 +214,7 @@
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex me-auto rounded">
                             <div class="section-heading mb-0">
-                                <div class="d-inline"> <a th:href="@{/perfil/__${historia.perfil.id_perfil}__}">
+                                <div class="d-inline"> <a th:href="@{/perfil/__${historia.perfil.usuario.id_usuario}__}">
                                     <img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini">
                                     <span class="section-heading-upper d-inline" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido != null ? historia.perfil.apellido : ''}">
                                 </a></span><span class="text-muted ms-2 me-1.5"> // </span><span class="text-muted" th:text="${historia.categoria.nombre}"></span></div>
