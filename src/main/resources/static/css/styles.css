@@ -18438,3 +18438,12 @@ p {
     display: flex;
     justify-content: space-around;
 }
+
+/*PROPIO*/
+
+.btn-circle {
+    border-radius: 50%;
+    background-color: #78c2ad;
+    height: 3em;
+    width: 3em;
+}

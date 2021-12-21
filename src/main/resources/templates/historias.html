@@ -207,8 +207,13 @@
                                 </button>
                                 <form th:if="${noEsMiHistoria}" method="post" th:action="@{/historia/fav}">
                                     <input name="historia" type="hidden" th:value="${historia.id_historia}"/>
-                                    <button class="btn btn-primary mt-2" type="submit" th:text="${isFav} ? 'disFav' : 'Fav'"  />
-                                </form>  
+                                <button class="btn btn-circle" type="submit" th:if="${isFav}">
+                                    <img th:src="@{/img/like.svg}"/>
+                                </button>
+                                <button class="btn btn-circle" type="submit" th:if="${!isFav}">
+                                    <img th:src="@{/img/dislike.svg}"/>
+                                </button>
+                                </form>
                             </p>
                             <div class="collapse" id="comentarios">
                                 <ol class="list-group">
