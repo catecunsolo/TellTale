@@ -126,7 +126,7 @@ public class UsuarioControlador {
                 aux = "deshabilitado";
                 usuarioServicio.bajaUsuario(id_usuario);
             }
-            redirectAttributes.addFlashAttribute("success", "El rol usuario sido " + aux + " exitosamente!");
+            redirectAttributes.addFlashAttribute("success", "El usuario sido " + aux + " exitosamente!");
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
         }

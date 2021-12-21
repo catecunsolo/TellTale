@@ -126,4 +126,8 @@ public class PerfilServicio {
 
     }
 
+    @Transactional
+    public void cambiarAltaPerfil(Perfil perfil) {
+        perfilRepositorio.save(perfil);
+    }
 }
