@@ -145,7 +145,8 @@ public class HistoriaControlador {
             }
             if ((perfil.getCategoriaDelDia() == null
                     || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria())
-                    && historia.getPerfil().getId_perfil() != perfil.getId_perfil()) {
+                    && historia.getPerfil().getId_perfil() != perfil.getId_perfil()
+                    && !perfil.getHistoriasFav().contains(historia)) {
                 mv.setViewName("redirect:/historia");
             }
             mv.addObject("historia", historia);
