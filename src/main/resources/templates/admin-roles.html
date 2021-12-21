@@ -33,7 +33,7 @@
             <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${rol.alta}">
                 <!--<a class="btn btn-secondary btn-sm" th:href="@{/roles/editar/__${rol.id_rol}__}">Editar</a>-->
                 <span>
-                    <form method="post" th:action="@{/roles/alta/__${rol.id_rol}__}">
+                    <form method="post" th:action="@{/rol/alta/__${rol.id_rol}__}">
                         <button class="btn btn-danger btn-sm" type="submit" th:text="${rol.alta == true} ? 'Deshabilitar' : 'Habilitar'"></button>
                     </form>
                 </span>
