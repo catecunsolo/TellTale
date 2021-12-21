@@ -1,63 +1,71 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments :: head">
-    </head>
-    <body>
-        <header th:replace="fragments :: header">
-        </header>
-        <div th:if="${listaComentarios.isEmpty()}">
-            <h5> Todavía no hay comentarios cargados</h5>
-        </div>
-        <div class="table-responsive" th:unless="${listaComentarios.isEmpty()}">
-            <table class="table table-hover table-sm table-bordered">
-                <thead class="table-secondary text-center">
-                    <tr>
-                        <th class="col-md-4" scope="col">Id</th>
-                        <th class="col-md-2" scope="col">Titulo</th>
-                        <th class="col-md-2" scope="col">Perfil</th>
-                        <th class="col-md-2" scope="col">Historia</th>
-                        <th class="col-md-2" scope="col">Fecha Creacion</th>
-                        <th class="col-md-2" scope="col">Fecha Modificación</th>
-                        <th class="col-md-2" scope="col">Me gusta</th>
-                        <th class="col-md-2" scope="col">No me gusta</th>
-                        <th class="col-md-2" scope="col">Alta</th>
-                        <th class="col-md-4" scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="comentario : ${listaComentarios}">
-                    <td class="col-md-4 " th:text="${comentario.id_comentario}"></td>
-                    <td class="col-md-4 " th:text="${comentario.comentario}"></td>
-                    <td class="col-md-2 " th:text="${comentario.perfil}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${comentario.historia}" style="text-align: center"></td>
+<head th:replace="fragments :: head">
+</head>
+<body>
+<header th:replace="fragments :: header">
+</header>
+<div th:if="${listaComentarios.isEmpty() or listaComentarios == null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th> Todavía no hay comentarios cargados</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive" th:unless="${listaComentarios.isEmpty() and listaComentarios != null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th class="col-md-4" scope="col">Id</th>
+            <th class="col-md-2" scope="col">Comentario</th>
+            <th class="col-md-2" scope="col">Usuario</th>
+            <th class="col-md-2" scope="col">Historia</th>
+            <th class="col-md-2" scope="col">Fecha Creacion</th>
+            <th class="col-md-2" scope="col">Fecha Modificación</th>
+            <th class="col-md-2" scope="col">Me gusta</th>
+            <th class="col-md-2" scope="col">No me gusta</th>
+            <th class="col-md-2" scope="col">Alta</th>
+            <th class="col-md-4" scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comentario : ${listaComentarios}">
+            <td class="col-md-4 " th:text="${comentario.id_comentario}"></td>
+<!--
+            <td class="col-md-4 " th:text="${comentario.comentario}"></td>
+-->
+            <td class="col-md-4 " th:text="${#strings.abbreviate(comentario.comentario,50)}"></td>
+            <td class="col-md-2 " th:text="${comentario.perfil.usuario.username}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${comentario.historia.titulo} + ' (de ' + ${comentario.historia.perfil.usuario.username} + ')'" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(comentario.fechaCreacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(comentario.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${comentario.meGusta}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${comentario.noMeGusta}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${comentario.alta == true} ? 'Habilitado' : 'Deshabilitado'"
+                style="text-align: center"></td>
+            <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${comentario.alta}">
+<!--
+                <a class="btn btn-secondary btn-sm" th:href="@{/comentarios/editar/__${comentario.id}__}">Editar</a>
+-->
+                <span>
+                    <form method="post" th:action="@{/comentario/alta/__${comentario.id_comentario}__}">
+                        <button class="btn btn-danger btn-sm" type="submit" th:text="${comentario.alta == true} ? 'Deshabilitar' : 'Habilitar'"></button>
+                    </form>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-                    <td class="col-md-2 " th:text="${#temporals.format(comentario.fechaCreacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${#temporals.format(comentario.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${comentario.meGusta}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${comentario.noMeGusta}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${comentario.alta}" style="text-align: center"></td>
-                    <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${comentario.alta}">
-                      <a class="btn btn-secondary btn-sm" th:href="@{/comentarios/editar/__${comentario.id}__}">Editar</a>
-                
-                    <span th:case="true"> <form
-                      method="post"
-                      th:action="@{/comentarios/eliminar/__${comentario.id}__}"
-                    >
-                      <button class="btn btn-danger btn-sm" type="submit"> Dar de baja
-                      </button> </form> </span>
-      
-                      <span th:case="false"> <form
-                        method="post"
-                        th:action="@{/comentarios/darAlta/__${comentario.id}__}"
-                      >
-                        <button class="btn btn-success btn-sm" type="submit"> Dar de alta
-                        </button> </form> </span>
-                  </td>   
-                 </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <footer th:replace="fragments :: footer"></footer>
-    </body>
+<footer th:replace="fragments :: footer"></footer>
+</body>
 </html>
