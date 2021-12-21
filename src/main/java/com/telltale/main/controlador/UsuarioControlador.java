@@ -51,7 +51,7 @@ public class UsuarioControlador {
         return redirectView;
     }
 
-    @GetMapping
+    @GetMapping("/todos")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
     public ModelAndView obtenerUsuarios(HttpServletRequest request, @RequestParam(required = false) String error) {
         ModelAndView modelAndView = new ModelAndView("admin-usuarios");
@@ -69,7 +69,7 @@ public class UsuarioControlador {
                 modelAndView.addObject("listaUsuarios", usuarioServicio.verTodosUsuario());
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
-                modelAndView.setViewName("redirect:/usuario");
+                modelAndView.setViewName("redirect:/usuario/todos");
             }
         }
         return modelAndView;
@@ -114,7 +114,7 @@ public class UsuarioControlador {
     @PostMapping("/alta/{id_usuario}")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
     public RedirectView habilitarRol(@PathVariable Integer id_usuario, RedirectAttributes redirectAttributes) {
-        RedirectView redirectView = new RedirectView("/usuario");
+        RedirectView redirectView = new RedirectView("/usuario/todos");
         try {
             String aux = "";
             Usuario usuario = usuarioServicio.buscarUsuarioPorId(id_usuario);
@@ -126,7 +126,7 @@ public class UsuarioControlador {
                 aux = "deshabilitado";
                 usuarioServicio.bajaUsuario(id_usuario);
             }
-            redirectAttributes.addFlashAttribute("success", "El usuario sido " + aux + " exitosamente!");
+            redirectAttributes.addFlashAttribute("success", "El usuario ha sido " + aux + " exitosamente!");
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
         }

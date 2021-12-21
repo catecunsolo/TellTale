@@ -118,9 +118,11 @@ public class HistoriaServicio {
     @Transactional(readOnly=true)
     public List<Historia> verTodosHistoria() throws Exception{
         List<Historia> historias = repository.findAll();
+/*
         if (historias.isEmpty()) {
             throw new Exception("No hay historias");
         }
+*/
         return historias;
     }
     

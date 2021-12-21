@@ -5,10 +5,7 @@
  */
 package com.telltale.main.controlador;
 
-import com.telltale.main.entidad.Categoria;
-import com.telltale.main.entidad.Comentario;
-import com.telltale.main.entidad.Historia;
-import com.telltale.main.entidad.Perfil;
+import com.telltale.main.entidad.*;
 import com.telltale.main.servicio.CategoriaServicio;
 import com.telltale.main.servicio.HistoriaServicio;
 import com.telltale.main.servicio.PerfilServicio;
@@ -22,6 +19,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -263,4 +261,50 @@ public class HistoriaControlador {
 //        }
 //        return rv;
 //    }
+
+    @GetMapping("/todas")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public ModelAndView verTodosPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("admin-historias");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("listaHistorias", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("listaHistorias", null);
+        } else {
+            try {
+                modelAndView.addObject("listaHistorias", historiaServicio.verTodosHistoria());
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/historia/todas");
+            }
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/alta/{id_historia}")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public RedirectView habilitarRol(@PathVariable Integer id_historia, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/historia/todas");
+        try {
+            String aux = "";
+            Historia historia = historiaServicio.buscarHistoriaPorId(id_historia);
+            historia.setAlta(!historia.getAlta());
+            if (historia.getAlta()) {
+                aux = "habilitada";
+                historiaServicio.alta(id_historia);
+            } else {
+                aux = "deshabilitada";
+                historiaServicio.baja(id_historia);
+            }
+            redirectAttributes.addFlashAttribute("success", "La historia ha sido " + aux + " exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        }
+        return redirectView;
+    }
 }
