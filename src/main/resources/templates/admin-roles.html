@@ -5,10 +5,20 @@
 <body>
 <header th:replace="fragments :: header">
 </header>
-<div th:if="${listaRoles.isEmpty()}">
-    <h5> Todavía no hay roles cargados</h5>
+<div th:if="${listaRoles.isEmpty() or listaRoles == null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th> Todavía no hay roles cargados</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<div class="table-responsive" th:unless="${listaRoles.isEmpty()}">
+<div class="table-responsive" th:unless="${listaRoles.isEmpty() and listaRoles != null}">
     <table class="table table-green table-sm table-bordered text-white text-center">
         <thead class="table-secondary text-center text-white">
         <tr>

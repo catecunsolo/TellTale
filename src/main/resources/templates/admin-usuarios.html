@@ -5,10 +5,20 @@
 <body>
 <header th:replace="fragments :: header">
 </header>
-<div th:if="${listaUsuarios.isEmpty()}">
-    <h5> Todavía no hay usuarios cargados</h5>
+<div th:if="${listaUsuarios.isEmpty() or listaUsuarios == null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th> Todavía no hay usuarios cargados</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<div class="table-responsive" th:unless="${listaUsuarios.isEmpty()}">
+<div class="table-responsive" th:unless="${listaUsuarios.isEmpty() and listaUsuarios != null}">
     <table class="table table-green table-sm table-bordered text-white text-center">
         <thead class="table-secondary text-center text-white">
         <tr>

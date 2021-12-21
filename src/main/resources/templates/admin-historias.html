@@ -1,62 +1,73 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments :: head">
-    </head>
-    <body>
-        <header th:replace="fragments :: header">
-        </header>
-        <div th:if="${listaHistorias.isEmpty()}">
-            <h5> Todavía no hay historias cargadas</h5>
-        </div>
-        <div class="table-responsive" th:unless="${listaHistorias.isEmpty()}">
-            <table class="table table-hover table-sm table-bordered">
-                <thead class="table-secondary text-center">
-                    <tr>
-                        <th class="col-md-4" scope="col">Id</th>
-                        <th class="col-md-2" scope="col">Titulo</th>
-                        <th class="col-md-2" scope="col">Historia</th>
-                        <th class="col-md-2" scope="col">Fecha Creacion</th>
-                        <th class="col-md-2" scope="col">Fecha Modificación</th>
-                        <th class="col-md-2" scope="col">Perfil</th>
-                        <th class="col-md-2" scope="col">Me gusta</th>
-                        <th class="col-md-2" scope="col">No me gusta</th>
-                        <th class="col-md-2" scope="col">Alta</th>
-                        <th class="col-md-4" scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="historia : ${listahistorias}">
-                    <td class="col-md-4 " th:text="${historia.id_historia}"></td>
-                    <td class="col-md-4 " th:text="${historia.titulo}"></td>
-                    <td class="col-md-4 " th:text="${historia.historia}"></td>
-                    <td class="col-md-2 " th:text="${#temporals.format(historia.fechaCreacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${#temporals.format(historia.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${historia.perfil}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${historia.meGusta}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${historia.noMeGusta}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${historia.alta}" style="text-align: center"></td>
-                    <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${historia.alta}">
-                      <a class="btn btn-secondary btn-sm" th:href="@{/historias/editar/__${historia.id}__}">Editar</a>
-                
-                    <span th:case="true"> <form
-                      method="post"
-                      th:action="@{/historias/eliminar/__${historia.id}__}"
-                    >
-                      <button class="btn btn-danger btn-sm" type="submit"> Dar de baja
-                      </button> </form> </span>
-      
-                      <span th:case="false"> <form
-                        method="post"
-                        th:action="@{/historias/darAlta/__${historia.id}__}"
-                      >
-                        <button class="btn btn-success btn-sm" type="submit"> Dar de alta
-                        </button> </form> </span>
-                  </td>   
-                 </tr>
-                </tbody>
-            </table>
-        </div>
+<head th:replace="fragments :: head">
+</head>
+<body>
+<header th:replace="fragments :: header">
+</header>
+<div th:if="${listaHistorias.isEmpty() or listaHistorias == null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th> Todavía no hay historias cargadas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive" th:unless="${listaHistorias.isEmpty() and listaHistorias != null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th class="col-md-4" scope="col">Id</th>
+            <th class="col-md-2" scope="col">Titulo</th>
+            <th class="col-md-2" scope="col">Categoría</th>
+            <th class="col-md-2" scope="col">Historia</th>
+            <th class="col-md-2" scope="col">Fecha Creacion</th>
+            <th class="col-md-2" scope="col">Fecha Modificación</th>
+            <th class="col-md-2" scope="col">Perfil</th>
+            <th class="col-md-2" scope="col">Me gusta</th>
+            <th class="col-md-2" scope="col">No me gusta</th>
+            <th class="col-md-2" scope="col">Alta</th>
+            <th class="col-md-4" scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="historia : ${listaHistorias}">
+            <td class="col-md-4 " th:text="${historia.id_historia}"></td>
+            <td class="col-md-4 " th:text="${historia.titulo}"></td>
+            <td class="col-md-4 " th:text="${historia.categoria.nombre}"></td>
+<!--
+            <td class="col-md-4 " th:text="${historia.historia}"></td>
+-->
+            <td class="col-md-4 " th:text="${#strings.abbreviate(historia.historia,50)}"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(historia.fechaCreacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(historia.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${historia.meGusta}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${historia.noMeGusta}" style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${historia.alta == true} ? 'Habilitada' : 'Deshabilitada'"
+                style="text-align: center"></td>
+            <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${historia.alta}">
+<!--
+                <a class="btn btn-secondary btn-sm" th:href="@{/historias/editar/__${historia.id}__}">Editar</a>
+-->
+                <span>
+                    <form method="post" th:action="@{/historia/alta/__${historia.id_historia}__}">
+                        <button class="btn btn-danger btn-sm" type="submit" th:text="${historia.alta == true} ? 'Deshabilitar' : 'Habilitar'"></button>
+                    </form>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-        <footer th:replace="fragments :: footer"></footer>
-    </body>
+<footer th:replace="fragments :: footer"></footer>
+</body>
 </html>
