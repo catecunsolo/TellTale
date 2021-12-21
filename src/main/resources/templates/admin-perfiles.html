@@ -28,7 +28,7 @@
                     <tr th:each="perfil : ${listaPerfiles}">
                     <td class="col-md-4 " th:text="${perfil.id_perfil}"></td>
                     <td class="col-md-4 " th:text="${perfil.nombre}"></td>
-                    <td class="col-md-4 " th:text="${perfil.apellido}"></td>
+                    <td class="col-md-4 " th:text="${perfil.apellido != null ? perfil.apellido : 'Sin apellido'}"></td>
                     <td class="col-md-4 " th:text="${perfil.descripcion}"></td>
                     <td class="col-md-4 " th:text="${perfil.categoriaDelDia}"></td>
                     <td class="col-md-4 " th:text="${perfil.usuario}"></td>

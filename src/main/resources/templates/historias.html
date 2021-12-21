@@ -189,7 +189,7 @@
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex me-auto rounded">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
+                                <span class="section-heading-upper" th:text="${historia.perfil.nombre} + ' ' + ${historia.perfil.apellido != null ? historia.perfil.apellido : ''}"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"></i>
                                         <span class="text-muted" th:text="${historia.categoria.nombre}"></span></span>
                                 <span class="section-heading-lower text-secondary" th:text="${historia.titulo}"></span>
                             </h2>
@@ -220,7 +220,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-start" th:each="comentario : ${listaComentarios}">
                                         <div class="ms-2 me-auto mb-3">
                                             <div class="fw-bold"><img src="../img/img_avatar2.png" alt="Avatar" class="profile-pic-mini"> 
-                                                    </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido}"></span></div>
+                                                    </i><span th:text="${comentario.perfil.nombre} + ' ' + ${comentario.perfil.apellido != null ? comentario.perfil.apellido : ''}"></span></div>
                                             <p class="mb-0" th:text="${comentario.comentario}"></p>
                                             <span class="text-end text-muted" th:text="${comentario.fechaCreacion}"></span>
                                         </div>
