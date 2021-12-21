@@ -45,6 +45,9 @@ public class PerfilControlador {
             try {
                 modelAndView.addObject("action", "perfil");
                 modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())));
+                int cantidadDeHistorias = perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())).getHistorias().size();
+                modelAndView.addObject("cantidadDeHistorias", cantidadDeHistorias);
+
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
                 modelAndView.setViewName("redirect:/");
@@ -158,6 +161,8 @@ public class PerfilControlador {
                     modelAndView.addObject("action", "perfil_id");
                     modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(id));
                     modelAndView.addObject("id_nuevo", id);
+                    int cantidadDeHistorias = perfilServicio.buscarPerfilPorIdUsuario(id).getHistorias().size();
+                modelAndView.addObject("cantidadDeHistorias", cantidadDeHistorias);
 
                 } catch (Exception excepcion) {
                     modelAndView.addObject("error", excepcion.getMessage());

@@ -61,9 +61,7 @@ public class Historia  implements Serializable {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean alta;
 
-    @OneToMany(mappedBy = "historia")
-    private List<HistoriaFavorita> historiasFav;
-
+   
     @OneToMany(mappedBy = "historia")
     private List<Comentario> comentarios;
 

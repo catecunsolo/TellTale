@@ -27,9 +27,6 @@ public class Comentario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_comentario;
 
-    @Column(name = "asunto", nullable = false, columnDefinition = "VARCHAR(50)")
-    private String asunto;
-
     @Column(name = "comentario", nullable = false, columnDefinition = "VARCHAR(255)")
     private String comentario;
 

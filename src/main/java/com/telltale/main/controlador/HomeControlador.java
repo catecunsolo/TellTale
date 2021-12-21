@@ -1,8 +1,7 @@
 package com.telltale.main.controlador;
 
 import com.telltale.main.entidad.Categoria;
-import com.telltale.main.servicio.CategoriaDelDiaServicio;
-import com.telltale.main.servicio.PerfilServicio;
+import com.telltale.main.servicio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +19,12 @@ public class HomeControlador {
     private PerfilServicio perfilServicio;
     @Autowired
     private CategoriaDelDiaServicio categoriaDelDiaServicio;
+    @Autowired
+    private HistoriaServicio historiaServicio;
+    @Autowired
+    private ComentarioServicio comentarioServicio;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     private List<Categoria> topicos;
 
@@ -27,6 +32,10 @@ public class HomeControlador {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("topicos", topicos);
+        modelAndView.addObject("cantidadHistorias",historiaServicio.cantidadDeHistorias());
+        modelAndView.addObject("cantidadUsuarios",usuarioServicio.cantidadDeUsuarios());
+        modelAndView.addObject("cantidadComentarios",comentarioServicio.cantidadDeComentarios());
+
         return modelAndView;
     }
 
@@ -34,7 +43,7 @@ public class HomeControlador {
     public void rellenarTopicos() {
         topicos = categoriaDelDiaServicio.buscarLasUltimasTresMasVotadas();
         perfilServicio.bajaCateDelDia();
-        
+
     }
 
 }

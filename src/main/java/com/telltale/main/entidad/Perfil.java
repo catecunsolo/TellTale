@@ -62,8 +62,8 @@ public class Perfil implements Serializable {
     @OneToMany(mappedBy = "perfil")
     private List<Historia> historias;
 
-    @OneToMany(mappedBy = "perfil")
-    private List<HistoriaFavorita> historiasFav;
+    @OneToMany
+    private List<Historia> historiasFav;
 
     @OneToMany(mappedBy = "perfil")
     private List<Comentario> comentarios;
