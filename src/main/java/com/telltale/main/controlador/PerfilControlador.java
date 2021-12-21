@@ -114,7 +114,7 @@ public class PerfilControlador {
                 modelAndView.addObject("listaPerfiles", perfilServicio.verTodosPerfil());
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
-                modelAndView.setViewName("redirect:/perfil");
+                modelAndView.setViewName("redirect:/perfil/todos");
             }
         }
         return modelAndView;
@@ -200,7 +200,7 @@ public class PerfilControlador {
                 aux = "deshabilitado";
             }
             perfilServicio.cambiarAltaPerfil(perfil);
-            redirectAttributes.addFlashAttribute("success", "El perfil sido " + aux + " exitosamente!");
+            redirectAttributes.addFlashAttribute("success", "El perfil hs sido " + aux + " exitosamente!");
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
         }
