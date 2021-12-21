@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/rol")
 public class RolControlador {
 
     @Autowired
@@ -40,7 +40,7 @@ public class RolControlador {
                 modelAndView.addObject("listaRoles", rolServicio.verTodosRol());
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
-                modelAndView.setViewName("redirect:/roles");
+                modelAndView.setViewName("redirect:/rol");
             }
         }
         return modelAndView;
@@ -126,7 +126,7 @@ public class RolControlador {
     @PostMapping("/alta/{id_rol}")
     @PreAuthorize("hasRole('SUPER')")
     public RedirectView habilitarRol(@PathVariable Integer id_rol, RedirectAttributes redirectAttributes) {
-        RedirectView redirectView = new RedirectView("/roles");
+        RedirectView redirectView = new RedirectView("/rol");
         try {
             String aux = "";
             Rol rol = rolServicio.buscarRolPorId(id_rol);
