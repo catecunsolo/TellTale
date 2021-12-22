@@ -231,8 +231,9 @@
                                 </button>
                                 <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar" aria-expanded="false" aria-controls="comentar">
                                     Comentar
-                                </button>
-                                <form th:if="${noEsMiHistoria}" method="post" th:action="@{/historia/fav}">
+                                </button></div>
+                                
+                                <form th:if="${noEsMiHistoria}" method="post" th:action="@{/historia/fav}" class= "d-inline">
                                     <input name="historia" type="hidden" th:value="${historia.id_historia}"/>
                                 <button class="btn btn-circle" type="submit" th:if="${isFav}">
                                     <img th:src="@{/img/like.svg}"/>
