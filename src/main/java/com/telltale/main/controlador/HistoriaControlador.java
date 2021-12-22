@@ -93,7 +93,7 @@ public class HistoriaControlador {
     }
 
     @GetMapping
-    public ModelAndView historia(HttpSession session, HttpServletRequest request) {
+    public ModelAndView historia(HttpSession session, HttpServletRequest request, RedirectAttributes attributes) {
         ModelAndView mv = new ModelAndView("historias");
         Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
         if (map != null) {
@@ -106,6 +106,7 @@ public class HistoriaControlador {
             Categoria categoria = perfil.getCategoriaDelDia();
             if (categoria == null) {
                 mv.setViewName("redirect:/");
+                attributes.addFlashAttribute("error-name", "Recordá subir una historia para poder leer las demás!");
             } else {
                 List<Historia> historias = historiaServicio.verHistoriasPorCategoria(categoria);
                 List<Historia> historiasCortadas = new ArrayList();
