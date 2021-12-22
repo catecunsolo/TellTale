@@ -30,6 +30,9 @@ class ApplicationTests {
     @Resource
     private HistoriaRepositorio historiaRepositorio;
 
+    @Resource
+    private ComentarioRepositorio comentarioRepositorio;
+
     @Test
     void contextLoads() {
     }
@@ -41,6 +44,846 @@ class ApplicationTests {
 	}
 */
 
+    @Test
+    public void cargaAutomaticaDeDatos() {
+        /* INSERCIÓN DE CATEGORIAS A LA DB */
+
+        Categoria categoria = new Categoria();
+        categoria.setNombre("PANQUEQUE");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("MEDIALUNAS");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("GÁRGOLA");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("SAUCE");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("COLIBRÍ");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("MONTAÑA");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("MAR");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("CRUCERO");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("TRABAJO");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        categoria = new Categoria();
+        categoria.setNombre("AMOR");
+        categoria.setVoto((int) ((Math.random()) * 100) + 1);
+        categoriaRepositorio.save(categoria);
+
+        /* INSERCIÓN AUTOMÁTICA DE ROLES A LA DB */
+
+        Rol rol;
+
+        rol = new Rol();
+        rol.setNombre("SUPER");
+        rol.setFechaCreacion(LocalDate.now());
+        rol.setFechaUltModificacion(LocalDate.now());
+        rol.setAlta(true);
+        rolRepositorio.save(rol);
+
+        rol = new Rol();
+        rol.setNombre("ADMIN");
+        rol.setFechaCreacion(LocalDate.now());
+        rol.setFechaUltModificacion(LocalDate.now());
+        rol.setAlta(true);
+        rolRepositorio.save(rol);
+
+        rol = new Rol();
+        rol.setNombre("MODER");
+        rol.setFechaCreacion(LocalDate.now());
+        rol.setFechaUltModificacion(LocalDate.now());
+        rol.setAlta(true);
+        rolRepositorio.save(rol);
+
+        rol = new Rol();
+        rol.setNombre("USER");
+        rol.setFechaCreacion(LocalDate.now());
+        rol.setFechaUltModificacion(LocalDate.now());
+        rol.setAlta(true);
+        rolRepositorio.save(rol);
+
+        /* INSERCIÓN AUTOMÁTICA DE USUARIOS A LA DB */
+
+        Usuario usuario = new Usuario();
+
+        usuario.setUsername("adminadmin");
+        usuario.setEmail("admin@mail.com");
+        usuario.setPassword(encoder.encode("adminadmin"));
+        usuario.setFechaCreacion(LocalDate.now());
+        usuario.setFechaUltModificacion(LocalDate.now());
+        usuario.setRol(rolRepositorio.findByNombreIgnoreCase("ADMIN"));
+        usuario.setAlta(true);
+        usuarioRepositorio.save(usuario);
+
+        usuario = new Usuario();
+        usuario.setUsername("supersuper");
+        usuario.setEmail("super@mail.com");
+        usuario.setPassword(encoder.encode("supersuper"));
+        usuario.setFechaCreacion(LocalDate.now());
+        usuario.setFechaUltModificacion(LocalDate.now());
+        usuario.setRol(rolRepositorio.findByNombreIgnoreCase("SUPER"));
+        usuario.setAlta(true);
+        usuarioRepositorio.save(usuario);
+
+        usuario = new Usuario();
+        usuario.setUsername("modermoder");
+        usuario.setEmail("moder@mail.com");
+        usuario.setPassword(encoder.encode("modermoder"));
+        usuario.setFechaCreacion(LocalDate.now());
+        usuario.setFechaUltModificacion(LocalDate.now());
+        usuario.setRol(rolRepositorio.findByNombreIgnoreCase("MODER"));
+        usuario.setAlta(true);
+        usuarioRepositorio.save(usuario);
+
+        /* INSERCIÓN AUTOMÁTICA DE PERFILES EN LA DB */
+
+        Perfil perfil = new Perfil();
+        perfil.setNombre("Usuario");
+        perfil.setApellido("Administrador");
+        perfil.setDescripcion("Usuario administrador del proyecto TellTale");
+        perfil.setCategoriaDelDia(null);
+        perfil.setUsuario(usuarioRepositorio.findByEmail("admin@mail.com").get());
+        perfil.setFechaCreacion(LocalDate.now());
+        perfil.setFechaUltModificacion(LocalDate.now());
+        perfil.setAlta(true);
+        perfilRepositorio.save(perfil);
+
+        perfil = new Perfil();
+        perfil.setNombre("Usuario");
+        perfil.setApellido("Superadministrador");
+        perfil.setDescripcion("Usuario superadministrador del proyecto TellTale");
+        perfil.setCategoriaDelDia(null);
+        perfil.setUsuario(usuarioRepositorio.findByEmail("super@mail.com").get());
+        perfil.setFechaCreacion(LocalDate.now());
+        perfil.setFechaUltModificacion(LocalDate.now());
+        perfil.setAlta(true);
+        perfilRepositorio.save(perfil);
+
+        perfil = new Perfil();
+        perfil.setNombre("Usuario");
+        perfil.setApellido("Moderador");
+        perfil.setDescripcion("Usuario moderador del proyecto TellTale");
+        perfil.setCategoriaDelDia(null);
+        perfil.setUsuario(usuarioRepositorio.findByEmail("moder@mail.com").get());
+        perfil.setFechaCreacion(LocalDate.now());
+        perfil.setFechaUltModificacion(LocalDate.now());
+        perfil.setAlta(true);
+        perfilRepositorio.save(perfil);
+
+        /* INSERCIÓN AUTOMÁTICA DE HISTORIAS EN LA DB */
+
+        Historia historia = new Historia();
+        historia.setTitulo("Mi primer amor");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("AMOR"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Un amor de verano");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("AMOR"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Trabajo finalizado");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("TRABAJO"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Mi primer empleo IT");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("TRABAJO"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("All inclusive");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("CRUCERO"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Naufragio");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("CRUCERO"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Mar muerto");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MAR"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Mar rojo");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MAR"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Secretos");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MONTAÑA"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Mar muerto");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MONTAÑA"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Picaflor");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("COLIBRÍ"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("1200 RPM");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("COLIBRÍ"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("A orillas del río");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("SAUCE"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Como lágrimas");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("SAUCE"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Gótico");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("GÁRGOLA"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("La fuente principal");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("GÁRGOLA"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Mafaldas");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MEDIALUNAS"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Saladas o de grasa");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MEDIALUNAS"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Se dio vuelta");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("PANQUEQUE"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        historia = new Historia();
+        historia.setTitulo("Con o sin dulce de leche");
+        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("PANQUEQUE"));
+        historia.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        historia.setFechaCreacion(LocalDate.now());
+        historia.setFechaUltModificacion(LocalDate.now());
+        historia.setAlta(true);
+        historiaRepositorio.save(historia);
+
+        /* INSERCIÓN AUTOMÁTICA DE COMENTARIOS EN LA DB */
+
+        Comentario comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(1).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó lo mismo xD");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(1).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(2).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Tristísimo!!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(2).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("¿Y cómo sigue?");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(3).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Hay parte 2!?");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(3).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("No me gusta para nada =(");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(4).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó lo mismo xD");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(4).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(5).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(5).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Creo que no era por ahí");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(6).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Zafaron?!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(6).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Yo hubiera hecho otra cosa");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(7).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Creo que no era la solución");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(7).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(8).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(8).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Comparto, pero no me animo");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(9).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Es en serio?");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(9).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(10).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó lo mismo xD");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(10).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(11).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(11).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Pero creo que era por otro lado");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(12).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Y como terminó todo!?");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(12).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(13).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó lo mismo xD");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(13).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(14).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Quizás hubiera hecho más");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(14).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó lo mismo xD");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(15).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(15).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(16).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Entonces, pudiste resolverlo??");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(16).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(17).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(17).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Dejalo ir!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(18).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Me pasó casi casi pero casi lo mismo");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(18).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(19).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Uffff te la debo -_-");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("supersuper").get()));
+        comentario.setHistoria(historiaRepositorio.findById(19).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Increible!!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("modermoder").get()));
+        comentario.setHistoria(historiaRepositorio.findById(20).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+
+        comentario = new Comentario();
+        comentario.setComentario("Genial!");
+        comentario.setMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setNoMeGusta((int) ((Math.random()) * 100) + 1);
+        comentario.setPerfil(perfilRepositorio.buscarPerfilPorIdUsuario(usuarioRepositorio.findByUsername("adminadmin").get()));
+        comentario.setHistoria(historiaRepositorio.findById(20).get());
+        comentario.setFechaCreacion(LocalDate.now());
+        comentario.setFechaUltModificacion(LocalDate.now());
+        comentario.setAlta(true);
+        comentarioRepositorio.save(comentario);
+    }
+
+/*
     @Test
     public void testRolRepositorio_save() { //método para cargar datos, desde RolRepositorio, a la tabla ROL de la DB
         Rol rol;
@@ -75,13 +918,10 @@ class ApplicationTests {
 
     }
 
-/*
 	@Test
 	public void testCategoriaRepositorio_deleteAll() { //método para borrar, desde CategoriaRepositorio, todos los datos cargados en la tabla CATEGORIA de la DB
 		categoriaRepositorio.deleteAll();
 	}
-*/
-
 
     @Test
     public void testCategoriaRepositorio_save() { //método para cargar datos, desde CategoriaRepositorio, a la tabla CATEGORIA de la DB
@@ -137,7 +977,6 @@ class ApplicationTests {
 
     }
 
-/*
 	@Test
 	public void testHistoriaRepositorio_deleteAll() { //método para borrar, desde HistoriaRepositorio, todos los datos cargados en la tabla HISTORIA de la DB
 		historiaRepositorio.deleteAll();
@@ -229,13 +1068,14 @@ class ApplicationTests {
 		historia7.setAlta(true);
 		historiaRepositorio.save(historia7);
 	}
-*/
 
     @Test
     public void testUsuarioRepositorio_deleteAll() { //método para borrar, desde UsuarioRepositorio, todos los datos cargados en la tabla USUARIO de la DB
         usuarioRepositorio.deleteAll();
     }
+*/
 
+/*
     @Test
     public void testUsuarioRepositorio_save() { //método para cargar datos, desde UsuarioRepositorio, a la tabla USUARIO de la DB
         Usuario usuario1 = new Usuario();
@@ -309,5 +1149,6 @@ class ApplicationTests {
 		perfil3.setAlta(true);
         perfilRepositorio.save(perfil3);
     }
+*/
 
 }
