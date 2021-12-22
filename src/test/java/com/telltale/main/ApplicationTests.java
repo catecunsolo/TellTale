@@ -202,7 +202,7 @@ class ApplicationTests {
 
         Historia historia = new Historia();
         historia.setTitulo("Mi primer amor");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Tenía 18 años, la conocí en la universidad. Ella estudiaba arquitectura y yo contaduría, entonces la veía siempre que salíamos de clases porque teníamos el mismo horario. La primera vez que pude hablarle fue porque estábamos en la fila del Subway de la uni. Recuerdo que ella pidió un sandwich de roast beef de 15 centímetros con aceitunas negras. Después de eso, cada que la veía la saludaba, hasta que una vez un amigo en común me dijo que a ella le gustaba mucho fumar mariguana. Así que un día en la uni le saqué conversación y la invité a fumar, después de ahí me agregó a Messenger y bueno, empezamos a salir.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("AMOR"));
@@ -214,7 +214,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Un amor de verano");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Hace diez años. Mi papá tenía una heladería y yo lo ayudaba en las tardes muchísimas veces. Había un grupo de niñas que se juntaban a jugar cerca del local, y a veces mi papá me enviaba a regalarles algunos helados. Siempre hubo una que me llamó la atención: María Carlota.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("AMOR"));
@@ -226,7 +226,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Trabajo finalizado");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("En una entrevista para un puesto de administrativa en un despacho de abogados, me preguntaron con qué animal me identificaba. Les dije que con un delfín. Fue el primer animal que me vino a la mente, porque me acordé de la canción de Bailar Pegados de Sergio Dalma y acerté. Estuve trabajando año y medio con ellos y me enteré después de que ese era el animal que más le gustaba a la de Recursos Humanos.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("TRABAJO"));
@@ -238,7 +238,11 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Mi primer empleo IT");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Aún recuerdo a una entrevista a la que fui y en la que el entrevistador me miró raro desde que entré. Pasado un rato, con cara incrédula me preguntó si era verdad todo lo que ponía en el currículum y si había alguna manera de demostrar toda mi experiencia.\n" +
+                "\n" +
+                "¿Experiencia? – pregunté – ¡si acabo de terminar la carrera!\n" +
+                "\n" +
+                "Cuando me enseñó finalmente el CV yo no daba crédito. Me empecé a carcajear y cuando el entrevistador me miró extrañado le tuve que explicar que ese CV ¡era de mi padre!");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("TRABAJO"));
@@ -249,8 +253,8 @@ class ApplicationTests {
         historiaRepositorio.save(historia);
 
         historia = new Historia();
-        historia.setTitulo("All inclusive");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setTitulo("Naufragio");
+        historia.setHistoria("Apenas una semana después otro hecho casi inaudito ocurría en el Caribe: Un crucerista de 22 años de edad, tuvo un dramático rescate en el mar cuando cayó por la borda del Oasis of the Seas, de Royal Caribbean, y fue rescatado por el barco Disney Magic de la Disney Cruise Line, 5 horas después. Un pasajero a bordo del crucero Disney dio la voz de alerta cuando escuchó gritos de auxilio en el mar alrededor de las 6:30 de la mañana. Fue entonces cuando se ordenó detener el barco y desplegar un bote para acudir a su rescate.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("CRUCERO"));
@@ -261,8 +265,8 @@ class ApplicationTests {
         historiaRepositorio.save(historia);
 
         historia = new Historia();
-        historia.setTitulo("Naufragio");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setTitulo("All inclusive");
+        historia.setHistoria("Los nacimientos a bordo sí que suelen ser un tema recurrente en los viajes. Nace bebe a bordo del Queen Mary 2 durante su itinerario transatlántico de siete días entre Southampton y Nueva York. El bebé que se llamará Benjamin Brooklyn nació el pasado sábado por la noche a bordo de barco de la naviera Cunard. La madre, una crucerista de nacionalidad alemana, viajaba con su hermano cuando rompió aguas con tres semanas de adelanto. El capitán del Queen Mary 2, comentó que es la primera vez que un bebé había nacido en el buque bajo su mando.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("CRUCERO"));
@@ -274,7 +278,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Mar muerto");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Se trata del punto con menor elevación en la Tierra, pues se encuentra a 420 metros, aproximadamente, por debajo del nivel del mar. Su agua contiene 10 veces más sal que los océanos, por lo que, a excepción de ciertas bacterias y microalgas, ningún organismo puede vivir en sus profundidades. Gracias a esta densidad de minerales, cuando te sumerges en el Mar Muerto flotas sin esfuerzo.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MAR"));
@@ -286,7 +290,8 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Mar rojo");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Jehová ahora le dijo a Moisés que extendiera su palo sobre el mar Rojo. Cuando Moisés hizo esto, Jehová hizo que un viento fuerte del este soplara. Las aguas del mar se dividieron, y se quedaron aguantadas en los dos lados.\n" +
+                "Jehová le dijo a Moisés que extendiera su palo sobre el mar Rojo, como viste en el cuadro. Entonces las paredes de agua empezaron a volver y a cubrir a los egipcios y sus carros. El ejército entero se había metido en el mar. ¡Y ni un solo egipcio salió vivo!\n");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MAR"));
@@ -298,7 +303,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Secretos");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Hace 2 días me fracturé la mano, yo dije que me había caído de las escaleras, por miedo de que me fueran a internar de nuevo. La verdadera razón fue que golpee durísimo a la pared en un momento de desesperación y ansiedad :(");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MONTAÑA"));
@@ -310,7 +315,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Mar muerto");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("No metas la cara al agua: te provocará un terrible ardor en los ojos; no se te ocurra tallarlos, aunque sientas ansiedad, porque el problema se agravará y alguien más deberá ayudarte a salir. Tampoco la pruebes por curiosidad. Su sabor es muy desagradable y deja los labios resecos. Si tienes una herida reciente o te acabas de rasurar, ¡no querrás saber qué pasará!");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MONTAÑA"));
@@ -322,7 +327,9 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Picaflor");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Poty (flor) se llamaba la hija de un Cacique de una tekoha (pueblo). Emanaba belleza y simpatía por todas partes y estaba enamorada de Mainumby. Si bien su amor era correspondido, el muchacho pertenecía a otra tekoha con la cual existían enfrentamientos desde antaño.\n" +
+                "\n" +
+                "Esto lo obligaba a escaparse y verse a escondidas solo con los montes como testigos que daban refugio a su amor. Esto fue así hasta que fueron descubiertos por una mujer que mucho envidiaba a Poty. Luego de las reprimendas del caso, cayó sobre la muchacha guaraní la prohibición de volver a ver a su amado.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("COLIBRÍ"));
@@ -334,7 +341,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("1200 RPM");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("La leyenda del colibrí es una hermosa reflexión de la muerte y el corazón. Esta ave ha sido muy apreciada desde los mayas y mexicas, quienes lo consideraban el mensajero de los dioses por su agilidad para volar. Su corazón alcanza hasta 1,200 latidos por minuto y sus alas se baten hasta 90 veces por segundo.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("COLIBRÍ"));
@@ -346,7 +353,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("A orillas del río");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("A orillas del río Uruguay existía una orgullosa tribu, la cual era gobernada por un hombre justo y valiente. Este guerrero tenía una hija llamada Isapí, a quien todos admiraban por ser la más bella de la región. En todo el lugar no había una sola persona que pudiera compararse con su belleza; sin embargo, así como grande era su hermosura, frío era su corazón, pues la princesa no tenía sentimientos por nadie.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("SAUCE"));
@@ -358,7 +365,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Como lágrimas");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Jamás en su vida había derramado una sola lágrima, no tenía amigos ni sabía sonreír. Y aunque le sobraban los pretendientes a ninguno de ellos amaba, pues se decía que era incapaz de sentir cariño. Así era la hermosa Isapí, orgullosa y fría como el hielo.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("SAUCE"));
@@ -370,7 +377,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Gótico");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Si bien las gárgolas tienen un uso práctico desde su masificación a partir del siglo XIII como desagües decorativos, también tenían fines ideológicos-místicos. Para la Iglesia Medieval Católica, las figuras representaban la maldad, los demonios y el dolor para quienes tuvieran que pagar sus pecados en la vida post muerte. De esta forma, los creyentes verían el interior de la iglesia/catedral como la salvación.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("GÁRGOLA"));
@@ -382,7 +389,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("La fuente principal");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("su origen como 'Gárgola' propiamente tal, está en Francia a partir de la palabra 'gargouille', que se suele asociar a 'garganta' y aquellas estatuas que expulsan agua por sus bocas. Sin embargo, su etimología nació de una antigua leyenda llamada La Gargouille, la historia de un dragón que aterrorizaba a los habitantes del pueblo Rouen.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("GÁRGOLA"));
@@ -394,7 +401,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Mafaldas");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Recuerdo que una vez estaba leyendo historietas con mi madre a la hora de la merienda. Estabamos comiendo medialunas rellenas de queso. Terminamos tirando a Mafalda al carajo porque me ahogué. Fin. ");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MEDIALUNAS"));
@@ -406,7 +413,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Saladas o de grasa");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Lo único bueno que trajo la cuarentena fue haberme dado tiempo para aprender a cocinar. Después de ver varios videos pude animarme a hacer las mejores medialunas que comí en mi vida. Cocinar es lo mejor que me pasó!");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("MEDIALUNAS"));
@@ -418,7 +425,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Se dio vuelta");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Si hablamos de panqueque no podemos olvidarnos de mencionar al gran señor SERGIO MASSA. That's the tweet. PD: si no entienden la referencia, acudan al gran amigo Google. Cambio y fuera.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("PANQUEQUE"));
@@ -430,7 +437,7 @@ class ApplicationTests {
 
         historia = new Historia();
         historia.setTitulo("Con o sin dulce de leche");
-        historia.setHistoria("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        historia.setHistoria("Hay algo que no se puede discutir y es que PRIMERO el dulce de leche es ARGENTINO y segundo que los panqueques llevan DULCE DE LECHE  y nada más. Una vez me pegaron un bife por ponerle mermelada así que no lo hagan, adiós.");
         historia.setMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setNoMeGusta((int) ((Math.random()) * 100) + 1);
         historia.setCategoria(categoriaRepositorio.buscarCategoriaPorNombre("PANQUEQUE"));
