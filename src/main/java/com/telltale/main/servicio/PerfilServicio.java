@@ -5,6 +5,7 @@ import com.telltale.main.entidad.Historia;
 import com.telltale.main.entidad.Perfil;
 import com.telltale.main.entidad.Usuario;
 import com.telltale.main.repositorio.PerfilRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class PerfilServicio {
         perfil.setCategoriaDelDia(null);
         perfil.setUsuario(usuario);
         perfil.setAlta(true);
+        perfil.setHistoriasFav(new ArrayList<Historia>());
         perfilRepositorio.save(perfil);
     }
 
@@ -80,8 +82,18 @@ public class PerfilServicio {
             perfilRepositorio.save(perfil);
         }
     }
-
-
+    
+    @Transactional
+    public void favorita(Perfil perfil,Historia historia){
+        List<Historia> historias = perfil.getHistoriasFav();
+        if (historias.contains(historia)) {
+            historias.remove(historia);
+        }else{
+            historias.add(historia);
+        }
+        perfil.setHistoriasFav(historias);
+        perfilRepositorio.save(perfil);
+    }
 
 
 
@@ -114,4 +126,8 @@ public class PerfilServicio {
 
     }
 
+    @Transactional
+    public void cambiarAltaPerfil(Perfil perfil) {
+        perfilRepositorio.save(perfil);
+    }
 }

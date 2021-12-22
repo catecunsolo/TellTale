@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import static org.apache.coyote.http11.Constants.a;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +46,9 @@ public class PerfilControlador {
             try {
                 modelAndView.addObject("action", "perfil");
                 modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())));
+                int cantidadDeHistorias = perfilServicio.buscarPerfilPorIdUsuario(Integer.parseInt(session.getAttribute("id_usuario").toString())).getHistorias().size();
+                modelAndView.addObject("cantidadDeHistorias", cantidadDeHistorias);
+
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
                 modelAndView.setViewName("redirect:/");
@@ -93,15 +97,27 @@ public class PerfilControlador {
     }
 
     @GetMapping("/todos")
-    public ModelAndView verTodosPerfil(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("perfiles");
-        Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
-        if (map != null) {
-            mav.addObject("error", map.get("exito-name"));
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public ModelAndView verTodosPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("admin-perfiles");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("listaPerfiles", null);
         }
-        mav.addObject("perfiles", perfilServicio.verTodosPerfil());
-
-        return mav;
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("listaPerfiles", null);
+        } else {
+            try {
+                modelAndView.addObject("listaPerfiles", perfilServicio.verTodosPerfil());
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/perfil/todos");
+            }
+        }
+        return modelAndView;
     }
 
     @GetMapping("/crear")
@@ -158,6 +174,8 @@ public class PerfilControlador {
                     modelAndView.addObject("action", "perfil_id");
                     modelAndView.addObject("perfil", perfilServicio.buscarPerfilPorIdUsuario(id));
                     modelAndView.addObject("id_nuevo", id);
+                    int cantidadDeHistorias = perfilServicio.buscarPerfilPorIdUsuario(id).getHistorias().size();
+                modelAndView.addObject("cantidadDeHistorias", cantidadDeHistorias);
 
                 } catch (Exception excepcion) {
                     modelAndView.addObject("error", excepcion.getMessage());
@@ -166,5 +184,26 @@ public class PerfilControlador {
             }
         }
         return modelAndView;
+    }
+
+    @PostMapping("/alta/{id_perfil}")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public RedirectView habilitarRol(@PathVariable Integer id_perfil, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/perfil/todos");
+        try {
+            String aux = "";
+            Perfil perfil = perfilServicio.buscarPerfilPorId(id_perfil);
+            perfil.setAlta(!perfil.getAlta());
+            if (perfil.getAlta()) {
+                aux = "habilitado";
+            } else {
+                aux = "deshabilitado";
+            }
+            perfilServicio.cambiarAltaPerfil(perfil);
+            redirectAttributes.addFlashAttribute("success", "El perfil hs sido " + aux + " exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        }
+        return redirectView;
     }
 }

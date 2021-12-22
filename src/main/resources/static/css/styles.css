@@ -1910,8 +1910,8 @@
  }
  
  .table {
-   --bs-table-bg: transparent;
-   --bs-table-accent-bg: transparent;
+   --bs-table-bg: #78c2ad;
+
    --bs-table-striped-color: #888;
    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
    --bs-table-active-color: #888;
@@ -2082,6 +2082,7 @@
  .table-responsive {
    overflow-x: auto;
    -webkit-overflow-scrolling: touch;
+   background-color: #78c2ad;
  }
  
  @media (max-width: 575.98px) {
@@ -4027,7 +4028,7 @@
  
  .dropdown-menu-dark {
    color: #eceeef;
-   background-color: #343a40;
+   background-color: rgba(59, 58, 48, 1);
    border-color: rgba(0, 0, 0, 0.15);
  }
  
@@ -18437,4 +18438,13 @@ p {
 #alertas{
     display: flex;
     justify-content: space-around;
+}
+
+/*PROPIO*/
+
+.btn-circle {
+    border-radius: 50%;
+    background-color: #78c2ad;
+    height: 3em;
+    width: 3em;
 }

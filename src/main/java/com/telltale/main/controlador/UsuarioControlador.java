@@ -10,9 +10,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/usuario")
@@ -48,11 +51,27 @@ public class UsuarioControlador {
         return redirectView;
     }
 
-    @GetMapping("/ver-todos")
+    @GetMapping("/todos")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
-    public ModelAndView obtenerUsuarios() {
-        ModelAndView modelAndView = new ModelAndView("usuario");
-        modelAndView.addObject("usuarios", usuarioServicio.verTodosUsuario());
+    public ModelAndView obtenerUsuarios(HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("admin-usuarios");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("listaUsuarios", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("listaUsuarios", null);
+        } else {
+            try {
+                modelAndView.addObject("listaUsuarios", usuarioServicio.verTodosUsuario());
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/usuario/todos");
+            }
+        }
         return modelAndView;
     }
 
@@ -92,4 +111,25 @@ public class UsuarioControlador {
         return new RedirectView("/usuario");
     }
 
+    @PostMapping("/alta/{id_usuario}")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public RedirectView habilitarRol(@PathVariable Integer id_usuario, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/usuario/todos");
+        try {
+            String aux = "";
+            Usuario usuario = usuarioServicio.buscarUsuarioPorId(id_usuario);
+            usuario.setAlta(!usuario.getAlta());
+            if (usuario.getAlta()) {
+                aux = "habilitado";
+                usuarioServicio.altaUsuario(id_usuario);
+            } else {
+                aux = "deshabilitado";
+                usuarioServicio.bajaUsuario(id_usuario);
+            }
+            redirectAttributes.addFlashAttribute("success", "El usuario ha sido " + aux + " exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        }
+        return redirectView;
+    }
 }

@@ -51,11 +51,14 @@ public class SignupControlador {
     }
 
     @PostMapping("/register")
-    public RedirectView register(@RequestParam String username, @RequestParam String mail, @RequestParam String password, @RequestParam String password2, RedirectAttributes redirectAttributes) {
+    public RedirectView register(@RequestParam String username, @RequestParam String mail, 
+            @RequestParam String password, @RequestParam String password2,
+            RedirectAttributes redirectAttributes,HttpServletRequest req) {
         RedirectView redirectView = new RedirectView("/login");
         try {
             perfilServicio.crearPerfil(username,null,null, usuarioServicio.crearUsuario(username, mail, password, rolServicio.buscarRolPorNombre("USER")));
             redirectAttributes.addFlashAttribute("success", "El usuario ha sido creado exitosamente!");
+            req.login(mail,password);
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             redirectAttributes.addFlashAttribute("username", username);

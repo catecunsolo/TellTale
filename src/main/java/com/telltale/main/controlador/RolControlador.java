@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/rol")
 public class RolControlador {
 
     @Autowired
     private RolServicio rolServicio;
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/todos")
+    @PreAuthorize("hasRole('SUPER')")
     public ModelAndView verTodosRol(HttpServletRequest request, @RequestParam(required = false) String error) {
         ModelAndView modelAndView = new ModelAndView("admin-roles");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -40,14 +40,14 @@ public class RolControlador {
                 modelAndView.addObject("listaRoles", rolServicio.verTodosRol());
             } catch (Exception excepcion) {
                 modelAndView.addObject("error", excepcion.getMessage());
-                modelAndView.setViewName("redirect:/roles");
+                modelAndView.setViewName("redirect:/rol/todos");
             }
         }
         return modelAndView;
     }
 
     @GetMapping("/crear")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER')")
     public ModelAndView crearRol(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -64,7 +64,7 @@ public class RolControlador {
     }
 
     @PostMapping("/guardar")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER')")
     public RedirectView guardarRol(@ModelAttribute Rol rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/rol");
         try {
@@ -79,7 +79,7 @@ public class RolControlador {
     }
 
     @GetMapping("/editar/{id_rol}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER')")
     public ModelAndView editarRol(@PathVariable Integer id_rol, HttpServletRequest request) throws Exception {
         ModelAndView modelAndView = new ModelAndView("rolformulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -96,11 +96,11 @@ public class RolControlador {
     }
 
     @PostMapping("/modificar")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER')")
     public RedirectView modificarRol(@ModelAttribute Rol rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/rol");
         try {
-            rolServicio.validarFormularioYModificar(rol.getId_rol(), rol.getNombre());
+            rolServicio.validarFormularioYModificar(rol.getId_rol(), rol.getNombre(), rol.getAlta());
             redirectAttributes.addFlashAttribute("success", "El Rol se ha modificado exitosamente!");
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
@@ -111,7 +111,7 @@ public class RolControlador {
     }
 
     @PostMapping("/delete/{id_roles}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER')")
     public RedirectView eliminarRol(@PathVariable Integer id_rol, RedirectAttributes redirectAttributes) {
         RedirectView redirectView = new RedirectView("/roles");
         try {
@@ -123,4 +123,24 @@ public class RolControlador {
         return redirectView;
     }
 
+    @PostMapping("/alta/{id_rol}")
+    @PreAuthorize("hasRole('SUPER')")
+    public RedirectView habilitarRol(@PathVariable Integer id_rol, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/rol/todos");
+        try {
+            String aux = "";
+            Rol rol = rolServicio.buscarRolPorId(id_rol);
+            rol.setAlta(!rol.getAlta());
+            if (rol.getAlta()) {
+                aux = "habilitado";
+            } else {
+                aux = "deshabilitado";
+            }
+            rolServicio.modificarRol(rol.getId_rol(), rol.getNombre(), rol.getAlta());
+            redirectAttributes.addFlashAttribute("success", "El rol ha sido " + aux + " exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        }
+        return redirectView;
+    }
 }

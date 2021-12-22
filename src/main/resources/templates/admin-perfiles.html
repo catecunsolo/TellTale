@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments :: head">
-    </head>
-    <body>
-        <header th:replace="fragments :: header">
-        </header>
-        <div th:if="${listaPerfiles.isEmpty()}">
-            <h5> Todavía no hay perfiles cargados</h5>
-        </div>
-        <div class="table-responsive" th:unless="${listaPerfiles.isEmpty()}">
-            <table class="table table-hover table-sm table-bordered">
-                <thead class="table-secondary text-center">
-                    <tr>
-                        <th class="col-md-4" scope="col">Id</th>
-                        <th class="col-md-2" scope="col">Nombre</th>
-                        <th class="col-md-2" scope="col">Apellido</th>
-                        <th class="col-md-2" scope="col">Descripcion</th>
-                        <th class="col-md-2" scope="col">Categoria del dia</th>
-                        <th class="col-md-2" scope="col">Usuario</th>
-                        <th class="col-md-2" scope="col">Fecha Creacion</th>
-                        <th class="col-md-2" scope="col">Fecha Modificación</th>
-                        <th class="col-md-2" scope="col">Alta</th>
-                        <th class="col-md-4" scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="perfil : ${listaPerfiles}">
-                    <td class="col-md-4 " th:text="${perfil.id_perfil}"></td>
-                    <td class="col-md-4 " th:text="${perfil.nombre}"></td>
-                    <td class="col-md-4 " th:text="${perfil.apellido}"></td>
-                    <td class="col-md-4 " th:text="${perfil.descripcion}"></td>
-                    <td class="col-md-4 " th:text="${perfil.categoriaDelDia}"></td>
-                    <td class="col-md-4 " th:text="${perfil.usuario}"></td>
-                    <td class="col-md-2 " th:text="${#temporals.format(perfil.fechaCreacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${#temporals.format(perfil.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}" style="text-align: center"></td>
-                    <td class="col-md-2 " th:text="${perfil.alta}" style="text-align: center"></td>
-                    <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${perfil.alta}">
-                      <a class="btn btn-secondary btn-sm" th:href="@{/perfils/editar/__${perfil.id}__}">Editar</a>
-                
-                    <span th:case="true"> <form
-                      method="post"
-                      th:action="@{/perfiles/eliminar/__${perfil.id}__}"
-                    >
-                      <button class="btn btn-danger btn-sm" type="submit"> Dar de baja
-                      </button> </form> </span>
-      
-                      <span th:case="false"> <form
-                        method="post"
-                        th:action="@{/perfiles/darAlta/__${perfil.id}__}"
-                      >
-                        <button class="btn btn-success btn-sm" type="submit"> Dar de alta
-                        </button> </form> </span>
-                  </td>   
-                 </tr>
-                </tbody>
-            </table>
-        </div>
+<head th:replace="fragments :: head">
+</head>
+<body>
+<header th:replace="fragments :: header">
+</header>
+<div th:if="${listaPerfiles.isEmpty() or listaPerfiles == null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th> Todavía no hay perfiles cargados</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive" th:unless="${listaPerfiles.isEmpty() and listaPerfiles != null}">
+    <table class="table table-green table-sm table-bordered text-white text-center">
+        <thead class="table-secondary text-center text-white">
+        <tr>
+            <th class="col-md-4" scope="col">Id</th>
+            <th class="col-md-2" scope="col">Nombre</th>
+            <th class="col-md-2" scope="col">Apellido</th>
+            <th class="col-md-2" scope="col">Descripcion</th>
+            <th class="col-md-2" scope="col">Categoria del dia</th>
+            <th class="col-md-2" scope="col">Usuario</th>
+            <th class="col-md-2" scope="col">Fecha Creacion</th>
+            <th class="col-md-2" scope="col">Fecha Modificación</th>
+            <th class="col-md-2" scope="col">Alta</th>
+            <th class="col-md-4" scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="perfil : ${listaPerfiles}">
+            <td class="col-md-4 " th:text="${perfil.id_perfil}"></td>
+            <td class="col-md-4 " th:text="${perfil.nombre}"></td>
+            <td class="col-md-4 " th:text="${perfil.apellido}"></td>
+            <td class="col-md-4 " th:text="${perfil.descripcion}"></td>
+            <td class="col-md-4 " th:text="${perfil.categoriaDelDia}"></td>
+            <td class="col-md-4 " th:text="${perfil.usuario.username}"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(perfil.fechaCreacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${#temporals.format(perfil.fechaUltModificacion, 'dd-MM-yyyy HH:mm')}"
+                style="text-align: center"></td>
+            <td class="col-md-2 " th:text="${perfil.alta == true} ? 'Habilitado' : 'Deshabilitado'"
+                style="text-align: center"></td>
+            <td class="col-2 px-md-2 d-flex justify-content-around w-100" th:switch="${perfil.alta}">
+                <!--<a class="btn btn-secondary btn-sm" th:href="@{/perfils/editar/__${perfil.id}__}">Editar</a>-->
+                <span>
+                    <form method="post" th:action="@{/perfil/alta/__${perfil.id_perfil}__}">
+                        <button class="btn btn-danger btn-sm" type="submit" th:text="${perfil.alta == true} ? 'Deshabilitar' : 'Habilitar'"></button>
+                    </form>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-        <footer th:replace="fragments :: footer"></footer>
-    </body>
+<footer th:replace="fragments :: footer"></footer>
+</body>
 </html>

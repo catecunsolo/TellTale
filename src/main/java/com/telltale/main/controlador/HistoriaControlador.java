@@ -5,9 +5,7 @@
  */
 package com.telltale.main.controlador;
 
-import com.telltale.main.entidad.Categoria;
-import com.telltale.main.entidad.Historia;
-import com.telltale.main.entidad.Perfil;
+import com.telltale.main.entidad.*;
 import com.telltale.main.servicio.CategoriaServicio;
 import com.telltale.main.servicio.HistoriaServicio;
 import com.telltale.main.servicio.PerfilServicio;
@@ -21,6 +19,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -112,8 +111,8 @@ public class HistoriaControlador {
                 List<Historia> historiasCortadas = new ArrayList();
                 for (Historia historia : historias) {
                     String history = historia.getHistoria();
-                    if (history.length() > 90) {
-                        history = history.substring(0, 89);
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
                         historia.setHistoria(history);
                     }
                     historiasCortadas.add(historia);
@@ -136,11 +135,22 @@ public class HistoriaControlador {
         try {
             Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
             Historia historia = historiaServicio.buscarHistoriaPorId(id);
-            if (perfil.getCategoriaDelDia() == null
-                    || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria()) {
+            if (perfil.getId_perfil() != historia.getPerfil().getId_perfil()) {
+                mv.addObject("noEsMiHistoria", true);
+            } else {
+                mv.addObject("noEsMiHistoria", false);
+
+            }
+            if ((perfil.getCategoriaDelDia() == null
+                    || perfil.getCategoriaDelDia().getId_categoria() != historia.getCategoria().getId_categoria())
+                    && historia.getPerfil().getId_perfil() != perfil.getId_perfil()
+                    && !perfil.getHistoriasFav().contains(historia)) {
                 mv.setViewName("redirect:/historia");
             }
             mv.addObject("historia", historia);
+            mv.addObject("listaComentarios", historia.getComentarios());
+            mv.addObject("comentario_propio", new Comentario());
+            mv.addObject("isFav", perfil.getHistoriasFav().contains(historia));
         } catch (Exception e) {
             ra.addFlashAttribute("error-name", e.getMessage());
             mv.setViewName("redirect:/historia");
@@ -165,8 +175,8 @@ public class HistoriaControlador {
             List<Historia> historiasCortadas = new ArrayList();
             for (Historia historia : historias) {
                 String history = historia.getHistoria();
-                if (history.length() > 90) {
-                    history = history.substring(0, 89);
+                if (history.length() > 87) {
+                    history = history.substring(0, 86).concat("...");
                     historia.setHistoria(history);
                 }
                 historiasCortadas.add(historia);
@@ -180,34 +190,69 @@ public class HistoriaControlador {
     }
 
     @GetMapping("/misHistorias/{id}")
-    public ModelAndView misHistorias(@PathVariable int id,HttpSession session, HttpServletRequest request) {
+    public ModelAndView misHistorias(@PathVariable int id, HttpSession session, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("historias");
-        if (id==(int)session.getAttribute("id_usuario")) {
+        if (id == (int) session.getAttribute("id_usuario")) {
             mv.setViewName("redirect:/historia/misHistorias");
-        }else{
+        } else {
             Map<String, ?> map = RequestContextUtils.getInputFlashMap(request);
-        if (map != null) {
-            mv.addObject("error", map.get("error-name"));
-        }
-        mv.addObject("action", "otrasHistorias");
-        mv.addObject("nombreUsuario",usuarioServicio.buscarUsuarioPorId(id).getUsername());
-        try {
-            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario(id);
-            List<Historia> historias = perfil.getHistorias();
-            List<Historia> historiasCortadas = new ArrayList();
-            for (Historia historia : historias) {
-                String history = historia.getHistoria();
-                if (history.length() > 90) {
-                    history = history.substring(0, 89);
-                    historia.setHistoria(history);
-                }
-                historiasCortadas.add(historia);
+            if (map != null) {
+                mv.addObject("error", map.get("error-name"));
             }
-            mv.addObject("listaHistorias", historiasCortadas);
-            mv.addObject("action", "misHistorias");
-        } catch (Exception e) {
-            mv.addObject("error", e.getMessage());
+            mv.addObject("action", "otrasHistorias");
+            mv.addObject("nombreUsuario", usuarioServicio.buscarUsuarioPorId(id).getUsername());
+            try {
+                Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario(id);
+                List<Historia> historias = perfil.getHistorias();
+                List<Historia> historiasCortadas = new ArrayList();
+                for (Historia historia : historias) {
+                    String history = historia.getHistoria();
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
+                        historia.setHistoria(history);
+                    }
+                    historiasCortadas.add(historia);
+                }
+                mv.addObject("listaHistorias", historiasCortadas);
+                //mv.addObject("action", "misHistorias");
+            } catch (Exception e) {
+                mv.addObject("error", e.getMessage());
+            }
         }
+        return mv;
+    }
+
+    @PostMapping("/fav")
+    public RedirectView favoritos(@RequestParam("historia") Historia historia, HttpSession session, RedirectAttributes ra) {
+        try {
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            perfilServicio.favorita(perfil, historia);
+        } catch (Exception e) {
+            ra.addFlashAttribute("error-name", e.getMessage());
+        }
+
+        return new RedirectView("/historia/" + historia.getId_historia());
+    }
+
+    @GetMapping("/favoritas")
+    public ModelAndView favoritas(HttpSession session) {
+        ModelAndView mv = new ModelAndView("historias");
+        mv.addObject("action", "favoritas");
+        try {
+            Perfil perfil = perfilServicio.buscarPerfilPorIdUsuario((int) session.getAttribute("id_usuario"));
+            List<Historia> historias = perfil.getHistoriasFav();
+                List<Historia> historiasCortadas = new ArrayList();
+                for (Historia historia : historias) {
+                    String history = historia.getHistoria();
+                    if (history.length() > 87) {
+                        history = history.substring(0, 86).concat("...");
+                        historia.setHistoria(history);
+                    }
+                    historiasCortadas.add(historia);
+                }
+            mv.addObject("listaHistorias", historiasCortadas);
+        } catch (Exception e) {
+            mv.setViewName("redirect:/");
         }
         return mv;
     }
@@ -226,4 +271,50 @@ public class HistoriaControlador {
 //        }
 //        return rv;
 //    }
+
+    @GetMapping("/todas")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public ModelAndView verTodosPerfil(HttpServletRequest request, @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("admin-historias");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            modelAndView.addObject("success", flashMap.get("success"));
+            modelAndView.addObject("error", flashMap.get("error"));
+            modelAndView.addObject("listaHistorias", null);
+        }
+        if (error != null) {
+            modelAndView.addObject("error", error);
+            modelAndView.addObject("listaHistorias", null);
+        } else {
+            try {
+                modelAndView.addObject("listaHistorias", historiaServicio.verTodosHistoria());
+            } catch (Exception excepcion) {
+                modelAndView.addObject("error", excepcion.getMessage());
+                modelAndView.setViewName("redirect:/historia/todas");
+            }
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/alta/{id_historia}")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER','MODER')")
+    public RedirectView habilitarRol(@PathVariable Integer id_historia, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/historia/todas");
+        try {
+            String aux = "";
+            Historia historia = historiaServicio.buscarHistoriaPorId(id_historia);
+            historia.setAlta(!historia.getAlta());
+            if (historia.getAlta()) {
+                aux = "habilitada";
+                historiaServicio.alta(id_historia);
+            } else {
+                aux = "deshabilitada";
+                historiaServicio.baja(id_historia);
+            }
+            redirectAttributes.addFlashAttribute("success", "La historia ha sido " + aux + " exitosamente!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        }
+        return redirectView;
+    }
 }

@@ -118,9 +118,11 @@ public class HistoriaServicio {
     @Transactional(readOnly=true)
     public List<Historia> verTodosHistoria() throws Exception{
         List<Historia> historias = repository.findAll();
+/*
         if (historias.isEmpty()) {
             throw new Exception("No hay historias");
         }
+*/
         return historias;
     }
     
@@ -131,5 +133,15 @@ public class HistoriaServicio {
             throw new Exception("No hay historias en esta categoría");
         }
         return historias;
+    }
+    
+    @Transactional(readOnly=true)
+    public int cantidadDeHistorias(){
+        List<Historia> historias = repository.findAll();
+        if (historias==null) {
+            return 0;
+        }else{
+            return historias.size();
+        }
     }
 }

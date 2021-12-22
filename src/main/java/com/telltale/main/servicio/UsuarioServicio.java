@@ -199,5 +199,14 @@ public class UsuarioServicio implements UserDetailsService {
         session.setAttribute("rol",usuario.getRol().getNombre());
         return new User(usuario.getUsername(), usuario.getPassword(), Collections.singletonList(autorizacion));
     }
-
+    
+    @Transactional(readOnly=true)
+    public int cantidadDeUsuarios(){
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        if (usuarios==null) {
+            return 0;
+        }else{
+            return usuarios.size();
+        }
+    }
 }
